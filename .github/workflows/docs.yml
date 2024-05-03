@@ -42,7 +42,7 @@ jobs:
           curl -sLOJ https://github.com/structurizr/cli/releases/download/${STRUCTURIZR_VERSION}/structurizr-cli.zip
           mkdir structurizr-${STRUCTURIZR_VERSION}
           pushd structurizr-${STRUCTURIZR_VERSION}
-          unzip -q ../structurizr-cli-${STRUCTURIZR_VERSION}.zip
+          unzip -q ../structurizr-cli.zip
           STRUCTURIZR_DIR=$(pwd)
           popd
           popd
