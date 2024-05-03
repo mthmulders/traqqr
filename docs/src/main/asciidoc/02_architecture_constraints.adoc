@@ -1,0 +1,74 @@
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+=== Technical Constraints
+[cols="0,1,3" options="header"]
+.Technical Constraints
+|===
+|  | Constraint | Background and / or motivation
+
+3+e| Software and programming constraints
+| TC01
+| Use of Java
+| One of the <<section-introduction-and-goals, goals>> is to learn and evaluate certain technologies.
+I don't want to learn too much new things at the same, so I stick to Java as the programming language.
+
+| TC02
+| Use of open source technology
+| Third-party (not written by me) software must be available under an open-source license. It should not be necessary to download or purchase proprietary software in order to study or contribute to this project.
+
+3+e| Operating System Constraints
+
+| TC03
+| OS independent
+| Developing and running the project should not require any particular operating system. It should be possible on at least Windows, Linux and macOS.
+
+|===
+
+=== Organisational Constraints
+[cols="0,1,3" options="header"]
+.Organisational Constraints
+|===
+|  | Constraint | Background and / or motivation
+
+| OC1
+| Team
+| Primarily myself, Maarten Mulders. Contributions from others are welcome, but I don't expect too many.
+
+| OC2
+| IDE independent setup
+| Developing and running the project should not require any particular IDE or editor. The project must be compilable on the command line via standard build tools (e.g., https://maven.apache.org/[Apache Maven]).
+
+| OC3
+| Configuration and version control / management
+| Code is stored in a public Git repository with a complete commit history. This repository will host the code as well as this documentation.
+
+| OC4
+| Testing
+| Use JUnit to prove functional correctness using unit tests and optionally integration tests. Use JaCoCo to ensure a high test coverage and use PiTest to ensure high quality of tests. Use https://playwright.dev/java[Playwright] to write functional integration tests. Use https://pitest.org/[Pitest] and the https://dashboard.stryker-mutator.io/[Stryker Dashboard] to run resp. display mutation testing (results).
+
+| OC5
+| Published under an Open Source license
+| The source code as well as the documentation should be published under an Open Source license.
+
+|===
+
+=== Conventions
+[cols="0,1,3" options="header"]
+.Conventions
+|===
+| | Convention | Background and / or motivation
+
+| C1
+| Architecture documentation
+| Structure based on the (English) Arc42 template.
+
+| C2
+| Coding conventions
+| The project uses the https://github.com/palantir/palantir-java-format[Palantir Java format]. Formatting is enforced through and can be executed using https://github.com/diffplug/spotless/tree/main/plugin-maven[Spotless].
+
+| C3
+| Natural language
+| English. The project and the documentation both target an international audience.
+
+|===

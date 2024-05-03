@@ -1,0 +1,28 @@
+[[section-solution-strategy]]
+== Solution Strategy
+
+Traqqr is a single deployable application using a relational database.
+
+plantuml::img/generated/structurizr-traqqr-container.puml[format=svg]
+
+The architecture of Traqqr follows the ideas of https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)[hexagonal architecture].
+This means that its domain model is unaware of the technology that powers it.
+Each component lives in its own https://maven.apache.org/guides/mini/guide-multiple-modules-4.html:[Maven module], which is also a https://www.oracle.com/corporate/features/understanding-java-9-modules.html[Java module].
+This approach makes it easier to test a large part of the application logic in a fast and light-weight way **[QC.OE.01]**.
+
+Since Traqqr is designed as a Jakarta Enterprise Edition, all components can freely depend on API's provided by that platform.
+The core of Traqqr is its Domain Model, which is completely agnostic of any other framework or library.
+It applies a few tactical patterns from Domain Driven Design.
+You will find Repositories, rich Entities and Value Objects.
+
+Since the Traqqr is technology-agnostic, some parts cannot be implemented in the Domain.
+That's why the Infrastructure provides implementations based on the selected technology stack.
+For instance, it provides implementations of the Repositories based on the Jakarta Persistence API.
+
+The Web application is responsible for generating the web-based user interface.
+It uses Jakarta Server Faces to deliver fast, light-weight web pages rather than requiring users to download a large bundle of JavaScript **[QC.PF.01]**.
+
+The API is responsible for exposing a REST API that can be invoked by automation platforms (such as https://www.home-assistant.io/[Home Assistant]) to periodically register a car's odometer mileage and battery capacity.
+
+To bring it all together without introducing undesired dependencies, the Application module packages all these components together.
+It creates a Web Archive (WAR) using https://maven.apache.org/plugins/maven-war-plugin/overlays.html[overlays], that can be deployed to any Jakarta EE 10-compatible application server **[QC.OE.01]**.

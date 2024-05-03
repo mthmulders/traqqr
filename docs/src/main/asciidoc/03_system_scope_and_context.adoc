@@ -1,0 +1,27 @@
+[[section-system-scope-and-context]]
+== System Scope and Context
+This chapter describes the environment and context of Traqqr.
+Who uses the system and on which other system(s) does Traqqr depend?
+
+=== Business Context
+plantuml::img/generated/structurizr-traqqr-context.puml[format=svg]
+
+==== User
+Somebody who drives an electric car and wants to have insight in how much electric energy that car(s) use.
+
+=== Technical Context
+The technical context of Traqqr is pretty simple.
+Polly runs as a web application and is accessible to users primarily using their web browser:
+
+.Technical interfaces
+[cols="5,20" options="header"]
+|===
+| Interface | Description
+
+| HTTP (Web)
+| Serves the (HTML) views to interact with a poll; this includes both viewing and voting.
+
+| HTTP (API)
+| Provide an Application Programmer Interface (API) to allow registering a measurement of a cars odometer and remaining battery capacity.
+
+|===

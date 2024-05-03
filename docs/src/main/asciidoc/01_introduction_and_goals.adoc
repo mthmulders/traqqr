@@ -1,0 +1,68 @@
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+https://mthmulders.github.io/traqqr/[Traqqr] is a project for
+
+* letting me keep track of the energy usage of my electric car
+* evaluating and learning certain technologies:
+** https://jakarta.ee/[Jakarta EE]
+** https://jakarta.ee/specifications/faces/[Jakarta Server Faces]
+** https://playwright.dev/java[Playwright]
+
+=== Requirements Overview
+From a functional point of view, Traqqr is a web application for keeping track of the energy usage of an electric car.
+The app that comes with my car does not provide such insights.
+
+From a project perspective, I use Traqqr to study and evaluate technology, patterns and frameworks.
+The functional requirements aren't too complex, leaving me enough room for attention to quality goals.
+
+.Main features
+* Logging in with a Google account.
+* Register a car for measuring.
+** This will issue an API key uniquely linked to that car.
+** Re-issue an API key for an existing car.
+* Register current battery capacity and mileage using a REST API.
+* Link two of such measurements to define a trip.
+* Combine two or more trips into a multi-leg trip.
+* View energy usage for any trip.
+
+=== Main Quality Goals
+The following list contains the most important quality goals for this application.
+The full list is in <<Quality Requirements>>.
+
+[cols="0,1,3" options="header"]
+.Main Quality Goals
+|===
+| ID | Quality | Motivation
+
+| QG01
+| Understandability
+| Functional requirements should be simple and stay simple. This allows me to focus on the other goals (learning, experimenting) as well as writing quality code.
+
+| QG02
+| Attractiveness
+| The display should look good enough.
+
+| QC03
+| Testability
+| The architecture should allow easy testing of all main building blocks.
+
+|===
+
+=== Stakeholders
+The following lists contains the most important personas for this application.
+[options="header",cols="1,2"]
+.Stakeholders
+|===
+| Role/Name           | Goal/Boundaries
+
+| Developers
+| Developers familiar with Java who want to learn about developing modern web applications without having to learn JavaScript/Typescript and an additional web application framework or two.
+
+| Maarten Mulders (me)
+| Improving my skills as an architect and a developer. Have some real-world, working sample code when discussing "traditional" web applications or Jakarta Server Faces.
+
+| Users (including me)
+| Having a convenient way to calculate energy usage of an electric car.
+
+|===

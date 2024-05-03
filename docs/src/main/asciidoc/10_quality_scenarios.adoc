@@ -1,0 +1,69 @@
+[[section-quality-scenarios]]
+== Quality Requirements
+
+=== Quality Tree
+
+The following list contains the quality goals for this application.
+The goals with an identifier between square brackets correspond with one of the <<Main Quality Goals>>.
+
+[cols="1,5,4,6,2" options="header"]
+.Quality Goals
+|===
+| ID | Quality Category | Quality | Description | Scenario
+
+| QC.US.01
+| Usability
+| Attractiveness **[QG02]**
+| I want to use Traqqr to look good.
+|
+
+| QC.US.02
+| Usability
+| Ease of use
+| Users should not have to register an account before being able to use the application.
+| **[SC1]**
+
+| QC.PF.01
+| Performance
+| Responsiveness
+| Displaying a page should take less than 2 seconds.
+|
+
+| QC.OE.01
+| Operational & Environmental
+| Runtime agnosticism
+| The solution should work on any Jakarta EE 10 compliant application server.
+|
+
+| QC.MS.01
+| Maintainability & Support
+| Understandability **[QC01]**
+| Functional requirements should be simple and stay simple.
+This allows me to focus on the other goals (learning, experimenting) as well as writing quality code.
+|
+
+| QC.TS.01
+|
+| Testability **[QC03]**
+| The architecture should allow easy testing of all main building blocks.
+|
+
+| QC.SC.01
+| Security
+| Confidentiality
+| Users should only be able to see the energy usage of the car(s) that they drive.
+|
+
+|===
+
+=== Quality Scenarios
+
+[cols="2,8" options="header"]
+.Quality Goals
+|===
+| ID | Scenario
+
+| SC1
+| Log in using Google
+
+|===

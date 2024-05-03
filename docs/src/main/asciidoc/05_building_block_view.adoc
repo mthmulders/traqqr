@@ -1,0 +1,9 @@
+[[section-building-block-view]]
+== Building Block View
+
+Traqqr is divided in four main parts: the (Core) **Domain**, a **Web application** and a **REST API** that expose functionality from the domain, and the **Infrastructure** that provides technology-dependent implementations for components that live in the domain.
+
+plantuml::img/generated/structurizr-traqqr-application-component.puml[format=svg]
+
+As outlined in the <<Solution Strategy>>, the domain model must be unaware of the technology that powers it.
+It is the responsibility of the **Infrastructure** module to provide the actual implementations for concerns like  persistent storage of domain entities.
