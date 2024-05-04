@@ -49,7 +49,7 @@ jobs:
           
           pushd docs
           PATH=$JAVA_HOME_17_X64/bin:$STRUCTURIZR_DIR:$PATH; structurizr.sh export \
-              -o src/main/asciidoc/img \
+              -o src/main/asciidoc/img/generated \
               -w src/main/structurizr/workspace.dsl \
               -f plantuml
           popd
