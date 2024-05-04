@@ -25,6 +25,6 @@ jobs:
           cache: maven
 
       - name: Build
-        run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage
+        run: mvn -B verify -pl !:docs
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
