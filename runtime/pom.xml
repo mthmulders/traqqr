@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>runtime</artifactId>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
     <name>Traqqr :: Runtime</name>
 </project>

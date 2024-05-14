@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>web</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Traqqr :: Ports :: Web application</name>
 </project>
