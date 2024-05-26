@@ -14,9 +14,9 @@
 
     <modules>
         <module>domain</module>
+        <module>adapters/api</module>
         <module>adapters/jpa</module>
-        <module>ports/api</module>
-        <module>ports/web</module>
+        <module>adapters/web</module>
     </modules>
 
     <name>Traqqr :: Application</name>
