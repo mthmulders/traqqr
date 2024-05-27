@@ -13,4 +13,12 @@
   <packaging>war</packaging>
 
   <name>Traqqr :: Ports :: REST API</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>domain</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>

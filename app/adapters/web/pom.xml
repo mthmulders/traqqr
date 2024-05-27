@@ -13,4 +13,28 @@
   <packaging>war</packaging>
 
   <name>Traqqr :: Ports :: Web application</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>domain</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.faces</groupId>
+      <artifactId>jakarta.faces-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.enterprise</groupId>
+      <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>

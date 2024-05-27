@@ -12,4 +12,71 @@
   <packaging>ear</packaging>
 
   <name>Traqqr :: Runtime</name>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.openliberty</groupId>
+        <artifactId>openliberty-jakartaee10</artifactId>
+        <version>24.0.0.5</version>
+        <type>zip</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>api</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>web</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>domain</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>traqqr</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <configuration>
+          <modules>
+            <webModule>
+              <groupId>it.mulders.traqqr</groupId>
+              <artifactId>api</artifactId>
+              <contextRoot>/api</contextRoot>
+            </webModule>
+            <webModule>
+              <groupId>it.mulders.traqqr</groupId>
+              <artifactId>web</artifactId>
+              <contextRoot>/</contextRoot>
+            </webModule>
+          </modules>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>io.openliberty.tools</groupId>
+        <artifactId>liberty-maven-plugin</artifactId>
+        <configuration>
+          <mergeServerEnv>true</mergeServerEnv>
+          <runtimeArtifact>
+            <groupId>io.openliberty</groupId>
+            <artifactId>openliberty-jakartaee10</artifactId>
+          </runtimeArtifact>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

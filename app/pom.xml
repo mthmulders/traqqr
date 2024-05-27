@@ -13,15 +13,6 @@
 
   <name>Traqqr :: Application</name>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>it.mulders.traqqr</groupId>
-                <artifactId>domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
   <modules>
     <module>domain</module>
     <module>adapters/api</module>
