@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>it.mulders.traqqr</groupId>
-        <artifactId>traqqr</artifactId>
-        <version>0.1-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>it.mulders.traqqr</groupId>
+    <artifactId>traqqr</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>app</artifactId>
-    <packaging>pom</packaging>
+  <artifactId>app</artifactId>
+  <packaging>pom</packaging>
 
-    <modules>
-        <module>domain</module>
-        <module>adapters/api</module>
-        <module>adapters/jpa</module>
-        <module>adapters/web</module>
-    </modules>
-
-    <name>Traqqr :: Application</name>
+  <name>Traqqr :: Application</name>
 
     <dependencyManagement>
         <dependencies>
@@ -30,4 +22,10 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+  <modules>
+    <module>domain</module>
+    <module>adapters/api</module>
+    <module>adapters/jpa</module>
+    <module>adapters/web</module>
+  </modules>
 </project>
