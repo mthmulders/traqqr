@@ -25,4 +25,4 @@ jobs:
           cache: maven
 
       - name: Build
-        run: mvn -B verify -pl !:docs
+        run: mvn -B verify -pl !:docs -P container
