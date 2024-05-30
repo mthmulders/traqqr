@@ -26,5 +26,3 @@ jobs:
 
       - name: Build
         run: mvn -B verify -pl !:docs
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
