@@ -33,3 +33,13 @@ jobs:
 
       - name: Build
         run: mvn -B verify -pl !:docs -P container
+
+      - name: Publish container
+        run: |
+          echo "${ACR_PASSWORD}" | docker login ${ACR_HOSTNAME} --username ${ACR_USERNAME} --password-stdin
+          docker tag traqqr:latest ${ACR_HOSTNAME}/traqqr:latest
+          docker push ${ACR_HOSTNAME}/traqqr:latest
+        env:
+          ACR_HOSTNAME: ${{ secrets.ACR_HOSTNAME }}
+          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
