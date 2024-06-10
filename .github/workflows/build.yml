@@ -43,3 +43,4 @@ jobs:
           ACR_HOSTNAME: ${{ secrets.ACR_HOSTNAME }}
           ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
           ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+        if: ${{ github.ref == 'refs/heads/main' }}
