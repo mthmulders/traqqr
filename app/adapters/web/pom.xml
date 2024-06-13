@@ -36,5 +36,11 @@
       <artifactId>jakarta.inject-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+      <version>13.0.0</version>
+      <classifier>jakarta</classifier>
+    </dependency>
   </dependencies>
 </project>
