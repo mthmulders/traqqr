@@ -10,15 +10,18 @@
         <feature>servlet-6.0</feature>
     </featureManager>
 
-    <httpEndpoint id="defaultHttpEndpoint"
-                  httpPort="9080"
-                  httpsPort="9443" />
-
     <application location="traqqr.ear" name="traqqr" contextRoot="/" />
 
     <!-- Enable detailed logging for JPA.
     <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
      -->
+    <!-- Enable detailed logging for Jakarta Security. -->
+    <logging traceSpecification="*=audit:com.ibm.ws.security.jwt.*=finer:com.ibm.wsspi*=fine=enabled:com.ibm.websphere.security*=fine=enabled" maxFiles="8" maxFileSize="200" />
+
+    <keyStore id="google-client-keystore"
+              location="google-client-keystore.p12"
+              password="don't change me"
+              readOnly="true" />
 
     <applicationMonitor dropinsEnabled="false" />
     <logging isoDateFormat="true" />

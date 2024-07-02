@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="traqqr-dev-server">
+    <httpEndpoint id="defaultHttpEndpoint"
+                  protocolVersion="http/1.1"
+                  httpPort="9080" />
+</server>
