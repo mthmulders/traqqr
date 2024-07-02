@@ -4,6 +4,9 @@ FROM icr.io/appcafe/open-liberty:kernel-slim-java21-openj9-ubi-minimal
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/
 COPY --chown=1001:0 src/main/liberty/config/configDropins/defaults/* /config/configDropins/defaults/
 
+# Copy the public certificate for Google OpenID Connect into the image
+COPY --chown=1001:0 src/main/resources/google-com.pem /etc/x509/certs/
+
 # Adds the requested XML snippets to enable Liberty features and grow the image to be fit-for-purpose.
 RUN features.sh
 
