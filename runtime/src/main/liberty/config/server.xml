@@ -19,8 +19,6 @@
     <!-- Enable detailed logging for Jakarta Security. -->
     <logging traceSpecification="*=audit:com.ibm.ws.security.jwt.*=finer:com.ibm.wsspi*=fine=enabled:com.ibm.websphere.security*=fine=enabled" maxFiles="8" maxFileSize="200" />
 
-
-
     <applicationMonitor dropinsEnabled="false" />
     <logging isoDateFormat="true" />
     <webContainer deferServletLoad="false" />
