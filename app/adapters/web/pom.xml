@@ -31,13 +31,17 @@
     </dependency>
 
     <dependency>
-      <groupId>jakarta.faces</groupId>
-      <artifactId>jakarta.faces-api</artifactId>
+      <groupId>jakarta.enterprise</groupId>
+      <artifactId>jakarta.enterprise.cdi-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.enterprise</groupId>
-      <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      <groupId>jakarta.el</groupId>
+      <artifactId>jakarta.el-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.faces</groupId>
+      <artifactId>jakarta.faces-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -45,6 +49,17 @@
       <artifactId>jakarta.inject-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>jakarta.security.enterprise</groupId>
+      <artifactId>jakarta.security.enterprise-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>

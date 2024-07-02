@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="traqqr-dev-server">
     <featureManager>
+        <feature>appSecurity-5.0</feature>
         <feature>beanValidation-3.0</feature>
         <feature>cdi-4.0</feature>
         <feature>expressionLanguage-5.0</feature>
@@ -12,7 +13,7 @@
 
     <application location="traqqr.ear" name="traqqr" contextRoot="/" />
 
-    <!-- Enable detailed logging for JPA.
+    <!-- Enable detailed logging for Jakarta Persistence API.
     <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
      -->
     <!-- Enable detailed logging for Jakarta Security. -->

@@ -24,6 +24,23 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <security-role>
+        <role-name>user</role-name>
+    </security-role>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Traqqr</web-resource-name>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
     <!-- Primefaces configuration -->
     <context-param>
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
