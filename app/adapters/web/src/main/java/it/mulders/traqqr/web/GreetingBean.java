@@ -2,16 +2,18 @@ package it.mulders.traqqr.web;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 @Named
 @SessionScoped
 public class GreetingBean implements Serializable {
-    private static final Logger logger = Logger.getLogger(GreetingBean.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(GreetingBean.class);
 
     public GreetingBean() {
-        logger.info("Creating greeting bean with ID %d".formatted(hashCode()));
+        log.info("Creating greeting bean; id={}", hashCode());
     }
 
     public String getGreeting() {
