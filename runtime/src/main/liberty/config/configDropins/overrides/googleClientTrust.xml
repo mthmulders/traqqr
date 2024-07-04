@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="traqqr-dev-server">
+    <ssl id="defaultSSLConfig"
+         keyStoreRef="google-client-keystore" />
+
+    <keyStore id="google-client-keystore"
+              location="google-client.p12"
+              password="don't change me"
+              readOnly="true" />
+</server>
