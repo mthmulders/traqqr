@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
@@ -11,11 +12,27 @@
 <ui:debug/>
 
 <div class="content">
+    <h:form>
+        <p:menubar rendered="true" style="margin-bottom: 1rem">
+            <f:facet name="start">
+            <!--
+                <p:graphicImage name="images/primefaces-logo.svg" library="showcase" />
+            -->
+            </f:facet>
+
+            <p:menuitem value="Vehicles" icon="pi pi-fw pi-car" url="/secure/vehicles/" />
+
+            <f:facet name="end">
+                <p:commandButton value="Quit" icon="pi pi-fw pi-power-off" action="#{sessionBean.logout(request)}" ajax="false" />
+            </f:facet>
+        </p:menubar>
+    </h:form>
+
     <ui:insert name="content"/>
 </div>
 
 <hr />
-<!-- alleen als ingelogd -->
+
 <p:outputPanel>
     Traqqr ${systemInfo.applicationVersion} (revision <code>${systemInfo.gitVersion}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
     Proudly running on ${systemInfo.javaRuntime}.

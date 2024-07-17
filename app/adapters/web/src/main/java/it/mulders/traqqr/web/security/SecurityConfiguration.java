@@ -11,7 +11,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.openid.LogoutDe
         clientId = "${oidcConfig.clientId}",
         clientSecret = "${oidcConfig.clientSecret}",
         logout = @LogoutDefinition(
-                redirectURI = "${baseURL}"
+                redirectURI = "/index.xhtml"
         ),
         providerURI = "https://accounts.google.com/.well-known/openid-configuration",
         redirectURI = "${oidcConfig.callbackUrl}",
