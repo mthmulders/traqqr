@@ -7,8 +7,11 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><ui:insert name="title">Default Title</ui:insert> | Traqqr</title>
+
+    <h:outputStylesheet name="/css/style.css" />
 </h:head>
 <body>
+
 <ui:debug/>
 
 <div class="content">
@@ -20,7 +23,12 @@
             -->
             </f:facet>
 
-            <p:menuitem value="Vehicles" icon="pi pi-fw pi-car" url="/secure/vehicles/" />
+            <p:menuitem
+                    value="Vehicles"
+                    icon="pi pi-fw pi-car"
+                    url="/secure/vehicles/"
+                    containerStyleClass="#{view.viewId.contains('vehicles') ? 'selected-menu-item' : ''}"
+            />
 
             <f:facet name="end">
                 <p:commandButton value="Quit" icon="pi pi-fw pi-power-off" action="#{sessionBean.logout(request)}" ajax="false" />
