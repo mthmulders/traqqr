@@ -34,7 +34,6 @@
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>web</artifactId>
-      <version>${project.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -52,6 +51,10 @@
         <artifactId>maven-ear-plugin</artifactId>
         <configuration>
           <modules>
+            <jarModule>
+              <groupId>it.mulders.traqqr</groupId>
+              <artifactId>domain</artifactId>
+            </jarModule>
             <webModule>
               <groupId>it.mulders.traqqr</groupId>
               <artifactId>api</artifactId>

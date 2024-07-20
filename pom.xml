@@ -58,11 +58,13 @@
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>api</artifactId>
+        <type>war</type>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>web</artifactId>
+        <type>war</type>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
