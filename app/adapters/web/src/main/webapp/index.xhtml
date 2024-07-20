@@ -20,6 +20,14 @@
             <p>
                 To get started, please <a href="/secure/">log in</a>.
             </p>
+
+            <p>
+                CDI injection attempts
+            </p>
+            <ul>
+                <li>Immediate: Howdy <pre style="display: inline">#{domainBean.whatever}</pre>.</li>
+                <li>Deferred: Howdy <pre style="display: inline">${domainBean.whatever}</pre>.</li>
+            </ul>
         </p:card>
     </ui:define>
 </ui:composition>
