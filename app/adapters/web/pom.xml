@@ -27,7 +27,6 @@
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>domain</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
