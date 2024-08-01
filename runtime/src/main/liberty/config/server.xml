@@ -22,8 +22,8 @@
 
     <dataSource id="traqqr-datasource" jndiName="jdbc/traqqr-ds" transactional="true" type="javax.sql.XADataSource">
         <jdbcDriver libraryRef="postgresql-jdbc" />
-        <properties serverName="localhost"
-                    databaseName="postgres"
+        <properties serverName="${jdbc.hostname}"
+                    databaseName="${jdbc.database}"
                     portNumber="5432"
                     user="${jdbc.username}"
                     password="${jdbc.password}" />
