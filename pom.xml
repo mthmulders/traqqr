@@ -67,6 +67,11 @@
         <type>war</type>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>mem</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

@@ -17,6 +17,7 @@
     <module>domain</module>
     <module>adapters/api</module>
     <module>adapters/jpa</module>
+    <module>adapters/mem</module>
     <module>adapters/web</module>
   </modules>
 </project>
