@@ -11,7 +11,6 @@
         <feature>servlet-6.0</feature>
     </featureManager>
 
-    <application location="traqqr.ear" name="traqqr" contextRoot="/" />
     <variable name="jdbc.hostname" defaultValue="localhost" />
     <variable name="jdbc.database" defaultValue="postgres" />
     <variable name="jdbc.username" defaultValue="postgres" />
@@ -30,6 +29,7 @@
                     password="${jdbc.password}" />
     </dataSource>
 
+    <application location="traqqr.ear" name="traqqr" />
 
     <!-- Enable detailed logging for Jakarta Persistence API.
     <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />

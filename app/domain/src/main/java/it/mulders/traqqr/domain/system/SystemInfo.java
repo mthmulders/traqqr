@@ -3,18 +3,17 @@ package it.mulders.traqqr.domain.system;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 @Named("systemInfo")
 public class SystemInfo {
     private static final Logger log = LoggerFactory.getLogger(SystemInfo.class);
 
-    private final Properties systemProperties =  System.getProperties();
+    private final Properties systemProperties = System.getProperties();
     private final Properties metadataProperties = new Properties();
 
     @PostConstruct

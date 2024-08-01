@@ -4,7 +4,6 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.security.enterprise.identitystore.openid.OpenIdContext;
-
 import java.io.Serializable;
 
 @Named
@@ -20,7 +19,7 @@ public class UserInfoBean implements Serializable {
         this.profilePictureUrl = claims.getPicture().orElse(null);
     }
 
-    public String getUsername() {// name, picture, email
+    public String getUsername() {
         return displayName;
     }
 

@@ -5,19 +5,13 @@ import jakarta.security.enterprise.authentication.mechanism.http.openid.ClaimsDe
 import jakarta.security.enterprise.authentication.mechanism.http.openid.LogoutDefinition;
 
 @OpenIdAuthenticationMechanismDefinition(
-        claimsDefinition = @ClaimsDefinition(
-                callerNameClaim = "sub"
-        ),
+        claimsDefinition = @ClaimsDefinition(callerNameClaim = "sub"),
         clientId = "${oidcConfig.clientId}",
         clientSecret = "${oidcConfig.clientSecret}",
-        logout = @LogoutDefinition(
-                redirectURI = "/index.xhtml"
-        ),
+        logout = @LogoutDefinition(redirectURI = "/index.xhtml"),
         providerURI = "https://accounts.google.com/.well-known/openid-configuration",
         redirectURI = "${oidcConfig.callbackUrl}",
         redirectToOriginalResource = true,
         useNonce = true,
-        useSession = true
-)
-public class SecurityConfiguration {
-}
+        useSession = true)
+public class SecurityConfiguration {}

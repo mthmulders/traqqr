@@ -3,11 +3,10 @@ package it.mulders.traqqr.web.security;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult;
 import jakarta.security.enterprise.identitystore.IdentityStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.EnumSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class TraqqrIdentityStore implements IdentityStore {
