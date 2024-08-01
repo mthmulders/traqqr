@@ -6,6 +6,9 @@ ENV SEC_TLS_TRUSTDEFAULTCERTS true
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/
 COPY --chown=1001:0 src/main/liberty/config/configDropins/defaults/* /config/configDropins/defaults/
 
+# Add PostgreSQL driver
+COPY --chown=1001:0 target/lib/*postgresql* /opt/ol/wlp/usr/servers/defaultServer/jdbc/
+
 # Adds the requested XML snippets to enable Liberty features and grow the image to be fit-for-purpose.
 RUN features.sh
 

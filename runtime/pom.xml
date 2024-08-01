@@ -13,6 +13,10 @@
 
   <name>Traqqr :: Runtime</name>
 
+  <properties>
+    <postgresql.jdbc.version>42.7.3</postgresql.jdbc.version>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -20,6 +24,11 @@
         <artifactId>openliberty-jakartaee10</artifactId>
         <version>24.0.0.7</version>
         <type>zip</type>
+      </dependency>
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgresql.jdbc.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -40,6 +49,10 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>domain</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>jpa</artifactId>
     </dependency>
   </dependencies>
 
@@ -63,6 +76,7 @@
               <contextRoot>/</contextRoot>
             </webModule>
           </modules>
+          <packagingExcludes>**/postgresql*.jar,**/*checker-qual*.jar</packagingExcludes>
           <skinnyModules>true</skinnyModules>
         </configuration>
       </plugin>
@@ -71,6 +85,15 @@
         <groupId>io.openliberty.tools</groupId>
         <artifactId>liberty-maven-plugin</artifactId>
         <configuration>
+          <copyDependencies>
+            <dependencyGroup>
+              <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+              </dependency>
+              <location>jdbc</location>
+            </dependencyGroup>
+          </copyDependencies>
           <mergeServerEnv>true</mergeServerEnv>
           <runtimeArtifact>
             <groupId>io.openliberty</groupId>
@@ -89,6 +112,28 @@
       </properties>
       <build>
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-postgresql-driver</id>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.postgresql</groupId>
+                      <artifactId>postgresql</artifactId>
+                    </artifactItem>
+                  </artifactItems>
+                  <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <groupId>io.fabric8</groupId>
             <artifactId>docker-maven-plugin</artifactId>

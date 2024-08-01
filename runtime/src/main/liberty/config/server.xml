@@ -12,6 +12,24 @@
     </featureManager>
 
     <application location="traqqr.ear" name="traqqr" contextRoot="/" />
+    <variable name="jdbc.hostname" defaultValue="localhost" />
+    <variable name="jdbc.database" defaultValue="postgres" />
+    <variable name="jdbc.username" defaultValue="postgres" />
+    <variable name="jdbc.password" defaultValue="postgres" />
+
+    <library id="postgresql-jdbc">
+        <fileset dir="${server.config.dir}/jdbc/" includes="postgresql*jar" />
+    </library>
+
+    <dataSource id="traqqr-datasource" jndiName="jdbc/traqqr-ds" transactional="true" type="javax.sql.XADataSource">
+        <jdbcDriver libraryRef="postgresql-jdbc" />
+        <properties serverName="localhost"
+                    databaseName="postgres"
+                    portNumber="5432"
+                    user="${jdbc.username}"
+                    password="${jdbc.password}" />
+    </dataSource>
+
 
     <!-- Enable detailed logging for Jakarta Persistence API.
     <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
