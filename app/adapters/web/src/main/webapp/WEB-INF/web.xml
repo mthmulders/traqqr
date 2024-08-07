@@ -41,6 +41,16 @@
         </user-data-constraint>
     </security-constraint>
 
+    <!-- Generic JSF configuration -->
+    <context-param>
+        <param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+
     <!-- Primefaces configuration -->
     <context-param>
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
