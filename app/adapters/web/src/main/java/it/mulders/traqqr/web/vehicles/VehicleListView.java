@@ -54,7 +54,7 @@ public class VehicleListView implements Serializable {
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(vehicle.getCode()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
-        log.debug("Vehicle edit completed; code={}", vehicle.getCode());
+        log.debug("Vehicle updated; code={}", vehicle.getCode());
     }
 
     public void showAddVehicle() {
