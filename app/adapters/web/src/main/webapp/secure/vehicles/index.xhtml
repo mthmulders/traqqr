@@ -35,11 +35,13 @@
                     <p:column style="width:6rem">
                         <p:rowEditor editTitle="Edit vehicle" cancelTitle="Cancel edit" saveTitle="Save"/>
                     </p:column>
-
-                    <f:facet name="footer">
-                        <span class="font-bold">Displaying ${fn:length(vehicleListView.vehicles)} row(s).</span>
-                    </f:facet>
                 </p:dataTable>
+
+                <f:facet name="footer">
+                    <p:commandButton icon="pi pi-plus" value="Add" action="#{vehicleListView.showAddVehicle()}">
+                        <p:ajax event="dialogReturn" listener="#{vehicleListView.handleVehicleSavedEvent}" />
+                    </p:commandButton>
+                </f:facet>
             </p:card>
         </h:form>
     </ui:define>

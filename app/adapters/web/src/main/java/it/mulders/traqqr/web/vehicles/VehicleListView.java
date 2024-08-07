@@ -15,7 +15,10 @@ import jakarta.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DialogFrameworkOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,5 +55,28 @@ public class VehicleListView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
         log.debug("Vehicle edit completed; code={}", vehicle.getCode());
+    }
+
+    public void showAddVehicle() {
+        var options = DialogFrameworkOptions.builder()
+                .modal(true)
+                .resizable(false)
+                .responsive(true)
+                .iframeStyleClass("max-w-screen")
+                .build();
+
+        PrimeFaces.current().dialog().openDynamic("/secure/vehicles/add.xhtml", options, null);
+    }
+
+    public void handleVehicleSavedEvent(final SelectEvent<Vehicle> event) {
+        var vehicle = event.getObject();
+        if (vehicle == null) {
+            return;
+        }
+
+        log.debug("Vehicle saved; code={}", vehicle.code());
+
+        var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(vehicle.code()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

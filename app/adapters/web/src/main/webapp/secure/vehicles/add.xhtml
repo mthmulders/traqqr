@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Add new Vehicle</title>
+
+    <h:outputStylesheet name="/css/style.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <p:messages>
+            <p:autoUpdate />
+        </p:messages>
+
+        <p:panelGrid columns="2"
+                     layout="grid"
+                     columnClasses="ui-grid-col-4,ui-grid-col-8">
+            <p:row>
+                <p:outputLabel for="@next">Description</p:outputLabel>
+                <p:inputText id="description" value="#{addVehicleView.vehicle.description}" styleClass="w-full" />
+            </p:row>
+
+            <p:row>
+                <p:column styleClass="ui-grid-col-4" />
+                <p:column styleClass="ui-grid-col-8">
+                    <p:commandButton value="Save" icon="pi pi-save" action="#{addVehicleView.save()}" style="width: auto; margin-right: 1rem" />
+                    <p:commandButton value="Cancel" icon="pi pi-times" action="#{addVehicleView.close()}" style="width: auto" />
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+
+        <p:panelGrid columns="2"
+                     layout="grid"
+                     columnClasses="ui-grid-col-3,ui-grid-col-3">
+        </p:panelGrid>
+
+        <div>
+        </div>
+    </h:form>
+</h:body>
+</html>

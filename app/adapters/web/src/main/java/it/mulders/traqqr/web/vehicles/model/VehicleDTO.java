@@ -39,4 +39,9 @@ public class VehicleDTO {
     public int hashCode() {
         return Objects.hash(description, code);
     }
+
+    @Override
+    public String toString() {
+        return "VehicleDTO{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
+    }
 }
