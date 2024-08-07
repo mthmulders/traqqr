@@ -57,6 +57,7 @@ public class JpaVehicleRepository implements VehicleRepository {
             em.flush();
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error registering vehicle; code={}", vehicle.code(), e);
+            throw e;
         }
     }
 
@@ -77,6 +78,7 @@ public class JpaVehicleRepository implements VehicleRepository {
                         em.flush();
                     } catch (IllegalArgumentException | TransactionRequiredException e) {
                         log.error("Error updating vehicle; code={}", vehicle.code(), e);
+                        throw e;
                     }
                 });
     }
