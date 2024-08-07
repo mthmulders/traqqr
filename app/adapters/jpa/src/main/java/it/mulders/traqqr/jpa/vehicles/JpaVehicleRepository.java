@@ -47,10 +47,17 @@ public class JpaVehicleRepository implements VehicleRepository {
     }
 
     @Override
+    @Transactional(Transactional.TxType.MANDATORY)
     public void save(Vehicle vehicle) {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         entity.setId(UUID.randomUUID());
-        this.em.persist(entity);
+        try {
+            em.joinTransaction();
+            em.persist(entity);
+            em.flush();
+        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            log.error("Error registering vehicle; code={}", vehicle.code(), e);
+        }
     }
 
     @Override
