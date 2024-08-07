@@ -25,7 +25,7 @@ public class SchemaUpdater {
         try {
             logger.info("Migrating database schema");
             var result = flyway.migrate();
-            logger.info("Migrating database schema done; migrations_executed={}", result.migrationsExecuted);
+            logger.info("Database schema migration done; migrations_executed={}", result.migrationsExecuted);
         } catch (final FlywayException fe) {
             logger.error("Failed to migrate database schema", fe);
         }
