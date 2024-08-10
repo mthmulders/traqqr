@@ -28,16 +28,19 @@ public class VehicleListView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(VehicleListView.class);
 
     private final Owner owner;
+    private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
     private final Collection<VehicleDTO> vehicles;
 
     @Inject
-    public VehicleListView(final VehicleRepository vehicleRepository, final Owner owner) {
+    public VehicleListView(
+            final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository, final Owner owner) {
         this.owner = owner;
+        this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
 
         this.vehicles = vehicleRepository.findByOwnerId(owner).stream()
-                .map(VehicleDTO::new) // MapStruct would be better
+                .map(this.vehicleMapper::vehicleToDto)
                 .collect(Collectors.toSet());
     }
 
@@ -49,7 +52,7 @@ public class VehicleListView implements Serializable {
     public void onRowEdit(final RowEditEvent<VehicleDTO> event) {
         var vehicle = event.getObject();
 
-        vehicleRepository.update(new Vehicle(vehicle.getCode(), vehicle.getDescription(), owner.code()));
+        vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(vehicle, owner));
 
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(vehicle.getCode()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
