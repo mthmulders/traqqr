@@ -23,8 +23,8 @@
     <mapstruct.version>1.5.5.Final</mapstruct.version>
 
     <!-- spotless:off -->
-        <jacocoArgLine></jacocoArgLine>
-        <!-- spotless:on -->
+    <jacocoArgLine></jacocoArgLine>
+    <!-- spotless:on -->
   </properties>
 
   <dependencyManagement>
