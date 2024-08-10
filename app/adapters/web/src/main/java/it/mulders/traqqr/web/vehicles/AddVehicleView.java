@@ -10,7 +10,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.io.Serializable;
-import java.util.Locale;
 import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +20,19 @@ public class AddVehicleView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(AddVehicleView.class);
 
     private final Owner owner;
+    private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
     private final VehicleDTO vehicle;
 
     @Inject
-    public AddVehicleView(final VehicleRepository vehicleRepository, final Owner owner) {
+    public AddVehicleView(
+            final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository, final Owner owner) {
         this.owner = owner;
-        var code = RandomStringUtils.generateRandomIdentifier(8).toLowerCase(Locale.getDefault());
-        this.vehicle = new VehicleDTO(new Vehicle(code, null, owner.code()));
+        this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
+
+        var vehicle = new Vehicle(RandomStringUtils.generateRandomIdentifier(8), "", owner.code());
+        this.vehicle = this.vehicleMapper.vehicleToDto(vehicle);
     }
 
     public VehicleDTO getVehicle() {
@@ -39,7 +42,7 @@ public class AddVehicleView implements Serializable {
     @Transactional(Transactional.TxType.REQUIRED)
     public void save() {
         log.debug("Saving vehicle; vehicle={}", vehicle);
-        vehicleRepository.save(new Vehicle(vehicle.getCode(), vehicle.getDescription(), owner.code()));
+        vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicle, owner));
 
         var stored = vehicleRepository
                 .findByCode(vehicle.getCode())

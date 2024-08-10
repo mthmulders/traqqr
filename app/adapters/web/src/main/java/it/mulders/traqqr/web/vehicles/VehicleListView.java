@@ -30,7 +30,8 @@ public class VehicleListView implements Serializable {
     private final Owner owner;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
-    private final Collection<VehicleDTO> vehicles;
+
+    private Collection<VehicleDTO> vehicles;
 
     @Inject
     public VehicleListView(
@@ -39,6 +40,10 @@ public class VehicleListView implements Serializable {
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
 
+        populateVehicles();
+    }
+
+    private void populateVehicles() {
         this.vehicles = vehicleRepository.findByOwnerId(owner).stream()
                 .map(this.vehicleMapper::vehicleToDto)
                 .collect(Collectors.toSet());
@@ -81,5 +86,7 @@ public class VehicleListView implements Serializable {
 
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(vehicle.code()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        populateVehicles();
     }
 }

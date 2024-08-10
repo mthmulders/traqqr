@@ -15,7 +15,7 @@
 
                 <p:growl id="msgs" showDetail="true"/>
 
-                <p:dataTable var="vehicle" value="${vehicleListView.vehicles}" editable="true" rowKey="#{vehicle.code}">
+                <p:dataTable id="vehicles" var="vehicle" value="${vehicleListView.vehicles}" editable="true" rowKey="#{vehicle.code}">
                     <p:ajax event="rowEdit" listener="#{vehicleListView.onRowEdit}" update=":form:msgs" />
 
                     <p:column headerText="Code">
@@ -39,7 +39,7 @@
 
                 <f:facet name="footer">
                     <p:commandButton icon="pi pi-plus" value="Add" action="#{vehicleListView.showAddVehicle()}">
-                        <p:ajax event="dialogReturn" listener="#{vehicleListView.handleVehicleSavedEvent}" />
+                        <p:ajax event="dialogReturn" listener="#{vehicleListView.handleVehicleSavedEvent}" update="vehicles,msgs" />
                     </p:commandButton>
                 </f:facet>
             </p:card>
