@@ -4,11 +4,13 @@ import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants.ComponentModel;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
+@Mapper(componentModel = ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
 public interface VehicleMapper {
     public Vehicle vehicleEntityToVehicle(final VehicleEntity entity);
 
+    @Mapping(target = "id", ignore = true)
     public VehicleEntity vehicleToVehicleEntity(final Vehicle vehicle);
 }
