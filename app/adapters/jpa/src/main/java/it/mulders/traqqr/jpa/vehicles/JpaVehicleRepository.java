@@ -55,6 +55,7 @@ public class JpaVehicleRepository implements VehicleRepository {
             em.joinTransaction();
             em.persist(entity);
             em.flush();
+            log.debug("Vehicle saved; code={}", vehicle.code());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error registering vehicle; code={}", vehicle.code(), e);
             throw e;
@@ -76,6 +77,7 @@ public class JpaVehicleRepository implements VehicleRepository {
                         em.joinTransaction();
                         em.merge(existing);
                         em.flush();
+                        log.debug("Vehicle updated; code={}", vehicle.code());
                     } catch (IllegalArgumentException | TransactionRequiredException e) {
                         log.error("Error updating vehicle; code={}", vehicle.code(), e);
                         throw e;
