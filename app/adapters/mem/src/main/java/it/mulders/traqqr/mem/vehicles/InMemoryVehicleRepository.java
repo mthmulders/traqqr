@@ -53,8 +53,7 @@ public class InMemoryVehicleRepository implements VehicleRepository {
                             log.debug("Removing vehicle; code={}", existing.code());
                             vehicles.remove(existing);
                         },
-                        handleVehicleNotFound(vehicle)
-                );
+                        handleVehicleNotFound(vehicle));
     }
 
     private Runnable handleVehicleNotFound(final Vehicle vehicle) {

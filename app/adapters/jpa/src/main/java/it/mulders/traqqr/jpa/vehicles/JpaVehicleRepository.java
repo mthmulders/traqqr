@@ -90,7 +90,8 @@ public class JpaVehicleRepository implements VehicleRepository {
     public void removeVehicle(final Vehicle vehicle) {
         try {
             em.joinTransaction();
-            var itemsUpdated = this.em.createQuery("delete from VehicleEntity v where v.code = :code", VehicleEntity.class)
+            var itemsUpdated = this.em
+                    .createQuery("delete from VehicleEntity v where v.code = :code", VehicleEntity.class)
                     .setParameter("code", vehicle.code())
                     .executeUpdate();
             if (itemsUpdated == 0) {

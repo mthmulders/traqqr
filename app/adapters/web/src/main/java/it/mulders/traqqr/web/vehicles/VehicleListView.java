@@ -70,14 +70,16 @@ public class VehicleListView implements Serializable {
 
             log.debug("Vehicle saved; code={}", selectedVehicle.getCode());
 
-            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
+            var msg =
+                    new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
             log.debug("Vehicle updated; code={}", selectedVehicle.getCode());
 
-            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));
+            var msg = new FacesMessage(
+                    SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
@@ -97,7 +99,8 @@ public class VehicleListView implements Serializable {
 
         log.debug("Vehicle removed; code={}", selectedVehicle.getCode());
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vehicle %s removed".formatted(selectedVehicle.getCode())));
+        var msg = new FacesMessage("Vehicle %s removed".formatted(selectedVehicle.getCode()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
 
         this.selectedVehicle = null;
