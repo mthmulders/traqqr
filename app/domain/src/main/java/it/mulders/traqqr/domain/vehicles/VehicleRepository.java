@@ -8,13 +8,13 @@ import java.util.Optional;
  * Describes operations for working with persistent vehicle objects.
  */
 public interface VehicleRepository {
-    public Optional<Vehicle> findByCode(final String code);
+    Optional<Vehicle> findByCode(final String code);
 
-    public Collection<Vehicle> findByOwnerId(final Owner owner);
+    Collection<Vehicle> findByOwnerId(final Owner owner);
 
-    public void save(final Vehicle vehicle);
+    void save(final Vehicle vehicle);
 
-    public void update(final Vehicle vehicle);
+    void update(final Vehicle vehicle);
 
     void removeVehicle(final Vehicle vehicle);
 }
