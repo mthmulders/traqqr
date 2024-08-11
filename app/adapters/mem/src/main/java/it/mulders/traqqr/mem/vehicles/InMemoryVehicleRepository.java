@@ -3,7 +3,6 @@ package it.mulders.traqqr.mem.vehicles;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import java.util.*;
@@ -17,11 +16,6 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryVehicleRepository.class);
 
     private final Set<Vehicle> vehicles = new HashSet<>();
-
-    @PostConstruct
-    public void seed() {
-        vehicles.add(new Vehicle("jdlkfsjklsdf", "T-624-PN", "116294182796817352273"));
-    }
 
     @Override
     public Optional<Vehicle> findByCode(final String code) {
