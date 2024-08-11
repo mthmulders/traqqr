@@ -13,11 +13,9 @@
             <p:card>
                 <f:facet name="title">Vehicles</f:facet>
 
-                <p:growl id="msgs" showDetail="true"/>
+                <p:growl id="messages" showDetail="true"/>
 
                 <p:dataTable id="vehicles" var="vehicle" value="${vehicleListView.vehicles}" editable="true" rowKey="#{vehicle.code}" stripedRows="true">
-                    <p:ajax event="rowEdit" listener="#{vehicleListView.onRowEdit}" update=":form:msgs" />
-
                     <p:column headerText="Code">
                         <h:outputText value="#{vehicle.code}" />
                     </p:column>
@@ -32,17 +30,46 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column style="width:6rem">
-                        <p:rowEditor editTitle="Edit vehicle" cancelTitle="Cancel edit" saveTitle="Save"/>
+                    <p:column style="width:6rem" ariaHeaderText="Actions">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:vehicle-details-content"
+                                         oncomplete="PF('manageVehicleDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                            <f:setPropertyActionListener value="#{vehicle}" target="#{vehicleListView.selectedVehicle}" />
+                            <p:resetInput target=":dialogs:vehicle-details" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
 
                 <f:facet name="footer">
-                    <p:commandButton icon="pi pi-plus" value="Add" action="#{vehicleListView.showAddVehicle()}">
-                        <p:ajax event="dialogReturn" listener="#{vehicleListView.handleVehicleSavedEvent}" update="vehicles,msgs" />
+                    <p:commandButton icon="pi pi-plus" value="Add" action="#{vehicleListView.createVehicle()}"
+                                     update=":dialogs:manage-vehicle" oncomplete="PF('manageVehicleDialog').show()">
+                        <p:resetInput target=":dialogs:manage-vehicle" />
                     </p:commandButton>
                 </f:facet>
             </p:card>
+        </h:form>
+
+        <h:form id="dialogs">
+            <p:dialog header="Vehicle Details" showEffect="fade" modal="true" widgetVar="manageVehicleDialog" responsive="true">
+                <p:outputPanel id="vehicle-details-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty vehicleListView.selectedVehicle}">
+                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
+                            <p:row>
+                                <p:outputLabel for="@next">Description</p:outputLabel>
+                                <p:inputText id="description" value="#{vehicleListView.selectedVehicle.description}" styleClass="w-full" />
+                            </p:row>
+
+                            <p:row>
+                                <p:column styleClass="ui-grid-col-4" />
+                                <p:column styleClass="ui-grid-col-8">
+                                    <p:commandButton value="Save" icon="pi pi-save" action="#{vehicleListView.saveVehicle()}" style="width: auto; margin-right: 1rem" />
+                                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageVehicleDialog').hide()" style="width: auto" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

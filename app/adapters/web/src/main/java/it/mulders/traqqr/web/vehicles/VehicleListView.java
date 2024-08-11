@@ -2,8 +2,8 @@ package it.mulders.traqqr.web.vehicles;
 
 import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
 
+import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
-import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.application.FacesMessage;
@@ -16,22 +16,23 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DialogFrameworkOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Named("vehicleListView")
 @ViewScoped
 public class VehicleListView implements Serializable {
+    // TODO Rename to ManageVehicleView?
     private static final Logger log = LoggerFactory.getLogger(VehicleListView.class);
 
+    // Components
     private final Owner owner;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
+    // Data
     private Collection<VehicleDTO> vehicles;
+    private VehicleDTO selectedVehicle;
 
     @Inject
     public VehicleListView(
@@ -53,40 +54,41 @@ public class VehicleListView implements Serializable {
         return vehicles;
     }
 
+    public VehicleDTO getSelectedVehicle() {
+        return selectedVehicle;
+    }
+
+    public void setSelectedVehicle(final VehicleDTO selectedVehicle) {
+        this.selectedVehicle = selectedVehicle;
+    }
+
     @Transactional(Transactional.TxType.REQUIRED)
-    public void onRowEdit(final RowEditEvent<VehicleDTO> event) {
-        var vehicle = event.getObject();
+    public void saveVehicle() {
+        if (selectedVehicle != null && selectedVehicle.getCode() == null) {
+            var code = RandomStringUtils.generateRandomIdentifier(8);
+            selectedVehicle.setCode(code);
+            this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-        vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(vehicle, owner));
+            log.debug("Vehicle saved; code={}", code);
 
-        var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(vehicle.getCode()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(code));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } else {
+            vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-        log.debug("Vehicle updated; code={}", vehicle.getCode());
-    }
+            log.debug("Vehicle updated; code={}", selectedVehicle.getCode());
 
-    public void showAddVehicle() {
-        var options = DialogFrameworkOptions.builder()
-                .modal(true)
-                .resizable(false)
-                .responsive(true)
-                .iframeStyleClass("max-w-screen")
-                .build();
-
-        PrimeFaces.current().dialog().openDynamic("/secure/vehicles/add.xhtml", options, null);
-    }
-
-    public void handleVehicleSavedEvent(final SelectEvent<Vehicle> event) {
-        var vehicle = event.getObject();
-        if (vehicle == null) {
-            return;
+            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
-        log.debug("Vehicle saved; code={}", vehicle.code());
-
-        var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(vehicle.code()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        populateVehicles();
+        PrimeFaces.current().executeScript("PF('manageVehicleDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
     }
+
+    public void createVehicle() {
+        selectedVehicle = new VehicleDTO();
+    }
+
+
 }
