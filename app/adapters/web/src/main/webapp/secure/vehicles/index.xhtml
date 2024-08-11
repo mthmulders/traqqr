@@ -33,9 +33,13 @@
                     <p:column style="width:6rem" ariaHeaderText="Actions">
                         <p:commandButton icon="pi pi-pencil" update=":dialogs:vehicle-details-content"
                                          oncomplete="PF('manageVehicleDialog').show()"
-                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                         styleClass="edit-button ui-button-success" process="@this">
                             <f:setPropertyActionListener value="#{vehicle}" target="#{vehicleListView.selectedVehicle}" />
                             <p:resetInput target=":dialogs:vehicle-details-content" />
+                        </p:commandButton>
+                        <p:commandButton icon="pi pi-trash" class="ui-button-warning"
+                                         oncomplete="PF('deleteVehicleDialog').show()" process="@this" >
+                            <f:setPropertyActionListener value="#{vehicle}" target="#{vehicleListView.selectedVehicle}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
@@ -73,6 +77,14 @@
                     </p:outputPanel>
                 </p:outputPanel>
             </p:dialog>
+
+            <p:confirmDialog widgetVar="deleteVehicleDialog" showEffect="fade" width="300"
+                             message="Delete vehicle?" header="Confirm" severity="warn">
+                <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{vehicleListView.deleteVehicle}"
+                                 process="@this" oncomplete="PF('deleteVehicleDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteVehicleDialog').hide()" />
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 </ui:composition>

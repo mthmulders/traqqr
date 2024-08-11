@@ -82,4 +82,25 @@ public class JpaVehicleRepository implements VehicleRepository {
                     }
                 });
     }
+
+    @Override
+    @Transactional(Transactional.TxType.MANDATORY)
+    public void removeVehicle(final Vehicle vehicle) {
+        try {
+            em.joinTransaction();
+            var itemsUpdated = this.em.createQuery("delete from VehicleEntity v where v.code = :code", VehicleEntity.class)
+                    .setParameter("code", vehicle.code())
+                    .executeUpdate();
+            if (itemsUpdated == 0) {
+                log.warn("Removing vehicle failed; code={}", vehicle.code());
+            } else if (itemsUpdated > 1) {
+                log.warn("Removing vehicle touched too many items; code={}, count={}", vehicle.code(), itemsUpdated);
+            }
+            em.flush();
+            log.debug("Vehicle removed; code={}", vehicle.code());
+        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            log.error("Error removing vehicle; code={}", vehicle.code(), e);
+            throw e;
+        }
+    }
 }

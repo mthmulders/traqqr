@@ -42,9 +42,23 @@ public class InMemoryVehicleRepository implements VehicleRepository {
                             vehicles.remove(existing);
                             vehicles.add(vehicle);
                         },
-                        () -> {
-                            log.error("Vehicle not found; code={}", vehicle.code());
-                        });
+                        handleVehicleNotFound(vehicle));
+    }
+
+    @Override
+    public void removeVehicle(Vehicle vehicle) {
+        findByCode(vehicle.code())
+                .ifPresentOrElse(
+                        existing -> {
+                            log.debug("Removing vehicle; code={}", existing.code());
+                            vehicles.remove(existing);
+                        },
+                        handleVehicleNotFound(vehicle)
+                );
+    }
+
+    private Runnable handleVehicleNotFound(final Vehicle vehicle) {
+        return () -> log.error("Vehicle not found; code={}", vehicle.code());
     }
 
     @Override

@@ -90,4 +90,17 @@ public class VehicleListView implements Serializable {
     public void createVehicle() {
         selectedVehicle = new VehicleDTO();
     }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void deleteVehicle() {
+        this.vehicleRepository.removeVehicle(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
+
+        log.debug("Vehicle removed; code={}", selectedVehicle.getCode());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vehicle %s removed".formatted(selectedVehicle.getCode())));
+        PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
+
+        this.selectedVehicle = null;
+        populateVehicles();
+    }
 }

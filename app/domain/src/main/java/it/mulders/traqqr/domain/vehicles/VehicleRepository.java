@@ -15,4 +15,6 @@ public interface VehicleRepository {
     public void save(final Vehicle vehicle);
 
     public void update(final Vehicle vehicle);
+
+    void removeVehicle(final Vehicle vehicle);
 }
