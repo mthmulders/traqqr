@@ -64,14 +64,13 @@ public class VehicleListView implements Serializable {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public void saveVehicle() {
-        if (selectedVehicle != null && selectedVehicle.getCode() == null) {
-            var code = RandomStringUtils.generateRandomIdentifier(8);
-            selectedVehicle.setCode(code);
+        if (selectedVehicle.getCode() == null) {
+            selectedVehicle.setCode(RandomStringUtils.generateRandomIdentifier(8));
             this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-            log.debug("Vehicle saved; code={}", code);
+            log.debug("Vehicle saved; code={}", selectedVehicle.getCode());
 
-            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(code));
+            var msg = new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
@@ -82,6 +81,8 @@ public class VehicleListView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
+        selectedVehicle = null;
+        populateVehicles();
         PrimeFaces.current().executeScript("PF('manageVehicleDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
     }
@@ -89,6 +90,4 @@ public class VehicleListView implements Serializable {
     public void createVehicle() {
         selectedVehicle = new VehicleDTO();
     }
-
-
 }
