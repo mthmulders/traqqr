@@ -14,7 +14,7 @@
   <name>Traqqr :: Runtime</name>
 
   <properties>
-    <postgresql.jdbc.version>42.7.3</postgresql.jdbc.version>
+    <postgresql.jdbc.version>42.7.4</postgresql.jdbc.version>
   </properties>
 
   <dependencyManagement>
