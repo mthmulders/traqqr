@@ -15,7 +15,7 @@
   <name>Traqqr :: Adapters :: JPA</name>
 
   <properties>
-    <flyway.version>10.18.1</flyway.version>
+    <flyway.version>10.18.2</flyway.version>
   </properties>
 
   <dependencies>
