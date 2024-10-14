@@ -1,11 +1,15 @@
 package it.mulders.traqqr.jpa.vehicles;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,6 +29,9 @@ public class VehicleEntity {
 
     @Column(name = "owner_id")
     private String ownerId;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "vehicle")
+    private Collection<AuthorisationEntity> authorisations;
 
     public UUID getId() {
         return id;
@@ -56,6 +63,20 @@ public class VehicleEntity {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public Collection<AuthorisationEntity> getAuthorisations() {
+        return authorisations;
+    }
+
+    public boolean hasAuthorisationWithHashedKey(String hashedKey) {
+        return authorisations != null
+                && authorisations.stream()
+                        .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
+    }
+
+    public void setAuthorisations(Collection<AuthorisationEntity> authorisations) {
+        this.authorisations = authorisations;
     }
 
     @Override

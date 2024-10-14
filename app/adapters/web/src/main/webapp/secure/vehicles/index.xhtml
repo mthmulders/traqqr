@@ -63,6 +63,28 @@
                                 <p:inputText id="description" value="#{vehicleListView.selectedVehicle.description}" styleClass="w-full" required="true" />
                             </p:row>
 
+                            <p:row rendered="#{not empty vehicleListView.selectedVehicle.code}">
+                                <p:column styleClass="ui-grid-col-4" />
+                                <p:column styleClass="ui-grid-col-8">
+                                    <p:commandButton value="Regenerate API key" icon="pi pi-key" action="#{vehicleListView.regenerateApiKey}"
+                                                     update="vehicle-details-content" process="vehicle-details-content @this"
+                                                     style="width: auto; margin-right: 1rem" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{not empty vehicleListView.generatedAuthorisation.rawKey}">
+                                <p:outputLabel for="rawKey">Generated API key</p:outputLabel>
+                                <p:outputLabel id="rawKey" value="#{vehicleListView.generatedAuthorisation.rawKey}" styleClass="w-full" />
+                            </p:row>
+                            <p:row rendered="#{not empty vehicleListView.generatedAuthorisation.rawKey}">
+                                <p:column styleClass="ui-grid-col-4" />
+                                <p:column styleClass="ui-grid-col-8">
+                                    Please note: you will see this API key only once. Make sure to write it down!
+
+                                    <strong>note: invalidation is not yet persisted into database</strong>
+                                </p:column>
+                            </p:row>
+
                             <p:row>
                                 <p:column styleClass="ui-grid-col-4" />
                                 <p:column styleClass="ui-grid-col-8">

@@ -5,6 +5,7 @@ import java.util.Objects;
 public class VehicleDTO {
     private String code;
     private String description;
+    private AuthorisationDTO authorisation;
 
     public String getDescription() {
         return description;
@@ -20,6 +21,14 @@ public class VehicleDTO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public AuthorisationDTO getAuthorisation() {
+        return authorisation;
+    }
+
+    public void setAuthorisation(AuthorisationDTO authorisation) {
+        this.authorisation = authorisation;
     }
 
     @Override

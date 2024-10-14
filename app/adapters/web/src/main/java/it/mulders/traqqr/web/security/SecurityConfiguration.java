@@ -12,6 +12,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.openid.LogoutDe
         providerURI = "https://accounts.google.com/.well-known/openid-configuration",
         redirectURI = "${oidcConfig.callbackUrl}",
         redirectToOriginalResource = true,
+        tokenAutoRefresh = true,
         useNonce = true,
         useSession = true)
 public class SecurityConfiguration {}

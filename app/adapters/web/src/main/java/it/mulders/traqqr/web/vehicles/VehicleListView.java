@@ -5,6 +5,7 @@ import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.web.vehicles.model.AuthorisationDTO;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -31,8 +32,9 @@ public class VehicleListView implements Serializable {
     private final VehicleRepository vehicleRepository;
 
     // Data
-    private Collection<VehicleDTO> vehicles;
+    private AuthorisationDTO generatedAuthorisation;
     private VehicleDTO selectedVehicle;
+    private Collection<VehicleDTO> vehicles;
 
     @Inject
     public VehicleListView(
@@ -60,6 +62,31 @@ public class VehicleListView implements Serializable {
 
     public void setSelectedVehicle(final VehicleDTO selectedVehicle) {
         this.selectedVehicle = selectedVehicle;
+    }
+
+    public AuthorisationDTO getGeneratedAuthorisation() {
+        return generatedAuthorisation;
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void regenerateApiKey() {
+        log.debug("Regenerating API key for vehicle; code={}", selectedVehicle.getCode());
+        this.vehicleRepository
+                .findByCode(selectedVehicle.getCode())
+                .ifPresentOrElse(
+                        (vehicle) -> {
+                            var authorisation = vehicle.regenerateKey();
+                            this.vehicleRepository.update(vehicle);
+
+                            generatedAuthorisation = vehicleMapper.authorisationToDto(authorisation);
+
+                            PrimeFaces.current().ajax().update("dialogs:vehicle-details-content");
+                        },
+                        () -> {
+                            log.error(
+                                    "Tried to generate new API key for non-existing vehicle; code={}",
+                                    selectedVehicle.getCode());
+                        });
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

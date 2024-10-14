@@ -73,6 +73,14 @@ public class JpaVehicleRepository implements VehicleRepository {
                 .ifPresent(existing -> {
                     existing.setDescription(vehicle.description());
 
+                    // New authorisations need to be explicitly added to the Vehicle entity that manages them.
+                    vehicle.authorisations().stream()
+                            .filter(authorisation ->
+                                    !existing.hasAuthorisationWithHashedKey(authorisation.getHashedKey()))
+                            .map(mapper::authorisationToAuthorisationEntity)
+                            .peek(entity -> entity.setVehicle(existing))
+                            .forEach(existing.getAuthorisations()::add);
+
                     try {
                         em.joinTransaction();
                         em.merge(existing);
