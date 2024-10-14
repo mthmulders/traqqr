@@ -7,6 +7,7 @@
         <jta-data-source>jdbc/traqqr-ds</jta-data-source>
 
         <class>it.mulders.traqqr.jpa.vehicles.VehicleEntity</class>
+        <class>it.mulders.traqqr.jpa.vehicles.AuthorisationEntity</class>
 
         <properties>
             <property name="eclipselink.logging.level" value="FINER" />

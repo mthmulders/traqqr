@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface VehicleRepository {
     Optional<Vehicle> findByCode(final String code);
 
-    Collection<Vehicle> findByOwnerId(final Owner owner);
+    Collection<Vehicle> findByOwner(final Owner owner);
 
     void save(final Vehicle vehicle);
 

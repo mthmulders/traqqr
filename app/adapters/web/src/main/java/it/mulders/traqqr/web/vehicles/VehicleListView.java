@@ -5,6 +5,7 @@ import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.web.vehicles.model.AuthorisationDTO;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -31,8 +32,9 @@ public class VehicleListView implements Serializable {
     private final VehicleRepository vehicleRepository;
 
     // Data
-    private Collection<VehicleDTO> vehicles;
+    private AuthorisationDTO generatedAuthorisation;
     private VehicleDTO selectedVehicle;
+    private Collection<VehicleDTO> vehicles;
 
     @Inject
     public VehicleListView(
@@ -45,7 +47,7 @@ public class VehicleListView implements Serializable {
     }
 
     private void populateVehicles() {
-        this.vehicles = vehicleRepository.findByOwnerId(owner).stream()
+        this.vehicles = vehicleRepository.findByOwner(owner).stream()
                 .map(this.vehicleMapper::vehicleToDto)
                 .collect(Collectors.toSet());
     }
@@ -62,21 +64,43 @@ public class VehicleListView implements Serializable {
         this.selectedVehicle = selectedVehicle;
     }
 
+    public AuthorisationDTO getGeneratedAuthorisation() {
+        return generatedAuthorisation;
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void regenerateApiKey(VehicleDTO vehicleDTO) {
+        setSelectedVehicle(vehicleDTO);
+        log.debug("Regenerating API key for vehicle; code={}", selectedVehicle.getCode());
+        this.vehicleRepository
+                .findByCode(selectedVehicle.getCode())
+                .ifPresentOrElse(
+                        (vehicle) -> {
+                            var authorisation = vehicle.regenerateKey();
+                            this.vehicleRepository.update(vehicle);
+
+                            generatedAuthorisation = vehicleMapper.authorisationToDto(authorisation);
+
+                            PrimeFaces.current().ajax().update("dialogs:vehicle-details-content");
+                        },
+                        () -> {
+                            log.error(
+                                    "Tried to generate new API key for non-existing vehicle; code={}",
+                                    selectedVehicle.getCode());
+                        });
+    }
+
     @Transactional(Transactional.TxType.REQUIRED)
     public void saveVehicle() {
         if (selectedVehicle.getCode() == null) {
             selectedVehicle.setCode(RandomStringUtils.generateRandomIdentifier(8));
             this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-            log.debug("Vehicle saved; code={}", selectedVehicle.getCode());
-
             var msg =
                     new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
-
-            log.debug("Vehicle updated; code={}", selectedVehicle.getCode());
 
             var msg = new FacesMessage(
                     SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));

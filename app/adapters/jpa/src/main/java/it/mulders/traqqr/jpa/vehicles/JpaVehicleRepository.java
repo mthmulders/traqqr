@@ -6,6 +6,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
@@ -37,7 +38,7 @@ public class JpaVehicleRepository implements VehicleRepository {
     }
 
     @Override
-    public Collection<Vehicle> findByOwnerId(Owner owner) {
+    public Collection<Vehicle> findByOwner(Owner owner) {
         var query =
                 this.em.createQuery("select v from VehicleEntity v where v.ownerId = :ownerId", VehicleEntity.class);
         return query.setParameter("ownerId", owner.code())
@@ -70,15 +71,35 @@ public class JpaVehicleRepository implements VehicleRepository {
                 .setParameter("code", vehicle.code())
                 .getResultStream()
                 .findAny()
-                .ifPresent(existing -> {
-                    existing.setDescription(vehicle.description());
+                .ifPresent(vehicleEntity -> {
+                    vehicleEntity.setDescription(vehicle.description());
+
+                    for (var authorisation : vehicle.authorisations()) {
+                        vehicleEntity.getAuthorisations().stream()
+                                .filter(it -> it.getHashedKey().equals(authorisation.getHashedKey()))
+                                .findAny()
+                                .ifPresentOrElse(
+                                        existingAuthorisationEntity -> {
+                                            existingAuthorisationEntity.setInvalidatedAt(
+                                                    authorisation.getInvalidatedAt());
+                                        },
+                                        () -> {
+                                            var authorisationEntity =
+                                                    mapper.authorisationToAuthorisationEntity(authorisation);
+                                            authorisationEntity.setVehicle(vehicleEntity);
+                                            vehicleEntity.getAuthorisations().add(authorisationEntity);
+                                        });
+                    }
 
                     try {
                         em.joinTransaction();
-                        em.merge(existing);
+                        em.merge(vehicleEntity);
                         em.flush();
                         log.debug("Vehicle updated; code={}", vehicle.code());
-                    } catch (IllegalArgumentException | TransactionRequiredException e) {
+                    } catch (PersistenceException e) {
+                        log.error("Database error during vehicle update; code={}", vehicle.code(), e);
+                        throw e;
+                    } catch (Exception e) {
                         log.error("Error updating vehicle; code={}", vehicle.code(), e);
                         throw e;
                     }
