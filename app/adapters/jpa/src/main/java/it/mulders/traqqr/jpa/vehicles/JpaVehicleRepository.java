@@ -37,7 +37,7 @@ public class JpaVehicleRepository implements VehicleRepository {
     }
 
     @Override
-    public Collection<Vehicle> findByOwnerId(Owner owner) {
+    public Collection<Vehicle> findByOwner(Owner owner) {
         var query =
                 this.em.createQuery("select v from VehicleEntity v where v.ownerId = :ownerId", VehicleEntity.class);
         return query.setParameter("ownerId", owner.code())

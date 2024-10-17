@@ -47,7 +47,7 @@ public class VehicleListView implements Serializable {
     }
 
     private void populateVehicles() {
-        this.vehicles = vehicleRepository.findByOwnerId(owner).stream()
+        this.vehicles = vehicleRepository.findByOwner(owner).stream()
                 .map(this.vehicleMapper::vehicleToDto)
                 .collect(Collectors.toSet());
     }
