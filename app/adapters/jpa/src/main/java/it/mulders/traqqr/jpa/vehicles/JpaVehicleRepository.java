@@ -70,20 +70,28 @@ public class JpaVehicleRepository implements VehicleRepository {
                 .setParameter("code", vehicle.code())
                 .getResultStream()
                 .findAny()
-                .ifPresent(existing -> {
-                    existing.setDescription(vehicle.description());
+                .ifPresent(vehicleEntity -> {
+                    vehicleEntity.setDescription(vehicle.description());
 
-                    // New authorisations need to be explicitly added to the Vehicle entity that manages them.
-                    vehicle.authorisations().stream()
-                            .filter(authorisation ->
-                                    !existing.hasAuthorisationWithHashedKey(authorisation.getHashedKey()))
-                            .map(mapper::authorisationToAuthorisationEntity)
-                            .peek(entity -> entity.setVehicle(existing))
-                            .forEach(existing.getAuthorisations()::add);
+                    for (var authorisation : vehicle.authorisations()) {
+                        vehicleEntity.getAuthorisations().stream()
+                                .filter(it -> it.getHashedKey().equals(authorisation.getHashedKey()))
+                                .findAny()
+                                .ifPresentOrElse(
+                                        existingAuthorisationEntity -> {
+                                            existingAuthorisationEntity.setInvalidatedAt(
+                                                    authorisation.getInvalidatedAt());
+                                        },
+                                        () -> {
+                                            var authorisationEntity = mapper.authorisationToAuthorisationEntity(authorisation);
+                                            authorisationEntity.setVehicle(vehicleEntity);
+                                            vehicleEntity.getAuthorisations().add(authorisationEntity);
+                                        });
+                    }
 
                     try {
                         em.joinTransaction();
-                        em.merge(existing);
+                        em.merge(vehicleEntity);
                         em.flush();
                         log.debug("Vehicle updated; code={}", vehicle.code());
                     } catch (IllegalArgumentException | TransactionRequiredException e) {
