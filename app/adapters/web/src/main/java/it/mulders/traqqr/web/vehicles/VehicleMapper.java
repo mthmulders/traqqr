@@ -17,7 +17,7 @@ public interface VehicleMapper {
     VehicleDTO vehicleToDto(final Vehicle vehicle);
 
     @Mapping(target = "ownerId", expression = "java(owner.code())")
-    @Mapping(target = "authorisations", ignore = true)
+    @Mapping(target = "authorisations", expression = "java(java.util.Collections.emptySet())")
     Vehicle vehicleDtoToVehicle(final VehicleDTO dto, final Owner owner);
 
     AuthorisationDTO authorisationToDto(final Authorisation authorisation);
