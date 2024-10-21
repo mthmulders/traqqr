@@ -95,8 +95,6 @@ public class VehicleListView implements Serializable {
             selectedVehicle.setCode(RandomStringUtils.generateRandomIdentifier(8));
             this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-            log.debug("Vehicle saved; code={}", selectedVehicle.getCode());
-
             var msg =
                     new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
