@@ -6,6 +6,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
@@ -94,7 +95,10 @@ public class JpaVehicleRepository implements VehicleRepository {
                         em.merge(vehicleEntity);
                         em.flush();
                         log.debug("Vehicle updated; code={}", vehicle.code());
-                    } catch (IllegalArgumentException | TransactionRequiredException e) {
+                    } catch (PersistenceException e) {
+                        log.error("Database error during vehicle update; code={}", vehicle.code(), e);
+                        throw e;
+                    } catch (Exception e) {
                         log.error("Error updating vehicle; code={}", vehicle.code(), e);
                         throw e;
                     }
