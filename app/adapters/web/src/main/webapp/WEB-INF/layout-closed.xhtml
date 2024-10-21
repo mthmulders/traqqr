@@ -21,13 +21,24 @@
             <!--
                 <p:graphicImage name="images/primefaces-logo.svg" library="showcase" />
             -->
+            <!--
+                View ID: #{view.viewId}
+            -->
             </f:facet>
+
+
+            <p:menuitem
+                    value="Dashboard"
+                    icon="pi pi-home"
+                    url="/secure/"
+                    containerStyleClass="#{view.viewId.contains('/secure/index') ? 'selected-menu-item' : ''}"
+            />
 
             <p:menuitem
                     value="Vehicles"
-                    icon="pi pi-fw pi-car"
+                    icon="pi pi-car"
                     url="/secure/vehicles/"
-                    containerStyleClass="#{view.viewId.contains('vehicles') ? 'selected-menu-item' : ''}"
+                    containerStyleClass="#{view.viewId.contains('/secure/vehicles') ? 'selected-menu-item' : ''}"
             />
 
             <f:facet name="end">
