@@ -101,8 +101,6 @@ public class VehicleListView implements Serializable {
         } else {
             vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
-            log.debug("Vehicle updated; code={}", selectedVehicle.getCode());
-
             var msg = new FacesMessage(
                     SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));
             FacesContext.getCurrentInstance().addMessage(null, msg);
