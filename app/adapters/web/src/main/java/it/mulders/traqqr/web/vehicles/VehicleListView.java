@@ -69,7 +69,8 @@ public class VehicleListView implements Serializable {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void regenerateApiKey() {
+    public void regenerateApiKey(VehicleDTO vehicleDTO) {
+        setSelectedVehicle(vehicleDTO);
         log.debug("Regenerating API key for vehicle; code={}", selectedVehicle.getCode());
         this.vehicleRepository
                 .findByCode(selectedVehicle.getCode())
