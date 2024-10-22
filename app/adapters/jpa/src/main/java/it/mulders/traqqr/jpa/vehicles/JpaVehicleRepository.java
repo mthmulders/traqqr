@@ -84,7 +84,8 @@ public class JpaVehicleRepository implements VehicleRepository {
                                                     authorisation.getInvalidatedAt());
                                         },
                                         () -> {
-                                            var authorisationEntity = mapper.authorisationToAuthorisationEntity(authorisation);
+                                            var authorisationEntity =
+                                                    mapper.authorisationToAuthorisationEntity(authorisation);
                                             authorisationEntity.setVehicle(vehicleEntity);
                                             vehicleEntity.getAuthorisations().add(authorisationEntity);
                                         });
