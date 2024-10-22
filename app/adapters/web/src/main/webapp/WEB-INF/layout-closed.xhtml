@@ -26,7 +26,6 @@
             -->
             </f:facet>
 
-
             <p:menuitem
                     value="Dashboard"
                     icon="pi pi-home"
@@ -39,6 +38,13 @@
                     icon="pi pi-car"
                     url="/secure/vehicles/"
                     containerStyleClass="#{view.viewId.contains('/secure/vehicles') ? 'selected-menu-item' : ''}"
+            />
+
+            <p:menuitem
+                    value="Measurements"
+                    icon="pi pi-gauge"
+                    url="/secure/measurements/"
+                    containerStyleClass="#{view.viewId.contains('/secure/measurements') ? 'selected-menu-item' : ''}"
             />
 
             <f:facet name="end">
