@@ -36,8 +36,7 @@ public class ManageVehicleView implements Serializable {
     private Collection<VehicleDTO> vehicles;
 
     @Inject
-    public ManageVehicleView(
-            final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository, final Owner owner) {
+    public ManageVehicleView(VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
         this.owner = owner;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
