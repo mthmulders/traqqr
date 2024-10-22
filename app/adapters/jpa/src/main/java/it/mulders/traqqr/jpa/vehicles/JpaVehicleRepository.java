@@ -99,9 +99,6 @@ public class JpaVehicleRepository implements VehicleRepository {
                     } catch (PersistenceException e) {
                         log.error("Database error during vehicle update; code={}", vehicle.code(), e);
                         throw e;
-                    } catch (Exception e) {
-                        log.error("Error updating vehicle; code={}", vehicle.code(), e);
-                        throw e;
                     }
                 });
     }

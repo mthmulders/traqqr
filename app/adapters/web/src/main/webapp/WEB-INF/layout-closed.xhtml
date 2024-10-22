@@ -48,6 +48,26 @@
     </h:form>
 
     <ui:insert name="content"/>
+
+    <p:ajaxExceptionHandler type="java.lang.Throwable"
+                            update="exceptionDialog"
+                            onexception="PF('exceptionDialog').show()"/>
+
+    <p:dialog id="exceptionDialog"
+              header="Unexpected error"
+              widgetVar="exceptionDialog"
+              width="90%"
+              height="500px">
+        Type: #{pfExceptionHandler.type}<br />
+        Message: #{pfExceptionHandler.message} <br />
+        <hr />
+        Stacktrace:
+        <pre>
+            <code>
+                <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false"/>
+            </code>
+        </pre>
+    </p:dialog>
 </div>
 
 <hr />
