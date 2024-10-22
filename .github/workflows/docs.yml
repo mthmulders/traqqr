@@ -54,7 +54,7 @@ jobs:
               -f plantuml
           popd
         env:
-          STRUCTURIZR_VERSION: v2024.03.03
+          STRUCTURIZR_VERSION: v2024.09.19
 
       - name: Generate documentation site
         run: mvn -B --no-transfer-progress generate-resources -pl :docs
