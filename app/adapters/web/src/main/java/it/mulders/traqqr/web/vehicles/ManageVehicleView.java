@@ -20,11 +20,10 @@ import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Named("vehicleListView")
+@Named("manageVehicleView")
 @ViewScoped
-public class VehicleListView implements Serializable {
-    // TODO Rename to ManageVehicleView?
-    private static final Logger log = LoggerFactory.getLogger(VehicleListView.class);
+public class ManageVehicleView implements Serializable {
+    private static final Logger log = LoggerFactory.getLogger(ManageVehicleView.class);
 
     // Components
     private final Owner owner;
@@ -37,7 +36,7 @@ public class VehicleListView implements Serializable {
     private Collection<VehicleDTO> vehicles;
 
     @Inject
-    public VehicleListView(
+    public ManageVehicleView(
             final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository, final Owner owner) {
         this.owner = owner;
         this.vehicleMapper = vehicleMapper;

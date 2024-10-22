@@ -15,7 +15,7 @@
 
                 <p:growl id="messages" showDetail="true"/>
 
-                <p:dataTable id="vehicles" var="vehicle" value="${vehicleListView.vehicles}" editable="true" rowKey="#{vehicle.code}" stripedRows="true">
+                <p:dataTable id="vehicles" var="vehicle" value="${manageVehicleView.vehicles}" editable="true" rowKey="#{vehicle.code}" stripedRows="true">
                     <p:column headerText="Code">
                         <h:outputText value="#{vehicle.code}" />
                     </p:column>
@@ -37,7 +37,7 @@
                                          styleClass="ui-button-secondary"
                                          style="margin: 0.5rem"
                                          process="@this">
-                            <f:actionListener binding="#{vehicleListView.regenerateApiKey(vehicle)}" />
+                            <f:actionListener binding="#{manageVehicleView.regenerateApiKey(vehicle)}" />
                         </p:commandButton>
                         <p:commandButton icon="pi pi-pencil"
                                          update=":dialogs:vehicle-details-content"
@@ -45,7 +45,7 @@
                                          styleClass="ui-button-secondary"
                                          style="margin: 0.5rem"
                                          process="@this">
-                            <f:setPropertyActionListener value="#{vehicle}" target="#{vehicleListView.selectedVehicle}" />
+                            <f:setPropertyActionListener value="#{vehicle}" target="#{manageVehicleView.selectedVehicle}" />
                             <p:resetInput target=":dialogs:vehicle-details-content" />
                         </p:commandButton>
                         <p:commandButton icon="pi pi-trash" class="ui-button-warning"
@@ -53,7 +53,7 @@
                                          style="margin: 0.5rem"
                                          styleClass="ui-button-danger"
                                          process="@this">
-                            <f:setPropertyActionListener value="#{vehicle}" target="#{vehicleListView.selectedVehicle}" />
+                            <f:setPropertyActionListener value="#{vehicle}" target="#{manageVehicleView.selectedVehicle}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
@@ -61,7 +61,7 @@
                 <f:facet name="footer">
                     <p:commandButton icon="pi pi-plus"
                                      value="Add"
-                                     action="#{vehicleListView.createVehicle}"
+                                     action="#{manageVehicleView.createVehicle}"
                                      update=":dialogs:vehicle-details-content"
                                      oncomplete="PF('manageVehicleDialog').show()">
                         <p:resetInput target=":dialogs:vehicle-details-content" />
@@ -74,20 +74,20 @@
             <p:dialog header="Generate API key" showEffect="fade" modal="true" widgetVar="generateApiKeyDialog" responsive="true">
                 <p:outputPanel id="generate-api-key-content" class="ui-fluid">
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
-                        <p:row rendered="#{not empty vehicleListView.selectedVehicle.code}">
+                        <p:row rendered="#{not empty manageVehicleView.selectedVehicle.code}">
                             <p:outputLabel for="gak-code">Code</p:outputLabel>
-                            <p:inputText id="gak-code" disabled="true" readonly="true" value="#{vehicleListView.selectedVehicle.code}" styleClass="w-full" />
+                            <p:inputText id="gak-code" disabled="true" readonly="true" value="#{manageVehicleView.selectedVehicle.code}" styleClass="w-full" />
                         </p:row>
                         <p:row>
                             <p:outputLabel for="gak-description">Description</p:outputLabel>
-                            <p:inputText id="gak-description" disabled="true" readonly="true" value="#{vehicleListView.selectedVehicle.description}" styleClass="w-full" required="true" />
+                            <p:inputText id="gak-description" disabled="true" readonly="true" value="#{manageVehicleView.selectedVehicle.description}" styleClass="w-full" required="true" />
                         </p:row>
 
-                        <p:row rendered="#{not empty vehicleListView.generatedAuthorisation.rawKey}">
+                        <p:row rendered="#{not empty manageVehicleView.generatedAuthorisation.rawKey}">
                             <p:outputLabel for="gak-rawKey">Generated API key</p:outputLabel>
-                            <p:outputLabel id="gak-rawKey" value="#{vehicleListView.generatedAuthorisation.rawKey}" styleClass="w-full" />
+                            <p:outputLabel id="gak-rawKey" value="#{manageVehicleView.generatedAuthorisation.rawKey}" styleClass="w-full" />
                         </p:row>
-                        <p:row rendered="#{not empty vehicleListView.generatedAuthorisation.rawKey}">
+                        <p:row rendered="#{not empty manageVehicleView.generatedAuthorisation.rawKey}">
                             <p:column styleClass="ui-grid-col-4" />
                             <p:column styleClass="ui-grid-col-8">
                                 Please note: you will see this API key only once. Make sure to write it down!
@@ -109,20 +109,20 @@
             <p:dialog header="Vehicle Details" showEffect="fade" modal="true" widgetVar="manageVehicleDialog" responsive="true">
                 <p:outputPanel id="vehicle-details-content" class="ui-fluid">
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
-                        <p:row rendered="#{not empty vehicleListView.selectedVehicle.code}">
+                        <p:row rendered="#{not empty manageVehicleView.selectedVehicle.code}">
                             <p:outputLabel for="vd-code">Code</p:outputLabel>
-                            <p:inputText id="vd-code" disabled="true" readonly="true" value="#{vehicleListView.selectedVehicle.code}" styleClass="w-full" />
+                            <p:inputText id="vd-code" disabled="true" readonly="true" value="#{manageVehicleView.selectedVehicle.code}" styleClass="w-full" />
                         </p:row>
                         <p:row>
                             <p:outputLabel for="vd-description">Description</p:outputLabel>
-                            <p:inputText id="vd-description" value="#{vehicleListView.selectedVehicle.description}" styleClass="w-full" required="true" />
+                            <p:inputText id="vd-description" value="#{manageVehicleView.selectedVehicle.description}" styleClass="w-full" required="true" />
                         </p:row>
 
                         <p:row>
                             <p:column styleClass="ui-grid-col-4" />
                             <p:column styleClass="ui-grid-col-8">
                                 <p:commandButton value="Save" icon="pi pi-save"
-                                                 action="#{vehicleListView.saveVehicle()}"
+                                                 action="#{manageVehicleView.saveVehicle()}"
                                                  process="vehicle-details-content @this"
                                                  oncomplete="PF('manageVehicleDialog').hide()"
                                                  style="width: auto; margin-right: 1rem" />
@@ -139,7 +139,7 @@
                              message="Delete vehicle?" header="Confirm" severity="warn">
                 <p:commandButton value="Yes"
                                  icon="pi pi-check"
-                                 actionListener="#{vehicleListView.deleteVehicle}"
+                                 actionListener="#{manageVehicleView.deleteVehicle}"
                                  process="@this"
                                  oncomplete="PF('deleteVehicleDialog').hide()" />
                 <p:commandButton value="No" type="button"
