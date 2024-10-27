@@ -9,8 +9,8 @@ import java.util.stream.IntStream;
 public class RandomStringUtils {
     private static final Random RANDOM = new SecureRandom();
     private static final char[] ALLOWED_CHARS = new char[] {
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-        'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+        'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
 
     /**
@@ -25,11 +25,14 @@ public class RandomStringUtils {
      * @return A {@link String} of {@code length} characters long.
      */
     public static String generateRandomIdentifier(final int length) {
+        if (length > 1024) {
+            throw new IllegalArgumentException("Length must be less than or equal to 1024");
+        }
+
         return IntStream.range(0, length)
                 .map(i -> RANDOM.nextInt(ALLOWED_CHARS.length))
                 .mapToObj(i -> ALLOWED_CHARS[i])
                 .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
-                .toString()
-                .toLowerCase();
+                .toString();
     }
 }
