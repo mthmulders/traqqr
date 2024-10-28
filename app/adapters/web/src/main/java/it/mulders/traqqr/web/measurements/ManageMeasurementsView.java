@@ -27,6 +27,7 @@ public class ManageMeasurementsView implements Serializable {
         this.vehicles = vehicleRepository.findByOwner(owner).stream()
                 .map(vehicleMapper::vehicleToDto)
                 .collect(Collectors.toSet());
+        log.info("Found {} vehicles for owner {}", this.vehicles.size(), owner.code());
     }
 
     public Collection<VehicleDTO> getVehicles() {
@@ -42,6 +43,6 @@ public class ManageMeasurementsView implements Serializable {
     }
 
     public void onVehicleChange() {
-        log.info("Another vehicle selected: {}", selectedVehicle);
+        log.info("Selected vehicle={}", selectedVehicle);
     }
 }
