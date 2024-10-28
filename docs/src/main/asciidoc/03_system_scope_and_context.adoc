@@ -9,6 +9,12 @@ plantuml::img/generated/structurizr-traqqr-context.puml[format=svg]
 ==== User
 Somebody who drives an electric car and wants to have insight in how much electric energy that car(s) use.
 
+==== Adapter
+Electric vehicles do not connect directly to Traqqr.
+Instead, measurements must be retrieved from the vehicle.
+Depending on the vehicle, this can be done using manufacturer-provided API's or hardware devices that connec to the car's board computer.
+These measurements must be converted into a format that Traqqr expects before being uploaded to Traqqr.
+
 === Technical Context
 The technical context of Traqqr is pretty simple.
 Polly runs as a web application and is accessible to users primarily using their web browser:
