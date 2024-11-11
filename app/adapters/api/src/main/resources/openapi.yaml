@@ -1,0 +1,92 @@
+openapi: 3.1.1
+info:
+  title: Traqqr API specification
+  summary: API specification for programmatic access to Traqqr.
+  description: |
+    Traqqr is a web application that allows to keep track of the energy usage of electric cars.
+    This specification describes all programmatic access to Traqqr.
+  version: 1.0.0
+servers:
+  - url: https://localhost:9443/
+    description: Development Traqqr instance
+  - url: https://traqqr.mulders.it/
+    description: Public Traqqr instance
+paths:
+  "/v1/vehicle/{code}/measurement":
+    post:
+      operationId: register-measurement
+      parameters:
+        - description: Code of the vehicle where the measurement was obtained from
+          in: path
+          name: code
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/new-measurement"
+        description: The measurement that was obtained from the vehicle
+        required: true
+      responses:
+        201:
+          description: The measurement is stored successfully.
+        401:
+          description: The provided credential did not validate.
+        404:
+          description: There is no vehicle with the specified code.
+      security:
+        - vehicle-api-key-auth: []
+      summary: Register a measurement for a vehicle.
+components:
+  schemas:
+    new-measurement:
+      description: A collection of measurements taken from the vehicle.
+      properties:
+        "timestamp":
+          description: The date and time at which the measurement was taken.
+          format: date-time
+          type:
+            - string
+        "odometer":
+          description: The value of the odometer when the measurement was taken.
+          type:
+            - integer
+        "battery":
+          description: Information about the main battery of the vehicle.
+          properties:
+            "soc":
+              description: The state-of-charge of the battery when the measurement was taken.
+              type:
+                - integer
+          required:
+            - soc
+          type: object
+        "location":
+          description: The physical location of the vehicle main battery when the measurement was taken.
+          properties:
+            "lat":
+              description: The north–south position of the vehicle.
+              type:
+                - number
+            "long":
+              description: The east–west position of the vehicle.
+              type:
+                - number
+          required:
+            - lat
+            - long
+          type: object
+      required:
+        - battery
+        - location
+        - odometer
+        - timestamp
+      type: "object"
+  securitySchemes:
+    vehicle-api-key-auth:
+      type: apiKey
+      in: header
+      name: X-VEHICLE-API-KEY
+      description: An API key that was generated for a vehicle.
