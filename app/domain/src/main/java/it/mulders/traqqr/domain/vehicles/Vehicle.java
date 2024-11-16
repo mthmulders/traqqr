@@ -17,4 +17,10 @@ public record Vehicle(String code, String description, String ownerId, Collectio
         authorisations.add(authorisation);
         return authorisation;
     }
+
+    public boolean hasAuthorisationWithHashedKey(String hashedKey) {
+        return authorisations != null
+                && authorisations.stream()
+                .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
+    }
 }

@@ -69,12 +69,6 @@ public class VehicleEntity {
         return authorisations;
     }
 
-    public boolean hasAuthorisationWithHashedKey(String hashedKey) {
-        return authorisations != null
-                && authorisations.stream()
-                        .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
-    }
-
     public void setAuthorisations(Collection<AuthorisationEntity> authorisations) {
         this.authorisations = authorisations;
     }

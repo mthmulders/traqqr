@@ -40,4 +40,22 @@ class VehicleTest implements WithAssertions {
         assertThat(currentAuthorisations.size()).isEqualTo(1);
         assertThat(currentAuthorisations).allMatch(Authorisation::isValid);
     }
+
+    @Test
+    void should_be_able_to_verify_authorisation() {
+        var existingAuthorisation = Authorisation.generate();
+        var authorisations = new HashSet<>(Set.of(existingAuthorisation));
+        var vehicle = new Vehicle("000003", "Vehicle 3", FAKE_OWNER_ID, authorisations);
+
+        assertThat(vehicle.hasAuthorisationWithHashedKey(existingAuthorisation.getHashedKey())).isTrue();
+    }
+
+    @Test
+    void should_be_able_to_falsify_authorisation() {
+        var existingAuthorisation = Authorisation.generate();
+        var authorisations = new HashSet<>(Set.of(existingAuthorisation));
+        var vehicle = new Vehicle("000004", "Vehicle 4", FAKE_OWNER_ID, authorisations);
+
+        assertThat(vehicle.hasAuthorisationWithHashedKey("whatever")).isFalse();
+    }
 }
