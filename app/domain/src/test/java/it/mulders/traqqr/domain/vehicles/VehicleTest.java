@@ -40,19 +40,4 @@ class VehicleTest implements WithAssertions {
         assertThat(currentAuthorisations.size()).isEqualTo(1);
         assertThat(currentAuthorisations).allMatch(Authorisation::isValid);
     }
-
-    @Test
-    void should_expose_raw_key_after_creation() {
-        var authorisation = Authorisation.generate();
-        assertThat(authorisation.getRawKey()).isNotNull();
-    }
-
-    @Test
-    void should_allow_verification() {
-        var originalAuthorisation = Authorisation.generate();
-
-        var verification = Authorisation.fromInput(originalAuthorisation.getRawKey());
-
-        assertThat(verification.getHashedKey()).isEqualTo(originalAuthorisation.getHashedKey());
-    }
 }
