@@ -67,11 +67,11 @@ components:
           description: The physical location of the vehicle main battery when the measurement was taken.
           properties:
             "lat":
-              description: The north–south position of the vehicle.
+              description: The north-south position of the vehicle.
               type:
                 - number
             "long":
-              description: The east–west position of the vehicle.
+              description: The east-west position of the vehicle.
               type:
                 - number
           required:
