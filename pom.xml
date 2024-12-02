@@ -243,6 +243,7 @@
           <configuration combine.children="append">
             <excludedClasses>
               <excludedClass>it.mulders.traqqr.**.*Entity</excludedClass>
+              <excludedClass>it.mulders.traqqr.**.*MapperImpl</excludedClass>
             </excludedClasses>
             <outputFormats>
               <format>${pit.format}</format>
