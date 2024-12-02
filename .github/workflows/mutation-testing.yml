@@ -35,6 +35,6 @@ jobs:
         run: mvn -B -ntp \
           -Dpit.format=stryker-dashboard \
           test-compile org.pitest:pitest-maven:mutationCoverage \
-          -pl \!:docs
+          -pl \!docs
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
