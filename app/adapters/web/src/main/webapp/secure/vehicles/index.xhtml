@@ -37,7 +37,8 @@
                                          styleClass="ui-button-secondary"
                                          style="margin: 0.5rem"
                                          process="@this">
-                            <f:actionListener binding="#{manageVehicleView.regenerateApiKey(vehicle)}" />
+                            <f:setPropertyActionListener value="#{vehicle}" target="#{regenerateVehicleAuthorisationView.selectedVehicle}" />
+                            <f:actionListener binding="#{regenerateVehicleAuthorisationView.regenerateApiKey()}" />
                         </p:commandButton>
                         <p:commandButton icon="pi pi-pencil"
                                          update=":dialogs:vehicle-details-content"
@@ -74,20 +75,20 @@
             <p:dialog header="Generate API key" showEffect="fade" modal="true" widgetVar="generateApiKeyDialog" responsive="true">
                 <p:outputPanel id="generate-api-key-content" class="ui-fluid">
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
-                        <p:row rendered="#{not empty manageVehicleView.selectedVehicle.code}">
+                        <p:row rendered="#{not empty regenerateVehicleAuthorisationView.selectedVehicle.code}">
                             <p:outputLabel for="gak-code">Code</p:outputLabel>
-                            <p:inputText id="gak-code" disabled="true" readonly="true" value="#{manageVehicleView.selectedVehicle.code}" styleClass="w-full" />
+                            <p:inputText id="gak-code" disabled="true" readonly="true" value="#{regenerateVehicleAuthorisationView.selectedVehicle.code}" styleClass="w-full" />
                         </p:row>
                         <p:row>
                             <p:outputLabel for="gak-description">Description</p:outputLabel>
-                            <p:inputText id="gak-description" disabled="true" readonly="true" value="#{manageVehicleView.selectedVehicle.description}" styleClass="w-full" required="true" />
+                            <p:inputText id="gak-description" disabled="true" readonly="true" value="#{regenerateVehicleAuthorisationView.selectedVehicle.description}" styleClass="w-full" required="true" />
                         </p:row>
 
-                        <p:row rendered="#{not empty manageVehicleView.generatedAuthorisation.rawKey}">
+                        <p:row rendered="#{not empty regenerateVehicleAuthorisationView.generatedAuthorisation.rawKey}">
                             <p:outputLabel for="gak-rawKey">Generated API key</p:outputLabel>
-                            <p:outputLabel id="gak-rawKey" value="#{manageVehicleView.generatedAuthorisation.rawKey}" styleClass="w-full" />
+                            <p:outputLabel id="gak-rawKey" value="#{regenerateVehicleAuthorisationView.generatedAuthorisation.rawKey}" styleClass="w-full" />
                         </p:row>
-                        <p:row rendered="#{not empty manageVehicleView.generatedAuthorisation.rawKey}">
+                        <p:row rendered="#{not empty regenerateVehicleAuthorisationView.generatedAuthorisation.rawKey}">
                             <p:column styleClass="ui-grid-col-4" />
                             <p:column styleClass="ui-grid-col-8">
                                 Please note: you will see this API key only once. Make sure to write it down!
