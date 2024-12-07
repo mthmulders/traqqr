@@ -46,7 +46,6 @@
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>api</artifactId>
-      <version>${project.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -57,11 +56,14 @@
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>domain</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>mem</artifactId>
     </dependency>
   </dependencies>
 
