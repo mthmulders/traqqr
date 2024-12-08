@@ -1,6 +1,7 @@
 package it.mulders.traqqr.api.measurements;
 
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -38,11 +39,11 @@ public class MeasurementResource {
         }
 
         var apiKey = headers.getHeaderString("X-VEHICLE-API-KEY");
-        if (apiKey == null || !vehicle.get().hasAuthorisationWithHashedKey(apiKey)) {
+        if (apiKey == null || !vehicle.get().hasAuthorisationWithKey(apiKey)) {
             return Response.status(Status.UNAUTHORIZED).build();
         }
 
-        var measurement = measurementMapper.toMeasurement(measurementDto);
+        var measurement = measurementMapper.toMeasurement(vehicle.get(), measurementDto);
         measurementRepository.save(measurement);
 
         return Response.status(Status.CREATED).build();

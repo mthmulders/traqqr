@@ -1,11 +1,11 @@
 package it.mulders.traqqr.api.measurements;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
+import it.mulders.traqqr.domain.vehicles.Vehicle;
+
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "jakarta")
 public interface MeasurementMapper {
-    @Mapping(target = "vehicle", ignore = true)
-    Measurement toMeasurement(MeasurementDto measurementDto);
+    Measurement toMeasurement(Vehicle vehicle, MeasurementDto measurementDto);
 }
