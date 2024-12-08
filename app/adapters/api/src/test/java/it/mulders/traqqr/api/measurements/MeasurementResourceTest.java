@@ -1,5 +1,6 @@
 package it.mulders.traqqr.api.measurements;
 
+import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
@@ -12,6 +13,7 @@ import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 
 import java.time.OffsetDateTime;
 import java.util.Map;
+import java.util.Set;
 
 public class MeasurementResourceTest {
     private MeasurementResource resource;
@@ -29,7 +31,7 @@ public class MeasurementResourceTest {
 
     @Test
     public void testRegisterMeasurement_Success() {
-        var vehicle = new Vehicle("code123", "description", "ownerId", null);
+        var vehicle = new Vehicle("code123", "description", "ownerId", Set.of(Authorisation.fromInput("hashedKey123")));
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto();
