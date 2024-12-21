@@ -18,7 +18,9 @@ public record Vehicle(String code, String description, String ownerId, Collectio
         return authorisation;
     }
 
-    public boolean hasAuthorisationWithHashedKey(String hashedKey) {
+    public boolean hasAuthorisationWithKey(String rawKey) {
+        var hashedKey = Authorisation.fromInput(rawKey).getHashedKey();
+
         return authorisations != null
                 && authorisations.stream()
                 .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
