@@ -1,5 +1,6 @@
 package it.mulders.traqqr.api.measurements;
 
+import it.mulders.traqqr.api.measurements.dto.MeasurementDto;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;

@@ -1,5 +1,6 @@
 package it.mulders.traqqr.api.measurements;
 
+import it.mulders.traqqr.api.measurements.dto.MeasurementDto;
 import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
@@ -34,16 +35,12 @@ public class MeasurementResourceTest {
         var vehicle = new Vehicle("code123", "description", "ownerId", Set.of(Authorisation.fromInput("hashedKey123")));
         vehicleRepository.save(vehicle);
 
-        var measurementDto = new MeasurementDto();
-        measurementDto.setTimestamp(OffsetDateTime.now());
-        measurementDto.setOdometer(1000);
-        var batteryDto = new MeasurementDto.BatteryDto();
-        batteryDto.setSoc((byte) 80);
-        measurementDto.setBattery(batteryDto);
-        var locationDto = new MeasurementDto.LocationDto();
-        locationDto.setLat(52.0);
-        locationDto.setLon(4.0);
-        measurementDto.setLocation(locationDto);
+        var measurementDto = new MeasurementDto(
+                OffsetDateTime.now(),
+                1000,
+                new MeasurementDto.BatteryDto((byte) 80),
+                new MeasurementDto.LocationDto(52.0, 4.0)
+        );
 
         var headers = new ResteasyHttpHeaders(
             new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123"))
@@ -56,16 +53,12 @@ public class MeasurementResourceTest {
 
     @Test
     public void testRegisterMeasurement_VehicleNotFound() {
-        var measurementDto = new MeasurementDto();
-        measurementDto.setTimestamp(OffsetDateTime.now());
-        measurementDto.setOdometer(1000);
-        var batteryDto = new MeasurementDto.BatteryDto();
-        batteryDto.setSoc((byte) 80);
-        measurementDto.setBattery(batteryDto);
-        var locationDto = new MeasurementDto.LocationDto();
-        locationDto.setLat(52.0);
-        locationDto.setLon(4.0);
-        measurementDto.setLocation(locationDto);
+        var measurementDto = new MeasurementDto(
+                OffsetDateTime.now(),
+                1000,
+                new MeasurementDto.BatteryDto((byte) 80),
+                new MeasurementDto.LocationDto(52.0, 4.0)
+        );
 
         var headers = new ResteasyHttpHeaders(
             new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123"))
@@ -80,16 +73,12 @@ public class MeasurementResourceTest {
         var vehicle = new Vehicle("code123", "description", "ownerId", null);
         vehicleRepository.save(vehicle);
 
-        var measurementDto = new MeasurementDto();
-        measurementDto.setTimestamp(OffsetDateTime.now());
-        measurementDto.setOdometer(1000);
-        var batteryDto = new MeasurementDto.BatteryDto();
-        batteryDto.setSoc((byte) 80);
-        measurementDto.setBattery(batteryDto);
-        var locationDto = new MeasurementDto.LocationDto();
-        locationDto.setLat(52.0);
-        locationDto.setLon(4.0);
-        measurementDto.setLocation(locationDto);
+        var measurementDto = new MeasurementDto(
+                OffsetDateTime.now(),
+                1000,
+                new MeasurementDto.BatteryDto((byte) 80),
+                new MeasurementDto.LocationDto(52.0, 4.0)
+        );
 
         var headers = new ResteasyHttpHeaders(
             new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey"))
