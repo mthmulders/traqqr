@@ -2,9 +2,8 @@ package it.mulders.traqqr.api.measurements;
 
 import it.mulders.traqqr.api.measurements.dto.MeasurementDto;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
-import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -16,22 +15,27 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@RequestScoped
+@ApplicationScoped
 @Path("/v1/vehicle/{code}/measurement")
-@Consumes("application/json")
-@Produces("application/json")
 public class MeasurementResource {
-    private final MeasurementRepository measurementRepository;
-    private final VehicleRepository vehicleRepository;
-    private final MeasurementMapper measurementMapper;
-
     @Inject
-    public MeasurementResource(MeasurementRepository measurementRepository, VehicleRepository vehicleRepository, MeasurementMapper measurementMapper) {
+    private MeasurementRepository measurementRepository;
+    @Inject
+    private VehicleRepository vehicleRepository;
+    @Inject
+    private MeasurementMapper measurementMapper;
+
+    public MeasurementResource() {
+    }
+
+    protected MeasurementResource(MeasurementRepository measurementRepository, VehicleRepository vehicleRepository, MeasurementMapper measurementMapper) {
         this.measurementRepository = measurementRepository;
         this.vehicleRepository = vehicleRepository;
         this.measurementMapper = measurementMapper;
     }
 
+    @Consumes("application/json")
+    @Produces("application/json")
     @POST
     public Response registerMeasurement(@PathParam("code") String code, MeasurementDto measurementDto, @Context HttpHeaders headers) {
         var vehicle = vehicleRepository.findByCode(code);
