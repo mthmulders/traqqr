@@ -35,33 +35,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>api</artifactId>
-      <version>${project.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>web</artifactId>
       <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>it.mulders.traqqr</groupId>
-      <artifactId>domain</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>it.mulders.traqqr</groupId>
-      <artifactId>jpa</artifactId>
     </dependency>
   </dependencies>
 
