@@ -8,6 +8,9 @@
 
         <class>it.mulders.traqqr.jpa.vehicles.VehicleEntity</class>
         <class>it.mulders.traqqr.jpa.vehicles.AuthorisationEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.MeasurementEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.BatteryEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.GpsLocationEntity</class>
 
         <properties>
             <property name="eclipselink.logging.level" value="FINER" />
