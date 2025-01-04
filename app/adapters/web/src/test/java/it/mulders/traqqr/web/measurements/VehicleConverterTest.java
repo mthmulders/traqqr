@@ -5,16 +5,15 @@ import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;
-import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class VehicleConverterTest implements WithAssertions {
@@ -58,16 +57,13 @@ class VehicleConverterTest implements WithAssertions {
         }
 
         @Override
-        public void save(Vehicle vehicle) {
-        }
+        public void save(Vehicle vehicle) {}
 
         @Override
-        public void update(Vehicle vehicle) {
-        }
+        public void update(Vehicle vehicle) {}
 
         @Override
-        public void removeVehicle(Vehicle vehicle) {
-        }
+        public void removeVehicle(Vehicle vehicle) {}
     };
     private final VehicleMapper mapper = new VehicleMapperImpl();
 
@@ -97,6 +93,7 @@ class VehicleConverterTest implements WithAssertions {
 
     @Test
     void should_use_code_as_identifier() {
-        assertThat(converter.getAsString(null, null, mapper.vehicleToDto(vehicle1))).isEqualTo("code1");
+        assertThat(converter.getAsString(null, null, mapper.vehicleToDto(vehicle1)))
+                .isEqualTo("code1");
     }
 }

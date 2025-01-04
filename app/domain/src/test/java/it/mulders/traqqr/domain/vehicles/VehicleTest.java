@@ -47,7 +47,8 @@ class VehicleTest implements WithAssertions {
         var authorisations = new HashSet<>(Set.of(existingAuthorisation));
         var vehicle = new Vehicle("000003", "Vehicle 3", FAKE_OWNER_ID, authorisations);
 
-        assertThat(vehicle.hasAuthorisationWithKey(existingAuthorisation.getRawKey())).isTrue();
+        assertThat(vehicle.hasAuthorisationWithKey(existingAuthorisation.getRawKey()))
+                .isTrue();
     }
 
     @Test

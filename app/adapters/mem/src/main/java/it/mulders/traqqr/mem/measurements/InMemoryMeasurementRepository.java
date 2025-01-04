@@ -4,10 +4,10 @@ import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import jakarta.enterprise.context.ApplicationScoped;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 @ApplicationScoped

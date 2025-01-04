@@ -20,8 +20,8 @@ class RandomStringUtilsTest implements WithAssertions {
 
     @Example
     void does_not_generate_string_longer_than_1024_chars(@ForAll @IntRange(min = 1025) final int length) {
-        assertThatThrownBy(
-                () -> RandomStringUtils.generateRandomIdentifier(length)
-        ).message().contains("1024");
+        assertThatThrownBy(() -> RandomStringUtils.generateRandomIdentifier(length))
+                .message()
+                .contains("1024");
     }
 }

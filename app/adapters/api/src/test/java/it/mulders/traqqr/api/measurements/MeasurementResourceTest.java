@@ -7,14 +7,13 @@ import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.Response;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.assertj.core.api.Assertions;
-import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
-
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Set;
+import org.assertj.core.api.Assertions;
+import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class MeasurementResourceTest {
     private MeasurementResource resource;
@@ -39,12 +38,9 @@ public class MeasurementResourceTest {
                 OffsetDateTime.now(),
                 1000,
                 new MeasurementDto.BatteryDto((byte) 80),
-                new MeasurementDto.LocationDto(52.0, 4.0)
-        );
+                new MeasurementDto.LocationDto(52.0, 4.0));
 
-        var headers = new ResteasyHttpHeaders(
-            new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123"))
-        );
+        var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
         Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
@@ -57,12 +53,9 @@ public class MeasurementResourceTest {
                 OffsetDateTime.now(),
                 1000,
                 new MeasurementDto.BatteryDto((byte) 80),
-                new MeasurementDto.LocationDto(52.0, 4.0)
-        );
+                new MeasurementDto.LocationDto(52.0, 4.0));
 
-        var headers = new ResteasyHttpHeaders(
-            new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123"))
-        );
+        var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
         Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
@@ -77,12 +70,9 @@ public class MeasurementResourceTest {
                 OffsetDateTime.now(),
                 1000,
                 new MeasurementDto.BatteryDto((byte) 80),
-                new MeasurementDto.LocationDto(52.0, 4.0)
-        );
+                new MeasurementDto.LocationDto(52.0, 4.0));
 
-        var headers = new ResteasyHttpHeaders(
-            new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey"))
-        );
+        var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
         Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());

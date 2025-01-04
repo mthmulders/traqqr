@@ -22,5 +22,4 @@ class AuthorisationTest implements WithAssertions {
 
         assertThat(verification.getHashedKey()).isEqualTo(originalAuthorisation.getHashedKey());
     }
-
 }

@@ -23,6 +23,6 @@ public record Vehicle(String code, String description, String ownerId, Collectio
 
         return authorisations != null
                 && authorisations.stream()
-                .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
+                        .anyMatch(existing -> existing.getHashedKey().equals(hashedKey));
     }
 }

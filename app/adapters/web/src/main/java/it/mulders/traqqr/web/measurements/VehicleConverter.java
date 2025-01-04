@@ -1,5 +1,7 @@
 package it.mulders.traqqr.web.measurements;
 
+import static java.util.stream.Collectors.toMap;
+
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
@@ -11,12 +13,9 @@ import jakarta.faces.convert.FacesConverter;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.function.Function;
-
-import static java.util.stream.Collectors.toMap;
 
 @FacesConverter(value = "vehicleConverter", managed = true)
 @Named

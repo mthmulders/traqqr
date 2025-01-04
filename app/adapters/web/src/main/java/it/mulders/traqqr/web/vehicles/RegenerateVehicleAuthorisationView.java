@@ -7,11 +7,10 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
+import java.io.Serializable;
 import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 @Named("regenerateVehicleAuthorisationView")
 @ViewScoped
@@ -27,8 +26,8 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
     private VehicleDTO selectedVehicle;
 
     @Inject
-    public RegenerateVehicleAuthorisationView(final VehicleMapper vehicleMapper,
-                                              final VehicleRepository vehicleRepository) {
+    public RegenerateVehicleAuthorisationView(
+            final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository) {
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
     }

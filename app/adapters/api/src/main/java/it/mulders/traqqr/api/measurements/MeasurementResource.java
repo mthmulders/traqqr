@@ -20,15 +20,19 @@ import jakarta.ws.rs.core.Response.Status;
 public class MeasurementResource {
     @Inject
     private MeasurementRepository measurementRepository;
+
     @Inject
     private VehicleRepository vehicleRepository;
+
     @Inject
     private MeasurementMapper measurementMapper;
 
-    public MeasurementResource() {
-    }
+    public MeasurementResource() {}
 
-    protected MeasurementResource(MeasurementRepository measurementRepository, VehicleRepository vehicleRepository, MeasurementMapper measurementMapper) {
+    protected MeasurementResource(
+            MeasurementRepository measurementRepository,
+            VehicleRepository vehicleRepository,
+            MeasurementMapper measurementMapper) {
         this.measurementRepository = measurementRepository;
         this.vehicleRepository = vehicleRepository;
         this.measurementMapper = measurementMapper;
@@ -37,7 +41,8 @@ public class MeasurementResource {
     @Consumes("application/json")
     @Produces("application/json")
     @POST
-    public Response registerMeasurement(@PathParam("code") String code, MeasurementDto measurementDto, @Context HttpHeaders headers) {
+    public Response registerMeasurement(
+            @PathParam("code") String code, MeasurementDto measurementDto, @Context HttpHeaders headers) {
         var vehicle = vehicleRepository.findByCode(code);
         if (vehicle.isEmpty()) {
             return Response.status(Status.NOT_FOUND).build();
