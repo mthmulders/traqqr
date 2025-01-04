@@ -5,6 +5,7 @@ import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -41,6 +42,7 @@ public class MeasurementResource {
     @Consumes("application/json")
     @Produces("application/json")
     @POST
+    @Transactional
     public Response registerMeasurement(
             @PathParam("code") String code, MeasurementDto measurementDto, @Context HttpHeaders headers) {
         var vehicle = vehicleRepository.findByCode(code);
