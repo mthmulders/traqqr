@@ -9,20 +9,31 @@
 
     <ui:define name="content">
         <h:form id="form">
-            <p:growl id="messages" showDetail="true"/>
+            <p:card>
+                <f:facet name="title">Measurements</f:facet>
 
-            <p:outputLabel for="vehicle" value="Vehicle: " />
-            <p:selectOneMenu id="vehicle" value="#{manageMeasurementsView.selectedVehicle}" converter="vehicleConverter">
-                <p:ajax listener="#{manageMeasurementsView.onVehicleChange}" />
-                <f:selectItem itemLabel="Select Vehicle"
-                              itemValue="#{null}"
-                              noSelectionOption="true"/>
-                <f:selectItems value="#{manageMeasurementsView.vehicles}"
-                               var="item"
-                               itemLabel="#{item.description}"/>
-            </p:selectOneMenu>
+                <p:growl id="messages" showDetail="true"/>
 
-            <p:divider />
+                <p:outputLabel for="vehicle" value="Vehicle: " />
+                <p:selectOneMenu id="vehicle" value="#{manageMeasurementsView.selectedVehicle}"
+                                 converter="vehicleConverter">
+                    <p:ajax event="change" update="@form" listener="#{manageMeasurementsView.onVehicleChange}" />
+                    <f:selectItem itemLabel="Select Vehicle"
+                                  itemValue="#{null}"
+                                  noSelectionOption="true"/>
+                    <f:selectItems value="#{manageMeasurementsView.vehicles}"
+                                   var="item"
+                                   itemLabel="#{item.description}"/>
+                </p:selectOneMenu>
+
+                <p:divider />
+
+                <h:outputText id="measurements"
+                              rendered="#{not empty manageMeasurementsView.measurementsForSelectedVehicle}">
+                    There are #{manageMeasurementsView.measurementsForSelectedVehicle.size()} measurement(s)
+                    for #{manageMeasurementsView.selectedVehicle.description}.
+                </h:outputText>
+            </p:card>
         </h:form>
     </ui:define>
 </ui:composition>
