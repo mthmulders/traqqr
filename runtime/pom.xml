@@ -140,7 +140,7 @@
             </webModule>
           </modules>
           <packagingExcludes>**/postgresql*.jar,**/*checker-qual*.jar</packagingExcludes>
-          <skinnyModules>true</skinnyModules>
+          <skinnyWars>true</skinnyWars>
         </configuration>
       </plugin>
 
@@ -157,6 +157,7 @@
               <location>jdbc</location>
             </dependencyGroup>
           </copyDependencies>
+          <looseApplication>false</looseApplication>
           <mergeServerEnv>true</mergeServerEnv>
           <runtimeArtifact>
             <groupId>io.openliberty</groupId>
