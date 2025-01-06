@@ -126,7 +126,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-ear-plugin</artifactId>
         <configuration>
-          <defaultLibBundleDir>lib/</defaultLibBundleDir>
+          <defaultLibBundleDir>lib</defaultLibBundleDir>
           <modules>
             <webModule>
               <groupId>it.mulders.traqqr</groupId>
