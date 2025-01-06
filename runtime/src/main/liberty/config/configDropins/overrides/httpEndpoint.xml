@@ -18,7 +18,12 @@
 
     <!-- This requires a p12 keystore with a x509 certificate for localhost.
          You can create such a certificate with a tool like mkcert, and import
-         it into a keystore using Portecle. -->
+         it into a keystore:
+
+         mkcert localhost
+         cat localhost.pem localhost-key.pem > combined.pem
+         openssl pkcs12 -export -inkey localhost-key.pem -in combined.pem -name localhost -out localhost.p12
+         -->
     <keyStore id="https-keystore"
               location="localhost.p12"
               password="changeit"
