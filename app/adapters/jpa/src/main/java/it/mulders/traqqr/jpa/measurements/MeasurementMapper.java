@@ -23,6 +23,7 @@ public interface MeasurementMapper {
 
     @Mapping(target = "vehicle", ignore = true)
     @Mapping(source = "gpsLocation", target = "location")
+    @Mapping(source = "registeredAt", target = "timestamp")
     Measurement measurementEntityToMeasurement(MeasurementEntity measurement);
 
     Measurement.Battery batteryEntityToBattery(BatteryEntity batteryEntity);
