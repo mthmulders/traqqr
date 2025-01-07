@@ -71,13 +71,13 @@ components:
               description: The north-south position of the vehicle.
               type:
                 - number
-            "long":
+            "lon":
               description: The east-west position of the vehicle.
               type:
                 - number
           required:
             - lat
-            - long
+            - lon
           type: object
       required:
         - battery
