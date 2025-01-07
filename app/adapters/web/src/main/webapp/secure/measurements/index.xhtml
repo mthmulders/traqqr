@@ -28,11 +28,23 @@
 
                 <p:divider />
 
-                <h:outputText id="measurements"
-                              rendered="#{not empty manageMeasurementsView.measurementsForSelectedVehicle}">
-                    There are #{manageMeasurementsView.measurementsForSelectedVehicle.size()} measurement(s)
-                    for #{manageMeasurementsView.selectedVehicle.description}.
-                </h:outputText>
+                <p:dataTable id="measurements"
+                             var="measurement" value="${manageMeasurementsView.measurementsForSelectedVehicle}"
+                             editable="false" stripedRows="true">
+                    <p:column headerText="Timestamp">
+                        <h:outputText value="#{measurement.timestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+                    </p:column>
+                    <p:column headerText="Odometer">
+                        <h:outputText value="#{measurement.odometer()}" />
+                    </p:column>
+                    <p:column headerText="Battery SoC">
+                        <h:outputText value="#{measurement.battery().soc()}" />%
+                    </p:column>
+                    <p:column headerText="GPS Location">
+                        <h:outputText value="#{measurement.location().lat()}" />,
+                        <h:outputText value="#{measurement.location().lon()}" />
+                    </p:column>
+                </p:dataTable>
             </p:card>
         </h:form>
     </ui:define>
