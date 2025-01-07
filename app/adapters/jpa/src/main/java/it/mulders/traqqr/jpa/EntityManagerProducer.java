@@ -1,6 +1,7 @@
 package it.mulders.traqqr.jpa;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,5 +15,9 @@ public class EntityManagerProducer {
     @Produces
     public EntityManager createEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public void destroy(@Disposes EntityManager em) {
+        em.close();
     }
 }
