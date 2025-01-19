@@ -1,6 +1,5 @@
 package it.mulders.traqqr.web.faces;
 
-import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -21,5 +20,10 @@ class MeasurementTimestampConverterTest implements WithAssertions {
     @Test
     void should_format_measurement_timestamp() {
         assertThat(converter.getAsString(null, null, INPUT)).isEqualTo("07 Jan 2025, 22:14.13");
+    }
+
+    @Test
+    void should_accept_null_input() {
+        assertThat(converter.getAsString(null, null, null)).isEqualTo("");
     }
 }

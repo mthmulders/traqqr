@@ -30,6 +30,10 @@ public class MeasurementTimestampConverter implements Converter<OffsetDateTime> 
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, OffsetDateTime value) {
+        if (value == null) {
+            return "";
+        }
+
         return value.format(FORMAT);
     }
 }
