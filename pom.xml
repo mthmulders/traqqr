@@ -72,6 +72,11 @@
       <!-- project dependencies -->
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
+        <artifactId>config</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
         <artifactId>domain</artifactId>
         <version>${project.version}</version>
       </dependency>

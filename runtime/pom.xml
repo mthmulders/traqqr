@@ -49,6 +49,10 @@
     <!-- shared application modules  -->
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
+      <artifactId>config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
       <artifactId>domain</artifactId>
     </dependency>
     <dependency>

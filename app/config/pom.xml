@@ -4,21 +4,19 @@
 
   <parent>
     <groupId>it.mulders.traqqr</groupId>
-    <artifactId>traqqr</artifactId>
+    <artifactId>app</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>app</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>config</artifactId>
+  <packaging>jar</packaging>
 
-  <name>Traqqr :: Application</name>
+  <name>Traqqr :: Core :: Configuration</name>
 
-  <modules>
-    <module>config</module>
-    <module>domain</module>
-    <module>adapters/api</module>
-    <module>adapters/jpa</module>
-    <module>adapters/mem</module>
-    <module>adapters/web</module>
-  </modules>
+  <dependencies>
+  </dependencies>
+
+  <build>
+  </build>
 </project>
