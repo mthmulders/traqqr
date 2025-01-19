@@ -1,11 +1,9 @@
 package it.mulders.traqqr.domain.shared;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-@ApplicationScoped
 public class RandomStringUtils {
     private static final Random RANDOM = new SecureRandom();
     private static final char[] ALLOWED_CHARS = new char[] {
