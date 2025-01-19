@@ -7,4 +7,6 @@ public interface MeasurementRepository {
     void save(Measurement measurement);
 
     Collection<Measurement> findByVehicle(Vehicle vehicle);
+
+    void removeMeasurement(final Measurement measurement);
 }

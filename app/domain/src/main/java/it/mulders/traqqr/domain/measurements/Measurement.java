@@ -2,8 +2,10 @@ package it.mulders.traqqr.domain.measurements;
 
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
-public record Measurement(OffsetDateTime timestamp, int odometer, Battery battery, Location location, Vehicle vehicle) {
+public record Measurement(
+        UUID id, OffsetDateTime timestamp, int odometer, Battery battery, Location location, Vehicle vehicle) {
 
     public record Battery(byte soc) {}
 

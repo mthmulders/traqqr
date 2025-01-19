@@ -17,7 +17,7 @@
                 <p:outputLabel for="vehicle" value="Vehicle: " />
                 <p:selectOneMenu id="vehicle" value="#{manageMeasurementsView.selectedVehicle}"
                                  converter="vehicleConverter">
-                    <p:ajax event="change" update="@form" listener="#{manageMeasurementsView.onVehicleChange}" />
+                    <p:ajax event="change" update="@form" listener="#{manageMeasurementsView.populateMeasurementsForSelectedVehicle}" />
                     <f:selectItem itemLabel="Select Vehicle"
                                   itemValue="#{null}"
                                   noSelectionOption="true"/>
@@ -28,7 +28,7 @@
 
                 <p:divider />
 
-                <p:dataTable id="measurements"
+                <p:dataTable id="measurements" rowKey="#{measurement.id}"
                              var="measurement" value="${manageMeasurementsView.measurementsForSelectedVehicle}"
                              editable="false" stripedRows="true">
                     <p:column headerText="Timestamp">
@@ -44,8 +44,32 @@
                         <h:outputText value="#{measurement.location().lat()}" />,
                         <h:outputText value="#{measurement.location().lon()}" />
                     </p:column>
+                    <p:column style="width:15rem" ariaHeaderText="Actions">
+                        <p:commandButton icon="pi pi-trash" class="ui-button-warning"
+                                         oncomplete="PF('deleteMeasurementDialog').show()"
+                                         style="margin: 0.5rem"
+                                         styleClass="ui-button-danger"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{measurement}" target="#{manageMeasurementsView.selectedMeasurement}" />
+                        </p:commandButton>
+                    </p:column>
                 </p:dataTable>
             </p:card>
+        </h:form>
+
+        <h:form id="dialogs">
+            <p:confirmDialog widgetVar="deleteMeasurementDialog" showEffect="fade" width="300"
+                             message="Delete measurement?" header="Confirm" severity="warn">
+                <p:commandButton value="Yes"
+                                 icon="pi pi-check"
+                                 actionListener="#{manageMeasurementsView.deleteSelectedMeasurement}"
+                                 process="@this"
+                                 oncomplete="PF('deleteMeasurementDialog').hide()" />
+                <p:commandButton value="No" type="button"
+                                 styleClass="ui-button-secondary"
+                                 icon="pi pi-times"
+                                 onclick="PF('deleteMeasurementDialog').hide()" />
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 </ui:composition>

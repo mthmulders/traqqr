@@ -3,11 +3,15 @@ package it.mulders.traqqr.jpa.measurements;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
+import it.mulders.traqqr.jpa.vehicles.VehicleMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants.ComponentModel;
 
-@Mapper(componentModel = ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
+@Mapper(
+        componentModel = ComponentModel.JAKARTA_CDI,
+        nullValueIterableMappingStrategy = RETURN_DEFAULT,
+        uses = {VehicleMapper.class})
 public interface MeasurementMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicle", ignore = true)
@@ -21,7 +25,6 @@ public interface MeasurementMapper {
     @Mapping(source = "lon", target = "longitude")
     GpsLocationEntity locationToGpsLocationEntity(final Measurement.Location location);
 
-    @Mapping(target = "vehicle", ignore = true)
     @Mapping(source = "gpsLocation", target = "location")
     @Mapping(source = "registeredAt", target = "timestamp")
     Measurement measurementEntityToMeasurement(MeasurementEntity measurement);
