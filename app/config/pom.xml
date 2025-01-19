@@ -14,9 +14,7 @@
 
   <name>Traqqr :: Core :: Configuration</name>
 
-  <dependencies>
-  </dependencies>
+  <dependencies></dependencies>
 
-  <build>
-  </build>
+  <build></build>
 </project>
