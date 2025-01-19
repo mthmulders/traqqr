@@ -1,25 +1,26 @@
 package it.mulders.traqqr.jpa.measurements;
 
 import jakarta.persistence.Embeddable;
+import java.math.BigDecimal;
 
 @Embeddable
 public class GpsLocationEntity {
-    double latitude;
-    double longitude;
+    BigDecimal latitude;
+    BigDecimal longitude;
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 }
