@@ -6,9 +6,12 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,6 +32,7 @@ public class ManageMeasurementsView implements Serializable {
 
     private VehicleDTO selectedVehicle;
     private Collection<Measurement> measurementsForSelectedVehicle = Collections.emptyList();
+    private Measurement selectedMeasurement;
 
     @Inject
     public ManageMeasurementsView(
@@ -60,12 +64,10 @@ public class ManageMeasurementsView implements Serializable {
     }
 
     public void setSelectedVehicle(VehicleDTO selectedVehicle) {
-        log.debug("setSelectedVehicle");
         this.selectedVehicle = selectedVehicle;
     }
 
-    public void onVehicleChange() {
-        log.debug("onVehicleChange");
+    public void populateMeasurementsForSelectedVehicle() {
         if (selectedVehicle != null) {
             log.info("Finding measurements; vehicle={}", this.selectedVehicle.getCode());
             this.measurementsForSelectedVehicle =
@@ -79,5 +81,26 @@ public class ManageMeasurementsView implements Serializable {
         }
 
         PrimeFaces.current().ajax().update("form:measurements");
+    }
+
+    public void setSelectedMeasurement(Measurement measurement) {
+        this.selectedMeasurement = measurement;
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void deleteSelectedMeasurement() {
+        log.info(
+                "Removing measurement; vehicle={}, id={}",
+                selectedMeasurement.vehicle().code(),
+                selectedMeasurement.id());
+
+        measurementRepository.removeMeasurement(selectedMeasurement);
+
+        var msg = new FacesMessage("1 measurement removed");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        PrimeFaces.current().ajax().update("form:messages", "form:measurements");
+
+        this.selectedMeasurement = null;
+        populateMeasurementsForSelectedVehicle();
     }
 }

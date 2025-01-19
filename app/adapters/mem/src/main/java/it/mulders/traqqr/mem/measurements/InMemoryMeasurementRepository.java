@@ -25,4 +25,9 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
                 .filter(measurement -> measurement.vehicle().equals(vehicle))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void removeMeasurement(Measurement measurement) {
+        measurements.remove(measurement);
+    }
 }

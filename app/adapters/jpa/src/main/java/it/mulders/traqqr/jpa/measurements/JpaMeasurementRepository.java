@@ -8,8 +8,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,5 +65,29 @@ public class JpaMeasurementRepository implements MeasurementRepository {
                 .getResultStream()
                 .map(mapper::measurementEntityToMeasurement)
                 .toList();
+    }
+
+    private Optional<MeasurementEntity> findEntityById(UUID id) {
+        return this.em
+                .createQuery("select m from MeasurementEntity m where m.id = :id", MeasurementEntity.class)
+                .setParameter("id", id)
+                .getResultStream()
+                .findFirst();
+    }
+
+    @Override
+    @Transactional(Transactional.TxType.MANDATORY)
+    public void removeMeasurement(Measurement measurement) {
+        findEntityById(measurement.id()).ifPresent(entity -> {
+            try {
+                em.joinTransaction();
+                em.remove(entity);
+                em.flush();
+                log.debug("Measurement removed; id={}", measurement.id());
+            } catch (IllegalArgumentException | TransactionRequiredException e) {
+                log.error("Error removing measurement; id={}", measurement.id(), e);
+                throw e;
+            }
+        });
     }
 }
