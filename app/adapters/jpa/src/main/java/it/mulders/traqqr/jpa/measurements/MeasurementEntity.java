@@ -29,6 +29,9 @@ public class MeasurementEntity {
     @Column(name = "registered_at")
     private OffsetDateTime registeredAt;
 
+    @Column(name = "measured_at")
+    private OffsetDateTime measuredAt;
+
     @Column(name = "odometer")
     private Integer odometer;
 
@@ -65,6 +68,14 @@ public class MeasurementEntity {
 
     public void setRegisteredAt(OffsetDateTime registeredAt) {
         this.registeredAt = registeredAt;
+    }
+
+    public OffsetDateTime getMeasuredAt() {
+        return measuredAt;
+    }
+
+    public void setMeasuredAt(OffsetDateTime measuredAt) {
+        this.measuredAt = measuredAt;
     }
 
     public Integer getOdometer() {

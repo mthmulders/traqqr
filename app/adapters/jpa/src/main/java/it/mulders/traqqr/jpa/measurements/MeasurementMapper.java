@@ -15,7 +15,8 @@ import org.mapstruct.MappingConstants.ComponentModel;
 public interface MeasurementMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicle", ignore = true)
-    @Mapping(source = "timestamp", target = "registeredAt")
+    @Mapping(source = "registrationTimestamp", target = "registeredAt")
+    @Mapping(source = "measurementTimestamp", target = "measuredAt")
     @Mapping(source = "location", target = "gpsLocation")
     MeasurementEntity measurementToMeasurementEntity(final Measurement measurement);
 
@@ -26,7 +27,8 @@ public interface MeasurementMapper {
     GpsLocationEntity locationToGpsLocationEntity(final Measurement.Location location);
 
     @Mapping(source = "gpsLocation", target = "location")
-    @Mapping(source = "registeredAt", target = "timestamp")
+    @Mapping(source = "registeredAt", target = "registrationTimestamp")
+    @Mapping(source = "measuredAt", target = "measurementTimestamp")
     Measurement measurementEntityToMeasurement(MeasurementEntity measurement);
 
     Measurement.Battery batteryEntityToBattery(BatteryEntity batteryEntity);

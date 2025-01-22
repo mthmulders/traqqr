@@ -32,8 +32,11 @@
                 <p:dataTable id="measurements" rowKey="#{measurement.id}"
                              var="measurement" value="${manageMeasurementsView.measurementsForSelectedVehicle}"
                              editable="false" stripedRows="true">
-                    <p:column headerText="Timestamp">
-                        <h:outputText value="#{measurement.timestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+                    <p:column headerText="Registered at">
+                        <h:outputText value="#{measurement.registrationTimestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+                    </p:column>
+                    <p:column headerText="Measured at">
+                        <h:outputText value="#{measurement.measurementTimestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
                     </p:column>
                     <p:column headerText="Odometer">
                         <h:outputText value="#{measurement.odometer()}" />

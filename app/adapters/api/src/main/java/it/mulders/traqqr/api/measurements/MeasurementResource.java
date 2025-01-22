@@ -15,6 +15,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.time.OffsetDateTime;
 
 @ApplicationScoped
 @Path("/v1/vehicle/{code}/measurement")
@@ -55,7 +56,9 @@ public class MeasurementResource {
             return Response.status(Status.UNAUTHORIZED).build();
         }
 
-        var measurement = measurementMapper.toMeasurement(vehicle.get(), measurementDto);
+        var now = OffsetDateTime.now();
+
+        var measurement = measurementMapper.toMeasurement(vehicle.get(), measurementDto, now);
         measurementRepository.save(measurement);
 
         return Response.status(Status.CREATED).build();

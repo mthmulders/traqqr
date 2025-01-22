@@ -5,7 +5,13 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record Measurement(
-        UUID id, OffsetDateTime timestamp, int odometer, Battery battery, Location location, Vehicle vehicle) {
+        UUID id,
+        OffsetDateTime registrationTimestamp,
+        OffsetDateTime measurementTimestamp,
+        int odometer,
+        Battery battery,
+        Location location,
+        Vehicle vehicle) {
 
     public record Battery(byte soc) {}
 
