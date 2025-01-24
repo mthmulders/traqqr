@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,6 +30,9 @@ public class VehicleEntity {
 
     @Column(name = "owner_id")
     private String ownerId;
+
+    @Column(name = "net_battery_capacity")
+    private BigDecimal netBatteryCapacity;
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "vehicle")
     private Collection<AuthorisationEntity> authorisations;
@@ -63,6 +67,14 @@ public class VehicleEntity {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public BigDecimal getNetBatteryCapacity() {
+        return netBatteryCapacity;
+    }
+
+    public void setNetBatteryCapacity(BigDecimal netBatteryCapacity) {
+        this.netBatteryCapacity = netBatteryCapacity;
     }
 
     public Collection<AuthorisationEntity> getAuthorisations() {

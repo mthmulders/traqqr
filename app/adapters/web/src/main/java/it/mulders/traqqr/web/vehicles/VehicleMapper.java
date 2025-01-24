@@ -14,10 +14,12 @@ import org.mapstruct.MappingConstants.ComponentModel;
 @Mapper(componentModel = ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
 public interface VehicleMapper {
     @Mapping(target = "authorisation", ignore = true)
+    @Mapping(target = "netBatteryCapacity", source = "netBatteryCapacity")
     VehicleDTO vehicleToDto(final Vehicle vehicle);
 
     @Mapping(target = "ownerId", expression = "java(owner.code())")
     @Mapping(target = "authorisations", expression = "java(java.util.Collections.emptySet())")
+    @Mapping(target = "netBatteryCapacity", source = "netBatteryCapacity")
     Vehicle vehicleDtoToVehicle(final VehicleDTO dto, final Owner owner);
 
     AuthorisationDTO authorisationToDto(final Authorisation authorisation);

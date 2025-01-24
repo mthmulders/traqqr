@@ -13,6 +13,7 @@ public interface VehicleMapper {
     Vehicle vehicleEntityToVehicle(final VehicleEntity entity);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "netBatteryCapacity", target = "netBatteryCapacity")
     VehicleEntity vehicleToVehicleEntity(final Vehicle vehicle);
 
     Authorisation authorisationEntityToAuthorisation(AuthorisationEntity entity);
