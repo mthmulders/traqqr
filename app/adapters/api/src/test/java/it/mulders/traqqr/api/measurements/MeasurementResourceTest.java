@@ -10,12 +10,12 @@ import jakarta.ws.rs.core.Response;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Set;
-import org.assertj.core.api.Assertions;
+import org.assertj.core.api.WithAssertions;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MeasurementResourceTest {
+public class MeasurementResourceTest implements WithAssertions {
     private MeasurementResource resource;
     private InMemoryMeasurementRepository measurementRepository;
     private InMemoryVehicleRepository vehicleRepository;
@@ -43,8 +43,14 @@ public class MeasurementResourceTest {
         var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
-        Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
-        Assertions.assertThat(measurementRepository.findByVehicle(vehicle)).isNotNull();
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        assertThat(measurementRepository.findByVehicle(vehicle)).isNotNull().anySatisfy(measurement -> {
+            assertThat(measurement.vehicle().code()).isEqualTo(vehicle.code());
+            assertThat(measurement.odometer()).isEqualTo(measurementDto.odometer());
+            assertThat(measurement.battery().soc())
+                    .isEqualTo(measurementDto.battery().soc());
+        });
     }
 
     @Test
@@ -58,7 +64,7 @@ public class MeasurementResourceTest {
         var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
-        Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
     }
 
     @Test
@@ -75,6 +81,6 @@ public class MeasurementResourceTest {
         var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey")));
 
         var response = resource.registerMeasurement("code123", measurementDto, headers);
-        Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 }
