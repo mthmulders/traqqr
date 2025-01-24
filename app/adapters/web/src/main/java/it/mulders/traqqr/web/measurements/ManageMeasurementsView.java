@@ -14,9 +14,9 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.LazyDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class ManageMeasurementsView implements Serializable {
     private final Owner owner;
 
     private VehicleDTO selectedVehicle;
-    private Collection<Measurement> measurementsForSelectedVehicle = Collections.emptyList();
+    private LazyDataModel<Measurement> measurementsForSelectedVehicle;
     private Measurement selectedMeasurement;
 
     @Inject
@@ -59,7 +59,7 @@ public class ManageMeasurementsView implements Serializable {
         return selectedVehicle;
     }
 
-    public Collection<Measurement> getMeasurementsForSelectedVehicle() {
+    public LazyDataModel<Measurement> getMeasurementsForSelectedVehicle() {
         return measurementsForSelectedVehicle;
     }
 
@@ -70,12 +70,8 @@ public class ManageMeasurementsView implements Serializable {
     public void populateMeasurementsForSelectedVehicle() {
         if (selectedVehicle != null) {
             log.info("Finding measurements; vehicle={}", this.selectedVehicle.getCode());
-            this.measurementsForSelectedVehicle =
-                    this.measurementRepository.findByVehicle(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
-            log.info(
-                    "Found measurements; vehicle={}, count={}",
-                    this.selectedVehicle.getCode(),
-                    this.measurementsForSelectedVehicle.size());
+            var selectedVehicle = vehicleMapper.vehicleDtoToVehicle(this.selectedVehicle, owner);
+            this.measurementsForSelectedVehicle = new LazyMeasurementDataModel(measurementRepository, selectedVehicle);
         } else {
             measurementsForSelectedVehicle = null;
         }

@@ -31,6 +31,9 @@
 
                 <p:dataTable id="measurements" rowKey="#{measurement.id}"
                              var="measurement" value="${manageMeasurementsView.measurementsForSelectedVehicle}"
+                             rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+                             currentPageReportTemplate="{startRecord} - {endRecord} of {totalRecords} measurements"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              editable="false" stripedRows="true">
                     <p:column headerText="Registered at">
                         <h:outputText value="#{measurement.registrationTimestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
