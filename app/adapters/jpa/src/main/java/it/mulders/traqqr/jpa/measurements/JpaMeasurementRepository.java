@@ -2,6 +2,7 @@ package it.mulders.traqqr.jpa.measurements;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.jpa.vehicles.VehicleEntity;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -57,14 +58,39 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     @Override
     public Collection<Measurement> findByVehicle(Vehicle vehicle) {
         log.debug("Finding measurements; vehicle={}", vehicle.code());
-        return this.em
+        return this.findByVehicle(vehicle, null);
+    }
+
+    @Override
+    public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
+        log.debug(
+                "Finding measurements; vehicle={}, offset={}, limit={}",
+                vehicle.code(),
+                pagination.offset(),
+                pagination.limit());
+        var query = this.em
                 .createQuery(
                         "select m from MeasurementEntity m where m.vehicle.code = :vehicle_code order by m.registeredAt desc",
                         MeasurementEntity.class)
-                .setParameter("vehicle_code", vehicle.code())
-                .getResultStream()
+                .setParameter("vehicle_code", vehicle.code());
+
+        if (pagination != null) {
+            query.setFirstResult(pagination.offset()).setMaxResults(pagination.limit());
+        }
+
+        return query.getResultStream()
                 .map(mapper::measurementEntityToMeasurement)
                 .toList();
+    }
+
+    @Override
+    public long countByVehicle(Vehicle vehicle) {
+        log.debug("Counting measurements; vehicle={}", vehicle.code());
+        return this.em
+                .createQuery(
+                        "select count(m) from MeasurementEntity m where m.vehicle.code = :vehicle_code", Long.class)
+                .setParameter("vehicle_code", vehicle.code())
+                .getSingleResult();
     }
 
     private Optional<MeasurementEntity> findEntityById(UUID id) {

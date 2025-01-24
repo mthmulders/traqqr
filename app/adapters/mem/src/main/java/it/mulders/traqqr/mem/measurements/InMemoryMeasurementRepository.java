@@ -2,6 +2,7 @@ package it.mulders.traqqr.mem.measurements;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Collection;
@@ -24,6 +25,22 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
         return measurements.stream()
                 .filter(measurement -> measurement.vehicle().equals(vehicle))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
+        return measurements.stream()
+                .filter(measurement -> measurement.vehicle().equals(vehicle))
+                .skip(pagination.offset())
+                .limit(pagination.limit())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public long countByVehicle(Vehicle vehicle) {
+        return measurements.stream()
+                .filter(measurement -> measurement.vehicle().equals(vehicle))
+                .count();
     }
 
     @Override
