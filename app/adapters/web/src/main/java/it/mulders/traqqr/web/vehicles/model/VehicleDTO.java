@@ -1,11 +1,13 @@
 package it.mulders.traqqr.web.vehicles.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class VehicleDTO {
     private String code;
     private String description;
     private AuthorisationDTO authorisation;
+    private BigDecimal netBatteryCapacity;
 
     public String getDescription() {
         return description;
@@ -29,6 +31,14 @@ public class VehicleDTO {
 
     public void setAuthorisation(AuthorisationDTO authorisation) {
         this.authorisation = authorisation;
+    }
+
+    public BigDecimal getNetBatteryCapacity() {
+        return netBatteryCapacity;
+    }
+
+    public void setNetBatteryCapacity(BigDecimal netBatteryCapacity) {
+        this.netBatteryCapacity = netBatteryCapacity;
     }
 
     @Override

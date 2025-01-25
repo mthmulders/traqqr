@@ -28,6 +28,16 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+                    <p:column headerText="Net Battery Capacity (kWh)">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{vehicle.netBatteryCapacity}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{vehicle.netBatteryCapacity}" style="width:100%" label="Net Battery Capacity" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
                     <p:column style="width:15rem" ariaHeaderText="Actions">
                         <p:commandButton icon="pi pi-key"
@@ -116,6 +126,10 @@
                         <p:row>
                             <p:outputLabel for="vd-description">Description</p:outputLabel>
                             <p:inputText id="vd-description" value="#{manageVehicleView.selectedVehicle.description}" styleClass="w-full" required="true" />
+                        </p:row>
+                        <p:row>
+                            <p:outputLabel for="vd-netBatteryCapacity">Net Battery Capacity (kWh)</p:outputLabel>
+                            <p:inputText id="vd-netBatteryCapacity" value="#{manageVehicleView.selectedVehicle.netBatteryCapacity}" styleClass="w-full" required="true" />
                         </p:row>
 
                         <p:row>

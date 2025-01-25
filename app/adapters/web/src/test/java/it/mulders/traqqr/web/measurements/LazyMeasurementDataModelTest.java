@@ -4,6 +4,7 @@ import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.UUID;
@@ -14,7 +15,8 @@ import org.primefaces.model.LazyDataModel;
 
 class LazyMeasurementDataModelTest implements WithAssertions {
     private final MeasurementRepository repository = new InMemoryMeasurementRepository();
-    private final Vehicle selectedVehicle = new Vehicle("code123", "Code 123", "owner123", Collections.emptyList());
+    private final Vehicle selectedVehicle =
+            new Vehicle("code123", "Code 123", "owner123", Collections.emptyList(), BigDecimal.valueOf(82));
 
     private final LazyDataModel<Measurement> measurementDataModel =
             new LazyMeasurementDataModel(repository, selectedVehicle);

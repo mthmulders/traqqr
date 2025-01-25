@@ -5,6 +5,7 @@ import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -33,11 +34,11 @@ class VehicleConverterTest implements WithAssertions {
             return "";
         }
     };
-    private final Vehicle vehicle1 = new Vehicle("code1", "description1", "owner1", null);
+    private final Vehicle vehicle1 = new Vehicle("code1", "description1", "owner1", null, BigDecimal.valueOf(82));
     private final Set<Vehicle> vehicles = new HashSet<>() {
         {
             add(vehicle1);
-            add(new Vehicle("code2", "description2", "owner2", null));
+            add(new Vehicle("code2", "description2", "owner2", null, BigDecimal.valueOf(82)));
         }
     };
 

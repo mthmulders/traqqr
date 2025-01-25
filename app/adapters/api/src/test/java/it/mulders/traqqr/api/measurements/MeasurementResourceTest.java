@@ -7,6 +7,7 @@ import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +32,12 @@ public class MeasurementResourceTest implements WithAssertions {
 
     @Test
     public void testRegisterMeasurement_Success() {
-        var vehicle = new Vehicle("code123", "description", "ownerId", Set.of(Authorisation.fromInput("hashedKey123")));
+        var vehicle = new Vehicle(
+                "code123",
+                "description",
+                "ownerId",
+                Set.of(Authorisation.fromInput("hashedKey123")),
+                BigDecimal.valueOf(50.0));
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto(
@@ -69,7 +75,7 @@ public class MeasurementResourceTest implements WithAssertions {
 
     @Test
     public void testRegisterMeasurement_Unauthorized() {
-        var vehicle = new Vehicle("code123", "description", "ownerId", null);
+        var vehicle = new Vehicle("code123", "description", "ownerId", null, BigDecimal.valueOf(50.0));
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto(
