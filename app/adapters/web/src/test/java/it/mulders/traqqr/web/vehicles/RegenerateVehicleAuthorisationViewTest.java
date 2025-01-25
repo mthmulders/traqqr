@@ -4,6 +4,7 @@ import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -29,7 +30,8 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
                 RandomStringUtils.generateRandomIdentifier(5),
                 RandomStringUtils.generateRandomIdentifier(30),
                 owner.code(),
-                new HashSet<>());
+                new HashSet<>(),
+                BigDecimal.valueOf(82));
         vehicleRepository.save(vehicle);
 
         // Act
