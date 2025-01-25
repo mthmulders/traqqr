@@ -32,12 +32,7 @@ public class MeasurementResourceTest implements WithAssertions {
 
     @Test
     public void testRegisterMeasurement_Success() {
-        var vehicle = new Vehicle(
-                "code123",
-                "description",
-                "ownerId",
-                Set.of(Authorisation.fromInput("hashedKey123")),
-                BigDecimal.valueOf(50.0));
+        var vehicle = new Vehicle("code123", "description", "ownerId", Set.of(Authorisation.fromInput("hashedKey123")), BigDecimal.valueOf(50.0));
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto(
