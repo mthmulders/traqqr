@@ -13,7 +13,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.primefaces.PrimeFaces;
