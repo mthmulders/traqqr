@@ -30,11 +30,7 @@ public class JpaVehicleRepository implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> findByCode(final String code) {
-        var query = this.em.createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class);
-        return query.setParameter("code", code)
-                .getResultStream()
-                .map(mapper::vehicleEntityToVehicle)
-                .findAny();
+        return findEntityByCode(code).map(mapper::vehicleEntityToVehicle);
     }
 
     @Override
@@ -66,53 +62,61 @@ public class JpaVehicleRepository implements VehicleRepository {
     @Override
     @Transactional(Transactional.TxType.MANDATORY)
     public void update(Vehicle vehicle) {
-        this.em
+        findEntityByCode(vehicle.code()).ifPresent(vehicleEntity -> {
+            vehicleEntity.setDescription(vehicle.description());
+            vehicleEntity.setNetBatteryCapacity(vehicle.netBatteryCapacity());
+
+            for (var authorisation : vehicle.authorisations()) {
+                vehicleEntity.getAuthorisations().stream()
+                        .filter(it -> it.getHashedKey().equals(authorisation.getHashedKey()))
+                        .findAny()
+                        .ifPresentOrElse(
+                                existingAuthorisationEntity ->
+                                        existingAuthorisationEntity.setInvalidatedAt(authorisation.getInvalidatedAt()),
+                                () -> {
+                                    var authorisationEntity = mapper.authorisationToAuthorisationEntity(authorisation);
+                                    authorisationEntity.setVehicle(vehicleEntity);
+                                    vehicleEntity.getAuthorisations().add(authorisationEntity);
+                                });
+            }
+
+            try {
+                em.joinTransaction();
+                em.merge(vehicleEntity);
+                em.flush();
+                log.debug("Vehicle updated; code={}", vehicle.code());
+            } catch (PersistenceException e) {
+                log.error("Database error during vehicle update; code={}", vehicle.code(), e);
+                throw e;
+            }
+        });
+    }
+
+    private Optional<VehicleEntity> findEntityByCode(String code) {
+        return this.em
                 .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
-                .setParameter("code", vehicle.code())
+                .setParameter("code", code)
                 .getResultStream()
-                .findAny()
-                .ifPresent(vehicleEntity -> {
-                    vehicleEntity.setDescription(vehicle.description());
-
-                    for (var authorisation : vehicle.authorisations()) {
-                        vehicleEntity.getAuthorisations().stream()
-                                .filter(it -> it.getHashedKey().equals(authorisation.getHashedKey()))
-                                .findAny()
-                                .ifPresentOrElse(
-                                        existingAuthorisationEntity -> {
-                                            existingAuthorisationEntity.setInvalidatedAt(
-                                                    authorisation.getInvalidatedAt());
-                                        },
-                                        () -> {
-                                            var authorisationEntity =
-                                                    mapper.authorisationToAuthorisationEntity(authorisation);
-                                            authorisationEntity.setVehicle(vehicleEntity);
-                                            vehicleEntity.getAuthorisations().add(authorisationEntity);
-                                        });
-                    }
-
-                    try {
-                        em.joinTransaction();
-                        em.merge(vehicleEntity);
-                        em.flush();
-                        log.debug("Vehicle updated; code={}", vehicle.code());
-                    } catch (PersistenceException e) {
-                        log.error("Database error during vehicle update; code={}", vehicle.code(), e);
-                        throw e;
-                    }
-                });
+                .findFirst();
     }
 
     @Override
     @Transactional(Transactional.TxType.MANDATORY)
     public void removeVehicle(final Vehicle vehicle) {
+        findEntityByCode(vehicle.code())
+                .ifPresentOrElse(
+                        this::removeVehicleEntity,
+                        () -> log.error("Vehicle not removed as it can not be found; code={}", vehicle.code()));
+    }
+
+    private void removeVehicleEntity(final VehicleEntity entity) {
         try {
             em.joinTransaction();
-            em.remove(vehicle);
+            em.remove(entity);
             em.flush();
-            log.debug("Vehicle removed; code={}", vehicle.code());
+            log.debug("Vehicle removed; code={}", entity.getCode());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
-            log.error("Error removing vehicle; code={}", vehicle.code(), e);
+            log.error("Error removing vehicle; code={}", entity.getCode(), e);
             throw e;
         }
     }
