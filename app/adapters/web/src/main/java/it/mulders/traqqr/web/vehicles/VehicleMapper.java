@@ -19,7 +19,6 @@ public interface VehicleMapper {
 
     @Mapping(target = "ownerId", expression = "java(owner.code())")
     @Mapping(target = "authorisations", expression = "java(java.util.Collections.emptySet())")
-    @Mapping(target = "netBatteryCapacity", source = "netBatteryCapacity")
     Vehicle vehicleDtoToVehicle(final VehicleDTO dto, final Owner owner);
 
     AuthorisationDTO authorisationToDto(final Authorisation authorisation);
