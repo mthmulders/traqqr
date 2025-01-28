@@ -64,26 +64,13 @@ public class JpaVehicleRepository implements VehicleRepository {
     @Override
     @Transactional(Transactional.TxType.MANDATORY)
     public void update(Vehicle vehicle) {
-        findEntityByCode(vehicle.code()).ifPresent(vehicleEntity -> {
-            vehicleEntity.setDescription(vehicle.description());
-            vehicleEntity.setNetBatteryCapacity(vehicle.netBatteryCapacity());
-
-            for (var authorisation : vehicle.authorisations()) {
-                vehicleEntity.getAuthorisations().stream()
-                        .filter(it -> it.getHashedKey().equals(authorisation.getHashedKey()))
-                        .findAny()
-                        .ifPresentOrElse(
-                                existingAuthorisationEntity ->
-                                        existingAuthorisationEntity.setInvalidatedAt(authorisation.getInvalidatedAt()),
-                                () -> {
-                                    var authorisationEntity = mapper.authorisationToAuthorisationEntity(authorisation);
-                                    authorisationEntity.setVehicle(vehicleEntity);
-                                    vehicleEntity.getAuthorisations().add(authorisationEntity);
-                                });
-            }
+        var entity = this.mapper.vehicleToVehicleEntity(vehicle);
+        findEntityByCode(vehicle.code()).ifPresent(found -> {
+            entity.setId(found.getId());
+            entity.getAuthorisations().forEach(authorisation -> authorisation.setVehicle(found));
 
             try {
-                em.merge(vehicleEntity);
+                em.merge(entity);
                 log.debug("Vehicle updated; code={}", vehicle.code());
             } catch (PersistenceException e) {
                 log.error("Database error during vehicle update; code={}", vehicle.code(), e);
