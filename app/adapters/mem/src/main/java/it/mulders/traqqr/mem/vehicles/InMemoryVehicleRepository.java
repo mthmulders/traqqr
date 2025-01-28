@@ -34,8 +34,7 @@ public class InMemoryVehicleRepository implements VehicleRepository {
                 vehicle.description(),
                 vehicle.ownerId(),
                 new HashSet<>(vehicle.authorisations()),
-                vehicle.netBatteryCapacity()
-        );
+                vehicle.netBatteryCapacity());
     }
 
     @Override
