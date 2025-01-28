@@ -3,6 +3,8 @@ package it.mulders.traqqr.domain.vehicles;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -66,5 +68,12 @@ class VehicleTest implements WithAssertions {
         var vehicle = new Vehicle("000005", "Vehicle 5", FAKE_OWNER_ID, new HashSet<>(), BigDecimal.valueOf(75.5));
 
         assertThat(vehicle.netBatteryCapacity()).isEqualTo(BigDecimal.valueOf(75.5));
+    }
+
+    @Test
+    void should_honor_equals_contract() {
+        EqualsVerifier.forClass(Vehicle.class)
+                .suppress(Warning.BIGDECIMAL_EQUALITY)
+                .verify();
     }
 }
