@@ -6,6 +6,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
@@ -19,11 +20,16 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 public class JpaVehicleRepository implements VehicleRepository {
     private static final Logger log = LoggerFactory.getLogger(JpaVehicleRepository.class);
-    private final EntityManager em;
-    private final VehicleMapper mapper;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Inject
-    public JpaVehicleRepository(final EntityManager em, final VehicleMapper mapper) {
+    private VehicleMapper mapper;
+
+    public JpaVehicleRepository() {}
+
+    protected JpaVehicleRepository(final EntityManager em, final VehicleMapper mapper) {
         this.em = em;
         this.mapper = mapper;
     }
@@ -49,9 +55,7 @@ public class JpaVehicleRepository implements VehicleRepository {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         entity.setId(UUID.randomUUID());
         try {
-            em.joinTransaction();
             em.persist(entity);
-            em.flush();
             log.debug("Vehicle saved; code={}", vehicle.code());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error registering vehicle; code={}", vehicle.code(), e);
@@ -81,9 +85,7 @@ public class JpaVehicleRepository implements VehicleRepository {
             }
 
             try {
-                em.joinTransaction();
                 em.merge(vehicleEntity);
-                em.flush();
                 log.debug("Vehicle updated; code={}", vehicle.code());
             } catch (PersistenceException e) {
                 log.error("Database error during vehicle update; code={}", vehicle.code(), e);
@@ -111,9 +113,7 @@ public class JpaVehicleRepository implements VehicleRepository {
 
     private void removeVehicleEntity(final VehicleEntity entity) {
         try {
-            em.joinTransaction();
             em.remove(entity);
-            em.flush();
             log.debug("Vehicle removed; code={}", entity.getCode());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error removing vehicle; code={}", entity.getCode(), e);

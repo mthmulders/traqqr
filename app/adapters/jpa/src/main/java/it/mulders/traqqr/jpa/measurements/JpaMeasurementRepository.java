@@ -8,6 +8,7 @@ import it.mulders.traqqr.jpa.vehicles.VehicleEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
@@ -20,11 +21,16 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 public class JpaMeasurementRepository implements MeasurementRepository {
     private static final Logger log = LoggerFactory.getLogger(JpaMeasurementRepository.class);
-    private final EntityManager em;
-    private final MeasurementMapper mapper;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Inject
-    public JpaMeasurementRepository(final EntityManager em, final MeasurementMapper mapper) {
+    private MeasurementMapper mapper;
+
+    public JpaMeasurementRepository() {}
+
+    protected JpaMeasurementRepository(final EntityManager em, final MeasurementMapper mapper) {
         this.em = em;
         this.mapper = mapper;
     }

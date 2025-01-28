@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+        <!-- According to the JPA spec, in a Java SE environment you *must* list all classes -->
+        <class>it.mulders.traqqr.jpa.vehicles.VehicleEntity</class>
+        <class>it.mulders.traqqr.jpa.vehicles.AuthorisationEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.MeasurementEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.BatteryEntity</class>
+        <class>it.mulders.traqqr.jpa.measurements.GpsLocationEntity</class>
+
+        <properties>
+            <property name="eclipselink.logging.level" value="FINER" />
+            <property name="eclipselink.logging.level.sql" value="FINE" />
+            <property name="eclipselink.logging.parameters" value="true" />
+            <property name="eclipselink.logging.file" value="eclipselink.log" />
+        </properties>
+    </persistence-unit>
+</persistence>
