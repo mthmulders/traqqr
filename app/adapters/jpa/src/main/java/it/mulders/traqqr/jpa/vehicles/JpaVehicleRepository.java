@@ -53,7 +53,6 @@ public class JpaVehicleRepository implements VehicleRepository {
     @Transactional(Transactional.TxType.MANDATORY)
     public void save(Vehicle vehicle) {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
-        entity.setId(UUID.randomUUID());
         try {
             em.persist(entity);
             log.debug("Vehicle saved; code={}", vehicle.code());
