@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.OffsetDateTime;
 import java.util.Base64;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,5 +74,16 @@ public class Authorisation {
 
     public boolean isValid() {
         return invalidatedAt == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Authorisation that)) return false;
+        return Objects.equals(generatedAt, that.generatedAt) && Objects.equals(hashedKey, that.hashedKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(generatedAt, hashedKey);
     }
 }
