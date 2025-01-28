@@ -45,6 +45,32 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
         assertThat(view.getGeneratedAuthorisation().getRawKey()).isNotEmpty();
     }
 
+    @Test
+    void should_persist_new_authorisation() {
+        // Arrange
+        var owner = ownerCreator(1);
+        var vehicle = new Vehicle(
+                RandomStringUtils.generateRandomIdentifier(5),
+                RandomStringUtils.generateRandomIdentifier(30),
+                owner.code(),
+                new HashSet<>(),
+                BigDecimal.valueOf(82));
+        vehicleRepository.save(vehicle);
+
+        // Act
+        view.setSelectedVehicle(vehicleMapper.vehicleToDto(vehicle));
+        view.regenerateApiKey();
+        var generatedAuthorisation = view.getGeneratedAuthorisation();
+
+        // Assert
+        assertThat(vehicleRepository.findByCode(vehicle.code())).isNotEmpty().hasValueSatisfying(found -> {
+            assertThat(found.authorisations()).isNotEmpty().anySatisfy(authorisation -> {
+                assertThat(authorisation.getHashedKey()).isEqualTo(generatedAuthorisation.getHashedKey());
+                assertThat(authorisation.getInvalidatedAt()).isNull();
+            });
+        });
+    }
+
     private Owner ownerCreator(final Integer number) {
         return new Owner() {
             @Override
