@@ -6,6 +6,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
 import jakarta.transaction.Transactional;
@@ -19,11 +20,16 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 public class JpaVehicleRepository implements VehicleRepository {
     private static final Logger log = LoggerFactory.getLogger(JpaVehicleRepository.class);
-    private final EntityManager em;
-    private final VehicleMapper mapper;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Inject
-    public JpaVehicleRepository(final EntityManager em, final VehicleMapper mapper) {
+    private VehicleMapper mapper;
+
+    public JpaVehicleRepository() {}
+
+    protected JpaVehicleRepository(final EntityManager em, final VehicleMapper mapper) {
         this.em = em;
         this.mapper = mapper;
     }
