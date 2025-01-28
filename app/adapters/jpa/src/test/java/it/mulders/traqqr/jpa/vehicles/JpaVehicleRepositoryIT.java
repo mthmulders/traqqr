@@ -155,6 +155,40 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
                 });
     }
 
+    @Test
+    void should_update_vehicle_with_new_and_updated_authorisation() {
+        var vehicle = new Vehicle(
+                "000011",
+                "should_update_vehicle_with_new_and_updated_authorisation",
+                FAKE_OWNER_ID,
+                new ArrayList<>(),
+                BigDecimal.valueOf(50.0));
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+
+        var authorisation1 = vehicle.regenerateKey();
+
+        runTransactional(() -> repository.update(vehicle));
+
+        var authorisation2 = vehicle.regenerateKey();
+        runTransactional(() -> repository.update(vehicle));
+
+        assertThat(repository.findByCode(vehicle.code()).map(Vehicle::authorisations))
+                .isPresent()
+                .hasValueSatisfying(authorisations -> {
+                    assertThat(authorisations).hasSize(2);
+
+                    assertThat(authorisations).anySatisfy(authorisation -> {
+                        assertThat(authorisation.getHashedKey()).isEqualTo(authorisation1.getHashedKey());
+                        assertThat(authorisation.getInvalidatedAt()).isNotNull();
+                    });
+
+                    assertThat(authorisations).anySatisfy(authorisation -> {
+                        assertThat(authorisation.getHashedKey()).isEqualTo(authorisation2.getHashedKey());
+                        assertThat(authorisation.getInvalidatedAt()).isNull();
+                    });
+                });
+    }
+
     private Owner createOwner(String ownerId) {
         return new Owner() {
 
