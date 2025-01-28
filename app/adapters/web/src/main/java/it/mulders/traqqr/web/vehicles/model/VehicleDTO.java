@@ -3,7 +3,7 @@ package it.mulders.traqqr.web.vehicles.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class VehicleDTO {
+public final class VehicleDTO {
     private String code;
     private String description;
     private AuthorisationDTO authorisation;
@@ -45,12 +45,15 @@ public class VehicleDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof VehicleDTO that)) return false;
-        return Objects.equals(description, that.description) && Objects.equals(code, that.code);
+        return Objects.equals(description, that.description)
+                && Objects.equals(code, that.code)
+                && Objects.equals(authorisation, that.authorisation)
+                && Objects.equals(netBatteryCapacity, that.netBatteryCapacity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, code);
+        return Objects.hash(description, code, authorisation, netBatteryCapacity);
     }
 
     @Override

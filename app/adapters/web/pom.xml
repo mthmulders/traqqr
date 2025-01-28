@@ -94,6 +94,10 @@
       <artifactId>assertj-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>nl.jqno.equalsverifier</groupId>
+      <artifactId>equalsverifier</artifactId>
+    </dependency>
+    <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>mem</artifactId>
       <scope>test</scope>
