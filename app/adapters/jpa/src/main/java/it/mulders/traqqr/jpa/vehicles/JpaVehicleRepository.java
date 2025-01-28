@@ -55,9 +55,7 @@ public class JpaVehicleRepository implements VehicleRepository {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         entity.setId(UUID.randomUUID());
         try {
-            em.joinTransaction();
             em.persist(entity);
-            em.flush();
             log.debug("Vehicle saved; code={}", vehicle.code());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error registering vehicle; code={}", vehicle.code(), e);
@@ -87,9 +85,7 @@ public class JpaVehicleRepository implements VehicleRepository {
             }
 
             try {
-                em.joinTransaction();
                 em.merge(vehicleEntity);
-                em.flush();
                 log.debug("Vehicle updated; code={}", vehicle.code());
             } catch (PersistenceException e) {
                 log.error("Database error during vehicle update; code={}", vehicle.code(), e);
@@ -117,9 +113,7 @@ public class JpaVehicleRepository implements VehicleRepository {
 
     private void removeVehicleEntity(final VehicleEntity entity) {
         try {
-            em.joinTransaction();
             em.remove(entity);
-            em.flush();
             log.debug("Vehicle removed; code={}", entity.getCode());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error removing vehicle; code={}", entity.getCode(), e);

@@ -34,7 +34,7 @@ public class VehicleEntity {
     @Column(name = "net_battery_capacity")
     private BigDecimal netBatteryCapacity;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "vehicle")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "vehicle")
     private Collection<AuthorisationEntity> authorisations;
 
     public UUID getId() {
