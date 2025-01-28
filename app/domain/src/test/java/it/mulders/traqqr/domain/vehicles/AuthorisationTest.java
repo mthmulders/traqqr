@@ -1,5 +1,6 @@
 package it.mulders.traqqr.domain.vehicles;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -21,5 +22,12 @@ class AuthorisationTest implements WithAssertions {
         var verification = Authorisation.fromInput(originalAuthorisation.getRawKey());
 
         assertThat(verification.getHashedKey()).isEqualTo(originalAuthorisation.getHashedKey());
+    }
+
+    @Test
+    void honours_equals_contract() {
+        EqualsVerifier.forClass(Authorisation.class)
+                .withIgnoredFields("rawKey", "invalidatedAt")
+                .verify();
     }
 }

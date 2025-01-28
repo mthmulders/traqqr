@@ -77,13 +77,13 @@ public class Authorisation {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (!(o instanceof Authorisation that)) return false;
         return Objects.equals(generatedAt, that.generatedAt) && Objects.equals(hashedKey, that.hashedKey);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(generatedAt, hashedKey);
     }
 }
