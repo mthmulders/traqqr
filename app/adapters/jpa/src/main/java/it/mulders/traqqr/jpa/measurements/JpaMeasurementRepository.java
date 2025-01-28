@@ -38,27 +38,21 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     @Override
     @Transactional(Transactional.TxType.MANDATORY)
     public void save(Measurement measurement) {
-        this.em
+        var vehicle = this.em
                 .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
                 .setParameter("code", measurement.vehicle().code())
-                .getResultStream()
-                .findAny()
-                .ifPresent(vehicleEntity -> {
-                    var entity = mapper.measurementToMeasurementEntity(measurement);
-                    log.debug("saving measurement {}", entity);
-                    entity.setVehicle(vehicleEntity);
-                    entity.setId(UUID.randomUUID());
+                .getSingleResult();
 
-                    try {
-                        em.joinTransaction();
-                        em.persist(entity);
-                        em.flush();
-                        log.info("Measurement stored; id={}", entity.getId());
-                    } catch (PersistenceException e) {
-                        log.error("Database error during measurement storage; id={}", entity.getId(), e);
-                        throw e;
-                    }
-                });
+        var entity = mapper.measurementToMeasurementEntity(measurement);
+        entity.setVehicle(vehicle);
+
+        try {
+            em.persist(entity);
+            log.info("Measurement stored; id={}", entity.getId());
+        } catch (PersistenceException e) {
+            log.error("Database error during measurement storage; id={}", entity.getId(), e);
+            throw e;
+        }
     }
 
     @Override
@@ -69,11 +63,6 @@ public class JpaMeasurementRepository implements MeasurementRepository {
 
     @Override
     public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
-        log.debug(
-                "Finding measurements; vehicle={}, offset={}, limit={}",
-                vehicle.code(),
-                pagination.offset(),
-                pagination.limit());
         var query = this.em
                 .createQuery(
                         "select m from MeasurementEntity m where m.vehicle.code = :vehicle_code order by m.registeredAt desc",
@@ -81,7 +70,14 @@ public class JpaMeasurementRepository implements MeasurementRepository {
                 .setParameter("vehicle_code", vehicle.code());
 
         if (pagination != null) {
+            log.debug(
+                    "Finding measurements; vehicle={}, offset={}, limit={}",
+                    vehicle.code(),
+                    pagination.offset(),
+                    pagination.limit());
             query.setFirstResult(pagination.offset()).setMaxResults(pagination.limit());
+        } else {
+            log.debug("Finding measurements; vehicle={}", vehicle.code());
         }
 
         return query.getResultStream()
