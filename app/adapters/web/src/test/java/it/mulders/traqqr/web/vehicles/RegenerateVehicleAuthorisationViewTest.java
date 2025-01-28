@@ -40,6 +40,9 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
 
         // Assert
         assertThat(vehicle.authorisations()).isNotEmpty();
+        assertThat(view.getGeneratedAuthorisation()).isNotNull();
+        assertThat(view.getGeneratedAuthorisation().getHashedKey()).isNotEmpty();
+        assertThat(view.getGeneratedAuthorisation().getRawKey()).isNotEmpty();
     }
 
     private Owner ownerCreator(final Integer number) {
