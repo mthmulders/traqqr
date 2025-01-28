@@ -29,12 +29,9 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     }
 
     private Vehicle clone(final Vehicle vehicle) {
+        var authorisations = vehicle.authorisations() == null ? null : new HashSet<>(vehicle.authorisations());
         return new Vehicle(
-                vehicle.code(),
-                vehicle.description(),
-                vehicle.ownerId(),
-                new HashSet<>(vehicle.authorisations()),
-                vehicle.netBatteryCapacity());
+                vehicle.code(), vehicle.description(), vehicle.ownerId(), authorisations, vehicle.netBatteryCapacity());
     }
 
     @Override
