@@ -116,7 +116,7 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:dialog header="Vehicle Details" showEffect="fade" modal="true" widgetVar="manageVehicleDialog" responsive="true">
+            <p:dialog rendered="#{not empty manageVehicleView.selectedVehicle}" header="Vehicle Details" showEffect="fade" modal="true" widgetVar="manageVehicleDialog" responsive="true">
                 <p:outputPanel id="vehicle-details-content" class="ui-fluid">
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-8">
                         <p:row rendered="#{not empty manageVehicleView.selectedVehicle.code}">
