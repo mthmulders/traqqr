@@ -80,7 +80,6 @@ public class ManageVehicleView implements Serializable {
 
         selectedVehicle = null;
         populateVehicles();
-        PrimeFaces.current().executeScript("PF('manageVehicleDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
     }
 
