@@ -12,9 +12,5 @@
   <artifactId>config</artifactId>
   <packaging>jar</packaging>
 
-  <name>Traqqr :: Core :: Configuration</name>
-
-  <dependencies></dependencies>
-
-  <build></build>
+  <name>Traqqr :: Core :: Application Configuration</name>
 </project>

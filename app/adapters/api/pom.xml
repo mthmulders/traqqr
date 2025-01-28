@@ -12,7 +12,7 @@
   <artifactId>api</artifactId>
   <packaging>war</packaging>
 
-  <name>Traqqr :: Ports :: REST API</name>
+  <name>Traqqr :: Adapters :: REST API</name>
 
   <dependencies>
     <dependency>

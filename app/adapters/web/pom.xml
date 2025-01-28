@@ -12,7 +12,7 @@
   <artifactId>web</artifactId>
   <packaging>war</packaging>
 
-  <name>Traqqr :: Ports :: Web application</name>
+  <name>Traqqr :: Adapters :: Web application</name>
 
   <dependencies>
     <dependency>
