@@ -22,7 +22,20 @@ public class InMemoryVehicleRepository implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> findByCode(final String code) {
-        return vehicles.stream().filter(vehicle -> code.equals(vehicle.code())).findAny();
+        return vehicles.stream()
+                .filter(vehicle -> code.equals(vehicle.code()))
+                .map(this::clone)
+                .findAny();
+    }
+
+    private Vehicle clone(final Vehicle vehicle) {
+        return new Vehicle(
+                vehicle.code(),
+                vehicle.description(),
+                vehicle.ownerId(),
+                new HashSet<>(vehicle.authorisations()),
+                vehicle.netBatteryCapacity()
+        );
     }
 
     @Override

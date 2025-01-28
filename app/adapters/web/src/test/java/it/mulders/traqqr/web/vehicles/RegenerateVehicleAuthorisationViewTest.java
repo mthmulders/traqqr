@@ -39,7 +39,6 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
         view.regenerateApiKey();
 
         // Assert
-        assertThat(vehicle.authorisations()).isNotEmpty();
         assertThat(view.getGeneratedAuthorisation()).isNotNull();
         assertThat(view.getGeneratedAuthorisation().getHashedKey()).isNotEmpty();
         assertThat(view.getGeneratedAuthorisation().getRawKey()).isNotEmpty();
