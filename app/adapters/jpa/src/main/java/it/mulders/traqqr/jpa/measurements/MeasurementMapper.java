@@ -13,7 +13,6 @@ import org.mapstruct.MappingConstants.ComponentModel;
         nullValueIterableMappingStrategy = RETURN_DEFAULT,
         uses = {VehicleMapper.class})
 public interface MeasurementMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicle", ignore = true)
     @Mapping(source = "registrationTimestamp", target = "registeredAt")
     @Mapping(source = "measurementTimestamp", target = "measuredAt")
