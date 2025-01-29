@@ -65,7 +65,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
         var query = this.em
                 .createQuery(
-                        "select m from MeasurementEntity m where m.vehicle.code = :vehicle_code order by m.registeredAt desc",
+                        "select m from MeasurementEntity m where m.vehicle.code = :vehicle_code order by m.measuredAt desc",
                         MeasurementEntity.class)
                 .setParameter("vehicle_code", vehicle.code());
 
