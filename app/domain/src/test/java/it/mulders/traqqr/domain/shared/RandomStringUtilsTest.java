@@ -18,6 +18,19 @@ class RandomStringUtilsTest implements WithAssertions {
         assertThat(RandomStringUtils.generateRandomIdentifier(length).length()).isEqualTo(length);
     }
 
+    @Property
+    void generates_string_with_sufficient_randomness(@ForAll @IntRange(min = 70, max = 255) final int length) {
+        var result = RandomStringUtils.generateRandomIdentifier(length);
+        var differentCharCount = result.chars().distinct().count();
+
+        assertThat(differentCharCount)
+                // Implementation detail: there are 35 characters to choose from.
+                // The randomness is not guaranteed to select all of them, but we can
+                // assume that at least half of them will be selected when we ask for
+                // a random String of 70 chars or more.
+                .isBetween(17L, 35L);
+    }
+
     @Example
     void does_not_generate_string_longer_than_1024_chars(@ForAll @IntRange(min = 1025) final int length) {
         assertThatThrownBy(() -> RandomStringUtils.generateRandomIdentifier(length))
