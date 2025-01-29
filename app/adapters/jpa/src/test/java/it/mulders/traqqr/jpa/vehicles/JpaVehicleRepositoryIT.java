@@ -4,11 +4,9 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
-import it.mulders.traqqr.jpa.MapStructHelper;
 import jakarta.persistence.RollbackException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +19,6 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
         implements WithAssertions {
     private static final String FAKE_OWNER_ID = "its-a-me";
 
-    private final VehicleMapper vehicleMapper = MapStructHelper.getMapper(VehicleMapper.class);
-
     @BeforeEach
     void prepare() {
         prepare(em -> new JpaVehicleRepository(em, vehicleMapper));
@@ -31,27 +27,9 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
     @Test
     void should_find_vehicles_by_owner() {
         var myOwnerId = "my-owner-id";
-        var vehicle1 = new Vehicle(
-                "000003",
-                "should_find_vehicles_by_owner_1",
-                myOwnerId,
-                Collections.emptySet(),
-                BigDecimal.valueOf(50.0));
-        var vehicle2 = new Vehicle(
-                "000004",
-                "should_find_vehicles_by_owner_2",
-                myOwnerId,
-                Collections.emptySet(),
-                BigDecimal.valueOf(50.0));
-        var vehicle3 = new Vehicle(
-                "000005",
-                "should_find_vehicles_by_owner_3",
-                "somebody-else",
-                Collections.emptySet(),
-                BigDecimal.valueOf(50.0));
-        persist(vehicleMapper.vehicleToVehicleEntity(vehicle1));
-        persist(vehicleMapper.vehicleToVehicleEntity(vehicle2));
-        persist(vehicleMapper.vehicleToVehicleEntity(vehicle3));
+        persist(vehicleMapper.vehicleToVehicleEntity(createVehicle("000003", myOwnerId)));
+        persist(vehicleMapper.vehicleToVehicleEntity(createVehicle("000004", myOwnerId)));
+        persist(vehicleMapper.vehicleToVehicleEntity(createVehicle("000005", "somebody-else")));
 
         var result = repository.findByOwner(createOwner(myOwnerId));
 
@@ -62,12 +40,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_find_vehicle_by_code() {
-        var vehicle = new Vehicle(
-                "000001",
-                "should_find_vehicle_by_code",
-                FAKE_OWNER_ID,
-                Collections.emptySet(),
-                BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle("000001");
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var result = repository.findByCode(vehicle.code());
@@ -82,8 +55,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_remove_vehicle() {
-        var vehicle = new Vehicle(
-                "000002", "should_remove_vehicle", FAKE_OWNER_ID, Collections.emptySet(), BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle("000002");
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         runTransactional(() -> repository.removeVehicle(vehicle));
@@ -93,20 +65,21 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_save_vehicle() {
-        var vehicle = new Vehicle(
-                "000006", "should_remove_vehicle", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle("000006");
 
         runTransactional(() -> repository.save(vehicle));
 
-        assertThat(repository.findByCode(vehicle.code())).hasValue(vehicle);
+        var result = entityManager
+                .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
+                .setParameter("code", vehicle.code())
+                .getSingleResult();
+        assertThat(vehicleMapper.vehicleEntityToVehicle(result)).isEqualTo(vehicle);
     }
 
     @Test
     void should_reject_vehicle_with_duplicate_code() {
-        var vehicle1 = new Vehicle(
-                "000008", "should_remove_vehicle", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
-        var vehicle2 = new Vehicle(
-                "000008", "should_remove_vehicle", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
+        var vehicle1 = createVehicle("000008");
+        var vehicle2 = createVehicle("000008");
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle1));
 
         assertThatThrownBy(() -> {
@@ -123,8 +96,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle() {
-        var original = new Vehicle(
-                "000009", "should_update_vehicle", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
+        var original = createVehicle("000009");
         persist(vehicleMapper.vehicleToVehicleEntity(original));
         var updated = new Vehicle(
                 "000009", "should_update_vehicle_v2", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
@@ -136,12 +108,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle_with_authorisation() {
-        var vehicle = new Vehicle(
-                "000010",
-                "should_update_vehicle_with_authorisation",
-                FAKE_OWNER_ID,
-                new ArrayList<>(),
-                BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle("000010");
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var authorisation = vehicle.regenerateKey();
@@ -157,12 +124,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle_with_new_and_updated_authorisation() {
-        var vehicle = new Vehicle(
-                "000011",
-                "should_update_vehicle_with_new_and_updated_authorisation",
-                FAKE_OWNER_ID,
-                new ArrayList<>(),
-                BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle("000011");
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var authorisation1 = vehicle.regenerateKey();

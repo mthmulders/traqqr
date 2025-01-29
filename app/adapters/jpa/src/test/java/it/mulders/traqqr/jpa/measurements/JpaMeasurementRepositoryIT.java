@@ -4,12 +4,8 @@ import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
-import it.mulders.traqqr.jpa.MapStructHelper;
-import it.mulders.traqqr.jpa.vehicles.VehicleMapper;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -18,9 +14,6 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRepository, JpaMeasurementRepository> {
-    private final MeasurementMapper measurementMapper = MapStructHelper.getMapper(MeasurementMapper.class);
-    private final VehicleMapper vehicleMapper = MapStructHelper.getMapper(VehicleMapper.class);
-
     @BeforeEach
     void prepare() {
         prepare(em -> new JpaMeasurementRepository(em, measurementMapper));
@@ -109,11 +102,6 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
 
         // Assert
         assertThat(result).isEqualTo(1);
-    }
-
-    private Vehicle createVehicle(String code) {
-        return new Vehicle(
-                code, "Vehicle Description", "fake-owner-id", Collections.emptySet(), BigDecimal.valueOf(55));
     }
 
     private Measurement createMeasurement(Vehicle vehicle) {

@@ -1,8 +1,13 @@
 package it.mulders.traqqr.jpa;
 
+import it.mulders.traqqr.domain.vehicles.Vehicle;
+import it.mulders.traqqr.jpa.measurements.MeasurementMapper;
+import it.mulders.traqqr.jpa.vehicles.VehicleMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.RollbackException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -23,6 +28,9 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
     @Container
     protected static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER =
             new PostgreSQLContainer<>("postgres:16.6-alpine");
+
+    protected final MeasurementMapper measurementMapper = MapStructHelper.getMapper(MeasurementMapper.class);
+    protected final VehicleMapper vehicleMapper = MapStructHelper.getMapper(VehicleMapper.class);
 
     protected EntityManager entityManager;
     protected Int repository;
@@ -91,5 +99,13 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
             fail("Could not run transactional action", t);
             return (T) null;
         }
+    }
+
+    protected Vehicle createVehicle(String code) {
+        return createVehicle(code, "fake-owner-id");
+    }
+
+    protected Vehicle createVehicle(String code, String ownerId) {
+        return new Vehicle(code, "Vehicle Description", ownerId, new ArrayList<>(), BigDecimal.valueOf(55));
     }
 }
