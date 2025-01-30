@@ -4,7 +4,9 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
@@ -12,7 +14,7 @@ import java.util.Locale;
 @FacesConverter("traqqr.MeasurementTimestampConverter")
 public class MeasurementTimestampConverter implements Converter<OffsetDateTime> {
     private static final DateTimeFormatter FORMAT = new DateTimeFormatterBuilder()
-            .appendPattern("dd MMM uuuu, HH:mm.ss")
+            .appendPattern("dd MMM uuuu, HH:mm:ss")
             .toFormatter(Locale.ROOT);
 
     @Override
@@ -24,7 +26,7 @@ public class MeasurementTimestampConverter implements Converter<OffsetDateTime> 
             return null;
         }
 
-        return OffsetDateTime.parse(value, FORMAT);
+        return OffsetDateTime.of(LocalDateTime.parse(value, FORMAT), ZoneOffset.UTC);
     }
 
     @Override
