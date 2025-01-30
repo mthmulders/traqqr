@@ -2,6 +2,7 @@ package it.mulders.traqqr.jpa.measurements;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.measurements.Source;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import java.time.OffsetDateTime;
@@ -46,11 +47,12 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement = new Measurement(
                 null,
-                OffsetDateTime.now().minus(1, ChronoUnit.DAYS),
-                OffsetDateTime.now().minus(1, ChronoUnit.DAYS).minus(5, ChronoUnit.SECONDS),
+                OffsetDateTime.now().minusDays(1),
+                OffsetDateTime.now().minusDays(1).minusSeconds(5),
                 1_000,
                 new Measurement.Battery((byte) 80),
                 new Measurement.Location(55.0, 6.0),
+                Source.API,
                 vehicle);
 
         // Act
@@ -112,6 +114,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
                 1_000,
                 new Measurement.Battery((byte) 80),
                 new Measurement.Location(55.0, 6.0),
+                Source.API,
                 vehicle);
     }
 }

@@ -12,5 +12,6 @@ import org.mapstruct.MappingConstants;
 public interface MeasurementMapper {
     @Mapping(source = "registrationTimestamp", target = "registrationTimestamp")
     @Mapping(source = "measurementDto.timestamp", target = "measurementTimestamp")
+    @Mapping(expression = "java(it.mulders.traqqr.domain.measurements.Source.API)", target = "source")
     Measurement toMeasurement(Vehicle vehicle, MeasurementDto measurementDto, OffsetDateTime registrationTimestamp);
 }

@@ -1,11 +1,14 @@
 package it.mulders.traqqr.jpa.measurements;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import it.mulders.traqqr.jpa.vehicles.VehicleEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +21,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "measurement")
 public class MeasurementEntity {
+    enum Source {
+        API,
+        USER
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,6 +46,10 @@ public class MeasurementEntity {
     @AttributeOverrides({@AttributeOverride(name = "soc", column = @Column(name = "battery_soc"))})
     @Embedded
     private BatteryEntity battery;
+
+    @Column(name = "source")
+    @Enumerated(STRING)
+    private Source source;
 
     @AttributeOverrides({
         @AttributeOverride(name = "latitude", column = @Column(name = "gps_location_lat")),
@@ -100,6 +112,14 @@ public class MeasurementEntity {
 
     public void setGpsLocation(GpsLocationEntity gpsLocation) {
         this.gpsLocation = gpsLocation;
+    }
+
+    public Source getSource() {
+        return source;
+    }
+
+    public void setSource(Source source) {
+        this.source = source;
     }
 
     @Override

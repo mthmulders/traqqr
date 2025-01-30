@@ -11,6 +11,7 @@ public record Measurement(
         int odometer,
         Battery battery,
         Location location,
+        Source source,
         Vehicle vehicle) {
 
     public record Battery(byte soc) {}

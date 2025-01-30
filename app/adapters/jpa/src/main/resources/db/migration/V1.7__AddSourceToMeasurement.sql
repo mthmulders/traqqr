@@ -1,0 +1,14 @@
+ALTER TABLE
+    measurement ADD COLUMN SOURCE VARCHAR;
+
+UPDATE
+    measurement
+SET
+    SOURCE = 'API'
+WHERE
+    SOURCE IS NULL;
+
+ALTER TABLE
+    measurement ALTER COLUMN SOURCE
+SET
+    NOT NULL;
