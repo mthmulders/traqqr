@@ -40,8 +40,7 @@ public class JpaVehicleRepository implements VehicleRepository {
 
     @Override
     public Collection<Vehicle> findByOwner(Owner owner) {
-        var query =
-                this.em.createQuery("select v from VehicleEntity v where v.ownerId = :ownerId", VehicleEntity.class);
+        var query = this.em.createQuery("select v from Vehicle v where v.ownerId = :ownerId", VehicleEntity.class);
         return query.setParameter("ownerId", owner.code())
                 .getResultStream()
                 .map(mapper::vehicleEntityToVehicle)
@@ -81,7 +80,7 @@ public class JpaVehicleRepository implements VehicleRepository {
 
     private Optional<VehicleEntity> findEntityByCode(String code) {
         return this.em
-                .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
+                .createQuery("select v from Vehicle v where v.code = :code", VehicleEntity.class)
                 .setParameter("code", code)
                 .getResultStream()
                 .findFirst();

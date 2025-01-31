@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Measurement")
 @Table(name = "measurement")
 public class MeasurementEntity {
     enum Source {

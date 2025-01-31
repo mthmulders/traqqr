@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Authorisation")
 @Table(name = "authorisation")
 public class AuthorisationEntity {
     @Id

@@ -39,7 +39,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     @Transactional(Transactional.TxType.MANDATORY)
     public void save(Measurement measurement) {
         var vehicle = this.em
-                .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
+                .createQuery("select v from Vehicle v where v.code = :code", VehicleEntity.class)
                 .setParameter("code", measurement.vehicle().code())
                 .getSingleResult();
 
@@ -65,7 +65,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
         var query = this.em
                 .createQuery(
-                        "select m from MeasurementEntity m where m.vehicle.code = :vehicle_code order by m.measuredAt desc",
+                        "select m from Measurement m where m.vehicle.code = :vehicle_code order by m.measuredAt desc",
                         MeasurementEntity.class)
                 .setParameter("vehicle_code", vehicle.code());
 
@@ -89,15 +89,14 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     public long countByVehicle(Vehicle vehicle) {
         log.debug("Counting measurements; vehicle={}", vehicle.code());
         return this.em
-                .createQuery(
-                        "select count(m) from MeasurementEntity m where m.vehicle.code = :vehicle_code", Long.class)
+                .createQuery("select count(m) from Measurement m where m.vehicle.code = :vehicle_code", Long.class)
                 .setParameter("vehicle_code", vehicle.code())
                 .getSingleResult();
     }
 
     private Optional<MeasurementEntity> findEntityById(UUID id) {
         return this.em
-                .createQuery("select m from MeasurementEntity m where m.id = :id", MeasurementEntity.class)
+                .createQuery("select m from Measurement m where m.id = :id", MeasurementEntity.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst();

@@ -70,7 +70,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
         runTransactional(() -> repository.save(vehicle));
 
         var result = entityManager
-                .createQuery("select v from VehicleEntity v where v.code = :code", VehicleEntity.class)
+                .createQuery("select v from Vehicle v where v.code = :code", VehicleEntity.class)
                 .setParameter("code", vehicle.code())
                 .getSingleResult();
         assertThat(vehicleMapper.vehicleEntityToVehicle(result)).isEqualTo(vehicle);
