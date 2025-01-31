@@ -15,7 +15,7 @@
   <name>Traqqr :: Adapters :: JPA</name>
 
   <properties>
-    <eclipselink.version>4.0.3</eclipselink.version>
+    <eclipselink.version>4.0.5</eclipselink.version>
     <flyway.version>11.3.0</flyway.version>
     <testcontainers.version>1.20.4</testcontainers.version>
   </properties>
