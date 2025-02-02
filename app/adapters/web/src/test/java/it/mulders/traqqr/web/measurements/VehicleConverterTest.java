@@ -3,14 +3,12 @@ package it.mulders.traqqr.web.measurements;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -42,30 +40,7 @@ class VehicleConverterTest implements WithAssertions {
         }
     };
 
-    private final VehicleRepository repository = new VehicleRepository() {
-        private final Set<Vehicle> vehicles = VehicleConverterTest.this.vehicles;
-
-        @Override
-        public Optional<Vehicle> findByCode(String code) {
-            return Optional.empty();
-        }
-
-        @Override
-        public Collection<Vehicle> findByOwner(Owner owner) {
-            return vehicles.stream()
-                    .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
-                    .collect(Collectors.toSet());
-        }
-
-        @Override
-        public void save(Vehicle vehicle) {}
-
-        @Override
-        public void update(Vehicle vehicle) {}
-
-        @Override
-        public void removeVehicle(Vehicle vehicle) {}
-    };
+    private final VehicleRepository repository = new InMemoryVehicleRepository(vehicles);
     private final VehicleMapper mapper = new VehicleMapperImpl();
 
     private final VehicleConverter converter = new VehicleConverter(mapper, repository, owner1);
