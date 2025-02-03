@@ -1,7 +1,6 @@
 package it.mulders.traqqr.web.faces;
 
 import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.FacesContext;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -9,6 +8,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeParseException;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -18,11 +18,16 @@ import org.primefaces.component.outputlabel.OutputLabel;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MeasurementTimestampConverterTest implements WithAssertions {
-    private final FacesContext facesContext = new MockFacesContext();
+    private static final MockFacesContext facesContext = new MockFacesContext();
     private final MeasurementTimestampConverter converter = new MeasurementTimestampConverter();
 
     private static final OffsetDateTime INPUT =
             OffsetDateTime.of(LocalDate.of(2025, Month.JANUARY, 7), LocalTime.of(22, 14, 13, 0), ZoneOffset.UTC);
+
+    @AfterAll
+    static void cleanupFacesContext() {
+        facesContext.unregister();
+    }
 
     @Nested
     class GetAsString {

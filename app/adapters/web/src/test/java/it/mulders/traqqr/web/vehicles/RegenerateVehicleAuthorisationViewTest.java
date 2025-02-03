@@ -4,15 +4,18 @@ import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
+import it.mulders.traqqr.web.faces.MockFacesContext;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
+    private static final MockFacesContext facesContext = new MockFacesContext();
     private final InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
 
@@ -21,6 +24,11 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
                 @Override
                 protected void updateView() {}
             };
+
+    @AfterAll
+    static void cleanupFacesContext() {
+        facesContext.unregister();
+    }
 
     @Test
     void should_regenerate_authorisation() {
