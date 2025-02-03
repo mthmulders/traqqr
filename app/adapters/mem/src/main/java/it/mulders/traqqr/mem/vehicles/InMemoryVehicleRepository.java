@@ -18,7 +18,15 @@ import org.slf4j.LoggerFactory;
 public class InMemoryVehicleRepository implements VehicleRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryVehicleRepository.class);
 
-    private final Set<Vehicle> vehicles = new HashSet<>();
+    private final Set<Vehicle> vehicles;
+
+    public InMemoryVehicleRepository() {
+        this(new HashSet<>());
+    }
+
+    public InMemoryVehicleRepository(final Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
 
     @Override
     public Optional<Vehicle> findByCode(final String code) {
