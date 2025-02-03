@@ -98,6 +98,7 @@ public class JpaVehicleRepository implements VehicleRepository {
     private void removeVehicleEntity(final VehicleEntity entity) {
         try {
             em.remove(entity);
+            em.flush();
             log.debug("Vehicle removed; code={}", entity.getCode());
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             log.error("Error removing vehicle; code={}", entity.getCode(), e);
