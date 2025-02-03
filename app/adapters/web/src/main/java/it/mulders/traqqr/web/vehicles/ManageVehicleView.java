@@ -1,8 +1,5 @@
 package it.mulders.traqqr.web.vehicles;
 
-import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
-
-import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
@@ -16,6 +13,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DialogFrameworkOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,11 +24,11 @@ public class ManageVehicleView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ManageVehicleView.class);
 
     // Components
-    private final Owner owner;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
     // Data
+    private final Owner owner;
     private VehicleDTO selectedVehicle;
     private Collection<VehicleDTO> vehicles;
 
@@ -62,32 +61,6 @@ public class ManageVehicleView implements Serializable {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void saveVehicle() {
-        if (selectedVehicle.getCode() == null) {
-            selectedVehicle.setCode(RandomStringUtils.generateRandomIdentifier(8));
-            this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
-
-            var msg =
-                    new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        } else {
-            vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
-
-            var msg = new FacesMessage(
-                    SEVERITY_INFO, "Success", "Vehicle %s updated".formatted(selectedVehicle.getCode()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-
-        selectedVehicle = null;
-        populateVehicles();
-        PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
-    }
-
-    public void createVehicle() {
-        selectedVehicle = new VehicleDTO();
-    }
-
-    @Transactional(Transactional.TxType.REQUIRED)
     public void deleteVehicle() {
         this.vehicleRepository.removeVehicle(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
@@ -98,6 +71,40 @@ public class ManageVehicleView implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
 
         this.selectedVehicle = null;
+        populateVehicles();
+    }
+
+    public void editVehicle(final VehicleDTO vehicle) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", vehicle);
+        openDialog("edit");
+    }
+
+    public void createVehicle() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", new VehicleDTO());
+        openDialog("edit");
+    }
+
+    public void regenerateApiKey(final VehicleDTO vehicle) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", vehicle);
+        openDialog("regenerate-authorisation");
+    }
+
+    private void openDialog(final String viewName) {
+        var options = DialogFrameworkOptions.builder()
+                .resizable(false)
+                .modal(true)
+                .showEffect("fade")
+                .hideEffect("fade")
+                .closeOnEscape(true)
+                .responsive(true)
+                .build();
+        PrimeFaces.current().dialog().openDynamic(viewName, options, null);
+    }
+
+    public void onVehicleUpdated(SelectEvent<FacesMessage> event) {
+        var msg = event.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        PrimeFaces.current().ajax().update("form:messages");
         populateVehicles();
     }
 }

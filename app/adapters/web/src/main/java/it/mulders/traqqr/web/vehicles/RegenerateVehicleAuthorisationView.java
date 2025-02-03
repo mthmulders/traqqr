@@ -1,14 +1,21 @@
 package it.mulders.traqqr.web.vehicles;
 
+import static jakarta.faces.application.FacesMessage.SEVERITY_WARN;
+
+import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.model.AuthorisationDTO;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.io.Serializable;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.DialogFrameworkOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +23,9 @@ import org.slf4j.LoggerFactory;
 @ViewScoped
 public class RegenerateVehicleAuthorisationView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(RegenerateVehicleAuthorisationView.class);
+
+    // UI
+    private UIComponent rawKey;
 
     // Components
     private final VehicleMapper vehicleMapper;
@@ -30,6 +40,11 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
             final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository) {
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
+
+        this.selectedVehicle = (VehicleDTO) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getFlash()
+                .get("selectedVehicle");
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
@@ -37,24 +52,34 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
         log.debug("Regenerating API key for vehicle; code={}", selectedVehicle.getCode());
         this.vehicleRepository
                 .findByCode(selectedVehicle.getCode())
-                .ifPresentOrElse(
-                        (vehicle) -> {
-                            var authorisation = vehicle.regenerateKey();
-                            this.vehicleRepository.update(vehicle);
+                .ifPresentOrElse(this::regenerateApiKey, this::logVehicleNotFound);
+    }
 
-                            generatedAuthorisation = vehicleMapper.authorisationToDto(authorisation);
+    private void regenerateApiKey(Vehicle vehicle) {
+        var authorisation = vehicle.regenerateKey();
+        this.vehicleRepository.update(vehicle);
+        generatedAuthorisation = vehicleMapper.authorisationToDto(authorisation);
+        updateView();
+    }
 
-                            updateView();
-                        },
-                        () -> {
-                            log.error(
-                                    "Tried to generate new API key for non-existing vehicle; code={}",
-                                    selectedVehicle.getCode());
-                        });
+    private void logVehicleNotFound() {
+        log.error("Tried to generate new API key for non-existing vehicle; code={}", selectedVehicle.getCode());
     }
 
     protected void updateView() {
-        PrimeFaces.current().ajax().update("dialogs:vehicle-details-content");
+        var msg = new FacesMessage(
+                SEVERITY_WARN, "Please note", "You will see this API key only once. Make sure to write it down!");
+        FacesContext.getCurrentInstance().addMessage(getRawKeyClientId(), msg);
+
+        var options = DialogFrameworkOptions.builder()
+                .resizable(false)
+                .modal(true)
+                .showEffect("fade")
+                .hideEffect("fade")
+                .closeOnEscape(true)
+                .responsive(true)
+                .build();
+        PrimeFaces.current().dialog().openDynamic("regenerate-authorisation", options, null);
     }
 
     public AuthorisationDTO getGeneratedAuthorisation() {
@@ -67,5 +92,18 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
 
     public void setSelectedVehicle(final VehicleDTO selectedVehicle) {
         this.selectedVehicle = selectedVehicle;
+    }
+
+    public UIComponent getRawKey() {
+        return rawKey;
+    }
+
+    public void setRawKey(final UIComponent rawKey) {
+        this.rawKey = rawKey;
+    }
+
+    private String getRawKeyClientId() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        return rawKey.getClientId(context);
     }
 }
