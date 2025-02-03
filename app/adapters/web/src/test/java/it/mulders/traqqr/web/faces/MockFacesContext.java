@@ -11,9 +11,13 @@ import jakarta.faces.lifecycle.Lifecycle;
 import jakarta.faces.render.RenderKit;
 import java.util.Iterator;
 
-class MockFacesContext extends FacesContext {
+public class MockFacesContext extends FacesContext {
     public MockFacesContext() {
         setCurrentInstance(this);
+    }
+
+    public void unregister() {
+        setCurrentInstance(null);
     }
 
     @Override
@@ -33,7 +37,7 @@ class MockFacesContext extends FacesContext {
 
     @Override
     public ExternalContext getExternalContext() {
-        return null;
+        return new MockExternalContext();
     }
 
     @Override
