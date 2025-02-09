@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="nop" class="ch.qos.logback.core.helpers.NOPAppender" />
+
+  <logger name="it.mulders.traqqr" level="debug" />
+
+  <root level="warn">
+    <appender-ref ref="nop" />
+  </root>
+</configuration>
