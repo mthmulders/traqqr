@@ -16,4 +16,19 @@
     <factory>
         <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
+    
+    <navigation-rule>
+        <from-view-id>/secure/measurements/index.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>add-manual-measurement</from-outcome>
+            <to-view-id>/secure/measurements/add/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>vehicleCode</name>
+                    <value>#{manageMeasurementsView.selectedVehicle.code}</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

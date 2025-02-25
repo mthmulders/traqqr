@@ -36,10 +36,20 @@ public class InMemoryVehicleRepository implements VehicleRepository {
                 .findAny();
     }
 
-    private Vehicle clone(final Vehicle vehicle) {
-        var authorisations = vehicle.authorisations() == null ? null : new HashSet<>(vehicle.authorisations());
-        return new Vehicle(
-                vehicle.code(), vehicle.description(), vehicle.ownerId(), authorisations, vehicle.netBatteryCapacity());
+    @Override
+    public Collection<Vehicle> findByOwner(final Owner owner) {
+        return vehicles.stream()
+                .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Vehicle> findByOwnerAndCode(final Owner owner, final String code) {
+        return vehicles.stream()
+                .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
+                .filter(vehicle -> code.equals(vehicle.code()))
+                .map(this::clone)
+                .findAny();
     }
 
     @Override
@@ -74,10 +84,9 @@ public class InMemoryVehicleRepository implements VehicleRepository {
         return () -> log.error("Vehicle not found; code={}", vehicle.code());
     }
 
-    @Override
-    public Collection<Vehicle> findByOwner(final Owner owner) {
-        return vehicles.stream()
-                .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
-                .collect(Collectors.toList());
+    private Vehicle clone(final Vehicle vehicle) {
+        var authorisations = vehicle.authorisations() == null ? null : new HashSet<>(vehicle.authorisations());
+        return new Vehicle(
+                vehicle.code(), vehicle.description(), vehicle.ownerId(), authorisations, vehicle.netBatteryCapacity());
     }
 }

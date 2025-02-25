@@ -6,6 +6,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TransactionRequiredException;
@@ -45,6 +46,22 @@ public class JpaVehicleRepository implements VehicleRepository {
                 .getResultStream()
                 .map(mapper::vehicleEntityToVehicle)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Optional<Vehicle> findByOwnerAndCode(final Owner owner, final String code) {
+        var query = this.em
+                .createQuery(
+                        "select v from Vehicle v where v.ownerId = :ownerId and v.code = :code", VehicleEntity.class)
+                .setParameter("ownerId", owner.code())
+                .setParameter("code", code);
+        try {
+            var entity = query.getSingleResult();
+            return Optional.of(mapper.vehicleEntityToVehicle(entity));
+        } catch (NoResultException nre) {
+            log.info("Vehicle not found; owner_id={}, code={}", owner.code(), code);
+            return Optional.empty();
+        }
     }
 
     @Override

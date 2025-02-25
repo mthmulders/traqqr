@@ -12,6 +12,8 @@ public interface VehicleRepository {
 
     Collection<Vehicle> findByOwner(final Owner owner);
 
+    Optional<Vehicle> findByOwnerAndCode(final Owner owner, final String code);
+
     void save(final Vehicle vehicle);
 
     void update(final Vehicle vehicle);

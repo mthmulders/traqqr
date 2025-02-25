@@ -63,6 +63,15 @@
                             <f:setPropertyActionListener value="#{measurement}" target="#{manageMeasurementsView.selectedMeasurement}" />
                         </p:commandButton>
                     </p:column>
+
+                    <f:facet name="footer">
+                        <p:linkButton icon="pi pi-plus"
+                                      value="Add"
+                                      outcome="add-manual-measurement"
+                                      includeViewParams="true"
+                                      rendered="#{not empty manageMeasurementsView.selectedVehicle}">
+                        </p:linkButton>
+                    </f:facet>
                 </p:dataTable>
             </p:card>
         </h:form>

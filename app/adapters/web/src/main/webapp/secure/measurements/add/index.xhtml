@@ -1,0 +1,98 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        template="/WEB-INF/layout-closed.xhtml">
+  <ui:define name="title">Add Measurement</ui:define>
+
+  <f:metadata>
+    <f:viewParam name="vehicleCode" value="#{addMeasurementView.preselectedVehicleCode}" />
+    <f:event listener="#{addMeasurementView.selectVehicle}" type="preRenderView"/>
+  </f:metadata>
+
+  <ui:define name="content">
+    <h:form id="form">
+      <f:facet name="title">Add Measurement</f:facet>
+
+      <p:growl id="messages" showDetail="true" />
+
+      <div class="ui-fluid">
+
+        <div class="field grid">
+          <p:outputLabel for="vehicle" value="Vehicle" class="col-12 mb-2 md:col-2 md:mb-0" />
+          <div class="col-12 md:col-10">
+            <p:inputText id="vehicle"
+                         value="#{addMeasurementView.selectedVehicle.description}"
+                         readonly="true" />
+          </div>
+        </div>
+
+        <div class="field grid">
+          <p:outputLabel for="odometer" value="Odometer" class="col-12 mb-2 md:col-2 md:mb-0" />
+          <div class="col-12 md:col-10">
+            <p:inputNumber id="odometer" value="#{addMeasurementView.measurement.odometer}"
+                         min="0"
+                         symbol=" km" symbolPosition="s"
+                         decimalPlaces="0"
+                         required="true" />
+          </div>
+        </div>
+
+        <div class="field grid">
+          <p:outputLabel for="battery_soc" value="Battery SoC" class="col-12 mb-2 md:col-2 md:mb-0" />
+          <div class="col-12 md:col-10">
+            <p:inputNumber id="battery_soc"
+                           value="#{addMeasurementView.measurement.batterySoc}"
+                           min="0" max="100"
+                           symbolPosition="s" symbol=" %"
+                           decimalPlaces="0"
+                           required="true" />
+          </div>
+        </div>
+
+        <div class="field grid">
+          <p:outputLabel for="location" value="Location" class="col-12 mb-2 md:col-2 md:mb-0" />
+          <div class="col-12 md:col-10">
+            <p:inputText id="location"
+                         value="#{addMeasurementView.measurement.location}"
+                         widgetVar="gps_location" required="true"
+                         readonly="#{facesContext.currentPhaseId.ordinal eq 6}" />
+            <!-- https://stackoverflow.com/a/32390903/1523342 -->
+          </div>
+        </div>
+
+        <div class="field grid">
+          <div class="col-12 mb-2 md:col-2 md:mb-0"></div>
+          <div class="col-12 md:col-10">
+            <p:commandButton
+                    icon="pi pi-save" iconPos="right"
+                    value="Register" ajax="false"
+                    action="#{addMeasurementView.submitMeasurement}">
+            </p:commandButton>
+          </div>
+        </div>
+
+      </div>
+
+      <script type="application/javascript">
+          if (navigator.geolocation) {
+              const updateInputField = (value) => {
+                  PF('gps_location').jq.val(value).trigger('change');
+              };
+              const onSuccess = (position) => {
+                  const coordinates = position.coords;
+                  const inputValue = `\${coordinates.latitude}, \${coordinates.longitude}`;
+                  updateInputField(inputValue);
+              };
+              const onFailure = (error) => {
+                  const inputValue = error.message;
+                  updateInputField(inputValue);
+              };
+              navigator.geolocation.getCurrentPosition(onSuccess, onFailure, {enableHighAccuracy: true});
+          }
+      </script>
+    </h:form>
+  </ui:define>
+</ui:composition>
