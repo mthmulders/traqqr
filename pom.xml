@@ -296,8 +296,8 @@
     <profile>
       <id>sonarcloud</id>
       <properties>
-        <sonar.projectKey>mthmulders_puml-maven-plugin</sonar.projectKey>
-        <sonar.organization>mthmulders_traqqr</sonar.organization>
+        <sonar.projectKey>mthmulders_traqqr</sonar.projectKey>
+        <sonar.organization>mthmulders-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
       </properties>
