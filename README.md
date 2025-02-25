@@ -2,6 +2,7 @@
 
 [![Build status](https://github.com/mthmulders/traqqr/actions/workflows/build.yml/badge.svg)](https://github.com/mthmulders/traqqr/actions/workflows/build.yml)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fmthmulders%2Ftraqqr%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/mthmulders/traqqr/main)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mthmulders_traqqr&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mthmulders_traqqr)
 
 Traqqr is a personal pet project with one main goal
 
