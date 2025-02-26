@@ -1,5 +1,6 @@
 package it.mulders.traqqr.web.vehicles;
 
+import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.traqqr.domain.user.Owner;
@@ -11,7 +12,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants.ComponentModel;
 
-@Mapper(componentModel = ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
+@Mapper(
+        componentModel = ComponentModel.JAKARTA_CDI,
+        nullValueIterableMappingStrategy = RETURN_DEFAULT,
+        injectionStrategy = CONSTRUCTOR)
 public interface VehicleMapper {
     @Mapping(target = "authorisation", ignore = true)
     @Mapping(target = "netBatteryCapacity", source = "netBatteryCapacity")
