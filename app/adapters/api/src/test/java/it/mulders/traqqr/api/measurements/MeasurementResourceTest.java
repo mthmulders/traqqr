@@ -19,14 +19,14 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
-public class MeasurementResourceTest implements WithAssertions {
+class MeasurementResourceTest implements WithAssertions {
     private MeasurementResource resource;
     private InMemoryMeasurementRepository measurementRepository;
     private InMemoryVehicleRepository vehicleRepository;
     private MeasurementMapper measurementMapper;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         measurementRepository = new InMemoryMeasurementRepository();
         vehicleRepository = new InMemoryVehicleRepository();
         measurementMapper = new MeasurementMapperImpl();
@@ -34,7 +34,7 @@ public class MeasurementResourceTest implements WithAssertions {
     }
 
     @Test
-    public void testRegisterMeasurement_Success() {
+    void testRegisterMeasurement_Success() {
         var vehicle = new Vehicle(
                 "code123",
                 "description",
@@ -63,7 +63,7 @@ public class MeasurementResourceTest implements WithAssertions {
     }
 
     @Test
-    public void testRegisterMeasurement_VehicleNotFound() {
+    void testRegisterMeasurement_VehicleNotFound() {
         var measurementDto = new MeasurementDto(
                 OffsetDateTime.now(),
                 1000,
@@ -77,7 +77,7 @@ public class MeasurementResourceTest implements WithAssertions {
     }
 
     @Test
-    public void testRegisterMeasurement_Unauthorized() {
+    void testRegisterMeasurement_Unauthorized() {
         var vehicle = new Vehicle("code123", "description", "ownerId", null, BigDecimal.valueOf(50.0));
         vehicleRepository.save(vehicle);
 
