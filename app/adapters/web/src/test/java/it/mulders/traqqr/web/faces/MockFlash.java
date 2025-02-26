@@ -16,7 +16,9 @@ public class MockFlash extends Flash {
     }
 
     @Override
-    public void setKeepMessages(boolean newValue) {}
+    public void setKeepMessages(boolean newValue) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
     public boolean isRedirect() {
@@ -24,19 +26,27 @@ public class MockFlash extends Flash {
     }
 
     @Override
-    public void setRedirect(boolean newValue) {}
+    public void setRedirect(boolean newValue) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
-    public void putNow(String key, Object value) {}
+    public void putNow(String key, Object value) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
     public void keep(String key) {}
 
     @Override
-    public void doPrePhaseActions(FacesContext ctx) {}
+    public void doPrePhaseActions(FacesContext ctx) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
-    public void doPostPhaseActions(FacesContext ctx) {}
+    public void doPostPhaseActions(FacesContext ctx) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
     public int size() {

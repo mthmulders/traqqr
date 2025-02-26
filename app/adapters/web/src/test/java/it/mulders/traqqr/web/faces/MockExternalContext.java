@@ -16,7 +16,9 @@ import java.util.Set;
 
 public class MockExternalContext extends ExternalContext {
     @Override
-    public void dispatch(String path) throws IOException {}
+    public void dispatch(String path) throws IOException {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
     public String encodeActionURL(String url) {
@@ -174,16 +176,24 @@ public class MockExternalContext extends ExternalContext {
     }
 
     @Override
-    public void log(String message) {}
+    public void log(String message) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
-    public void log(String message, Throwable exception) {}
+    public void log(String message, Throwable exception) {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
-    public void redirect(String url) throws IOException {}
+    public void redirect(String url) throws IOException {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
-    public void release() {}
+    public void release() {
+        // Only used in tests, no implementation necessary.
+    }
 
     @Override
     public Flash getFlash() {
