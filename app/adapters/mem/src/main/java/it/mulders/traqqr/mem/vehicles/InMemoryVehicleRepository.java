@@ -40,7 +40,7 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     public Collection<Vehicle> findByOwner(final Owner owner) {
         return vehicles.stream()
                 .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

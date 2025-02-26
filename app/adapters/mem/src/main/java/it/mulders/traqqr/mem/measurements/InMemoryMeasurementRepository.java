@@ -23,7 +23,7 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
 
     @Override
     public Collection<Measurement> findByVehicle(Vehicle vehicle) {
-        return measurements.stream().filter(byVehicle(vehicle)).collect(Collectors.toList());
+        return measurements.stream().filter(byVehicle(vehicle)).toList();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
                 .filter(byVehicle(vehicle))
                 .skip(pagination.offset())
                 .limit(pagination.limit())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
