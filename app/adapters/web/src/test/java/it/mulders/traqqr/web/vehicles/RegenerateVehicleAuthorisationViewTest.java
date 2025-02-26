@@ -5,10 +5,12 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.MockFacesContext;
+import jakarta.faces.context.FacesContext;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -20,10 +22,17 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
 
     private final RegenerateVehicleAuthorisationView view =
-            new RegenerateVehicleAuthorisationView(vehicleMapper, vehicleRepository) {
-                @Override
-                protected void updateView() {}
-            };
+            new RegenerateVehicleAuthorisationView(vehicleMapper, vehicleRepository);
+
+    @BeforeEach
+    void prepareRawKeyComponent() {
+        view.setRawKey(new org.primefaces.component.inputtext.InputText() {
+            @Override
+            public String getClientId(FacesContext context) {
+                return RandomStringUtils.generateRandomIdentifier(5);
+            }
+        });
+    }
 
     @AfterAll
     static void cleanupFacesContext() {

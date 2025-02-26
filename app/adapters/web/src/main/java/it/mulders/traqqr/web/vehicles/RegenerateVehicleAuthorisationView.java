@@ -59,14 +59,7 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
         var authorisation = vehicle.regenerateKey();
         this.vehicleRepository.update(vehicle);
         generatedAuthorisation = vehicleMapper.authorisationToDto(authorisation);
-        updateView();
-    }
 
-    private void logVehicleNotFound() {
-        log.error("Tried to generate new API key for non-existing vehicle; code={}", selectedVehicle.getCode());
-    }
-
-    protected void updateView() {
         var msg = new FacesMessage(
                 SEVERITY_WARN, "Please note", "You will see this API key only once. Make sure to write it down!");
         FacesContext.getCurrentInstance().addMessage(getRawKeyClientId(), msg);
@@ -80,6 +73,10 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
                 .responsive(true)
                 .build();
         PrimeFaces.current().dialog().openDynamic("regenerate-authorisation", options, null);
+    }
+
+    private void logVehicleNotFound() {
+        log.error("Tried to generate new API key for non-existing vehicle; code={}", selectedVehicle.getCode());
     }
 
     public AuthorisationDTO getGeneratedAuthorisation() {
