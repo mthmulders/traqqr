@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -22,15 +23,13 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
 
     @Override
     public Collection<Measurement> findByVehicle(Vehicle vehicle) {
-        return measurements.stream()
-                .filter(measurement -> measurement.vehicle().equals(vehicle))
-                .collect(Collectors.toList());
+        return measurements.stream().filter(byVehicle(vehicle)).collect(Collectors.toList());
     }
 
     @Override
     public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
         return measurements.stream()
-                .filter(measurement -> measurement.vehicle().equals(vehicle))
+                .filter(byVehicle(vehicle))
                 .skip(pagination.offset())
                 .limit(pagination.limit())
                 .collect(Collectors.toList());
@@ -38,9 +37,11 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
 
     @Override
     public long countByVehicle(Vehicle vehicle) {
-        return measurements.stream()
-                .filter(measurement -> measurement.vehicle().equals(vehicle))
-                .count();
+        return measurements.stream().filter(byVehicle(vehicle)).count();
+    }
+
+    private Predicate<Measurement> byVehicle(Vehicle vehicle) {
+        return measurement -> measurement.vehicle().code().equals(vehicle.code());
     }
 
     @Override
