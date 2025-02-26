@@ -1,5 +1,7 @@
 package it.mulders.traqqr.web.measurements;
 
+import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
+
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.measurements.Source;
 import it.mulders.traqqr.domain.user.Owner;
@@ -7,6 +9,8 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.web.measurements.model.MeasurementDTO;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -68,10 +72,9 @@ public class AddMeasurementView implements Serializable {
         log.debug("Registering measurement; {}", measurement);
         this.measurementRepository.save(measurement);
 
-        /*
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Measurement saved".formatted(selectedVehicle.getCode()));
-        PrimeFaces.current().dialog().closeDynamic(msg);
-         */
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
     }
 
     public String getPreselectedVehicleCode() {
