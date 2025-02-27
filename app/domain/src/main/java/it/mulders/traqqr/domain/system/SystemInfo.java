@@ -1,10 +1,11 @@
 package it.mulders.traqqr.domain.system;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,12 @@ public class SystemInfo {
     private final Properties systemProperties = System.getProperties();
     private final Properties metadataProperties = new Properties();
 
-    @PostConstruct
-    public void loadConfigurationProperties() {
-        loadMetadataProperties("/git.properties");
-        loadMetadataProperties("/application.properties");
+    public SystemInfo() {
+        this("/git.properties", "/application.properties");
+    }
+
+    protected SystemInfo(final String... classpathResourceNames) {
+        Arrays.stream(classpathResourceNames).forEach(this::loadMetadataProperties);
     }
 
     public String getJavaVersion() {
