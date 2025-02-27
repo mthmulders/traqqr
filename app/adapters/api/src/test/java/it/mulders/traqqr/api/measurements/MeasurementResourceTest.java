@@ -30,7 +30,7 @@ class MeasurementResourceTest implements WithAssertions {
         measurementRepository = new InMemoryMeasurementRepository();
         vehicleRepository = new InMemoryVehicleRepository();
         measurementMapper = new MeasurementMapperImpl();
-        resource = new MeasurementResource(measurementRepository, vehicleRepository, measurementMapper);
+        resource = new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
     }
 
     @Test

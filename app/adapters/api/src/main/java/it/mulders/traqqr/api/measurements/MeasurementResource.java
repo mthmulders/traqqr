@@ -20,21 +20,19 @@ import java.time.OffsetDateTime;
 @ApplicationScoped
 @Path("/v1/vehicle/{code}/measurement")
 public class MeasurementResource {
-    @Inject
+    private MeasurementMapper measurementMapper;
     private MeasurementRepository measurementRepository;
-
-    @Inject
     private VehicleRepository vehicleRepository;
 
+    public MeasurementResource() {
+        // Only here to satisfy CDI spec.
+    }
+
     @Inject
-    private MeasurementMapper measurementMapper;
-
-    public MeasurementResource() {}
-
-    protected MeasurementResource(
+    public MeasurementResource(
+            MeasurementMapper measurementMapper,
             MeasurementRepository measurementRepository,
-            VehicleRepository vehicleRepository,
-            MeasurementMapper measurementMapper) {
+            VehicleRepository vehicleRepository) {
         this.measurementRepository = measurementRepository;
         this.vehicleRepository = vehicleRepository;
         this.measurementMapper = measurementMapper;
