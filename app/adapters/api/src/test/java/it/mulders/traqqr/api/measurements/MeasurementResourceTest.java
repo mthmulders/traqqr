@@ -13,25 +13,17 @@ import java.util.Map;
 import java.util.Set;
 import org.assertj.core.api.WithAssertions;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class MeasurementResourceTest implements WithAssertions {
-    private MeasurementResource resource;
-    private InMemoryMeasurementRepository measurementRepository;
-    private InMemoryVehicleRepository vehicleRepository;
-    private MeasurementMapper measurementMapper;
+    private final InMemoryMeasurementRepository measurementRepository = new InMemoryMeasurementRepository();
+    private final InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
+    private final MeasurementMapper measurementMapper = new MeasurementMapperImpl();
 
-    @BeforeEach
-    void setUp() {
-        measurementRepository = new InMemoryMeasurementRepository();
-        vehicleRepository = new InMemoryVehicleRepository();
-        measurementMapper = new MeasurementMapperImpl();
-        resource = new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
-    }
+    private final MeasurementResource resource = new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
 
     @Test
     void testRegisterMeasurement_Success() {
