@@ -31,4 +31,19 @@
             </redirect>
         </navigation-case>
     </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/secure/measurements/add/index.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>return-measurement-list</from-outcome>
+            <to-view-id>/secure/measurements/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>vehicleCode</name>
+                    <value>#{addMeasurementView.preselectedVehicleCode}</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

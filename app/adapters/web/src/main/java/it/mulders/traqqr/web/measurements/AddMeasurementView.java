@@ -64,7 +64,7 @@ public class AddMeasurementView implements Serializable {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void submitMeasurement() {
+    public String submitMeasurement() {
         log.info("Submitting measurement; vehicle={}", selectedVehicle.getCode());
         log.debug("Submitting measurement; {}", measurementDTO);
         var now = OffsetDateTime.now();
@@ -75,6 +75,7 @@ public class AddMeasurementView implements Serializable {
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Measurement saved".formatted(selectedVehicle.getCode()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
+        return "return-measurement-list";
     }
 
     public String getPreselectedVehicleCode() {

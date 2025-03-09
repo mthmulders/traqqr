@@ -25,14 +25,19 @@ import org.slf4j.LoggerFactory;
 public class ManageMeasurementsView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ManageMeasurementsView.class);
 
-    private final Collection<VehicleDTO> vehicles;
+    // Components
     private final MeasurementRepository measurementRepository;
     private final VehicleMapper vehicleMapper;
-    private final Owner owner;
 
-    private VehicleDTO selectedVehicle;
+    // Data
     private LazyDataModel<Measurement> measurementsForSelectedVehicle;
+    private final Owner owner;
     private Measurement selectedMeasurement;
+    private VehicleDTO selectedVehicle;
+    private final Collection<VehicleDTO> vehicles;
+
+    // Parameters
+    private String preselectedVehicleCode;
 
     @Inject
     public ManageMeasurementsView(
@@ -49,6 +54,16 @@ public class ManageMeasurementsView implements Serializable {
                 .collect(Collectors.toSet());
 
         log.info("Found vehicles; owner={}, count={}", owner.code(), this.vehicles.size());
+    }
+
+    public void selectVehicle() {
+        if (preselectedVehicleCode != null) {
+            vehicles.stream()
+                    .filter(vehicle -> vehicle.getCode().equals(preselectedVehicleCode))
+                    .findAny()
+                    .ifPresent(this::setSelectedVehicle);
+            populateMeasurementsForSelectedVehicle();
+        }
     }
 
     public Collection<VehicleDTO> getVehicles() {
@@ -81,6 +96,14 @@ public class ManageMeasurementsView implements Serializable {
 
     public void setSelectedMeasurement(Measurement measurement) {
         this.selectedMeasurement = measurement;
+    }
+
+    public String getPreselectedVehicleCode() {
+        return preselectedVehicleCode;
+    }
+
+    public void setPreselectedVehicleCode(String preselectedVehicleCode) {
+        this.preselectedVehicleCode = preselectedVehicleCode;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

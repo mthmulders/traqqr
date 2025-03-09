@@ -7,6 +7,11 @@
         template="/WEB-INF/layout-closed.xhtml">
     <ui:define name="title">Measurements</ui:define>
 
+    <f:metadata>
+        <f:viewParam name="vehicleCode" value="#{manageMeasurementsView.preselectedVehicleCode}" />
+        <f:event listener="#{manageMeasurementsView.selectVehicle}" type="preRenderView"/>
+    </f:metadata>
+
     <ui:define name="content">
         <h:form id="form">
             <p:blockUI block="measurements" trigger="vehicle,measurements" />
