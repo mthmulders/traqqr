@@ -23,7 +23,8 @@ class MeasurementResourceTest implements WithAssertions {
     private final InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
     private final MeasurementMapper measurementMapper = new MeasurementMapperImpl();
 
-    private final MeasurementResource resource = new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
+    private final MeasurementResource resource =
+            new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
 
     @Test
     void testRegisterMeasurement_Success() {

@@ -31,7 +31,8 @@ class SystemInfoTest implements WithAssertions {
 
     @Test
     void should_fail_to_load_invalid_property_resource() {
-        assertThatThrownBy(() -> new SystemInfo(new String[]{"/non-existing.properties"})).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new SystemInfo(new String[]{null})).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new SystemInfo(new String[] {"/non-existing.properties"}))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new SystemInfo(new String[] {null})).isInstanceOf(IllegalArgumentException.class);
     }
 }
