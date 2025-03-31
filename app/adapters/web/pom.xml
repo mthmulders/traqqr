@@ -75,13 +75,13 @@
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
-      <version>15.0.2</version>
+      <version>${primefaces.version}</version>
       <classifier>jakarta</classifier>
     </dependency>
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces-themes</artifactId>
-      <version>15.0.2</version>
+      <version>${primefaces.version}</version>
     </dependency>
     <dependency>
       <groupId>org.webjars.npm</groupId>
