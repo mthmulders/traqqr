@@ -7,14 +7,15 @@ info:
     This specification describes all programmatic access to Traqqr.
   version: 1.0.0
 servers:
-  - url: https://localhost:9443/
+  - url: https://localhost:9443/api
     description: Development Traqqr instance
-  - url: https://traqqr.mulders.it/
+  - url: https://traqqr.mulders.it/api
     description: Public Traqqr instance
 paths:
   "/v1/vehicle/{code}/measurement":
     post:
-      operationId: register-measurement
+      operationId: registerMeasurement
+      description: Register a measurement of the odometer and state-of-charge of a vehicle.
       parameters:
         - description: Code of the vehicle where the measurement was obtained from
           in: path
@@ -30,11 +31,11 @@ paths:
         description: The measurement that was obtained from the vehicle
         required: true
       responses:
-        201:
+        "201":
           description: The measurement is stored successfully.
-        401:
+        "401":
           description: The provided credential did not validate.
-        404:
+        "404":
           description: There is no vehicle with the specified code.
       security:
         - vehicle-api-key-auth: []
