@@ -15,7 +15,9 @@ public class TraqqrIdentityStore implements IdentityStore {
     @Override
     public Set<String> getCallerGroups(final CredentialValidationResult validationResult) {
         log.info("Assigning groups; caller_unique_id={}", validationResult.getCallerUniqueId());
-        return Set.of("user");
+        // TODO Determine if every user gets the right to manually start batch processes.
+        // See WSBatchAuthServiceImpl.java and ROLES.java in the Open Liberty code base
+        return Set.of("batchAdmin", "user");
     }
 
     @Override

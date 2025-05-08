@@ -19,6 +19,6 @@ class TraqqrIdentityStoreTest implements WithAssertions {
     @Test
     void should_always_assign_role_user() {
         var input = new CredentialValidationResult("caller principal name");
-        assertThat(identityStore.getCallerGroups(input)).containsExactly("user");
+        assertThat(identityStore.getCallerGroups(input)).contains("batchAdmin", "user");
     }
 }
