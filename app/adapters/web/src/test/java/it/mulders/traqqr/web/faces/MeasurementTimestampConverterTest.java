@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeParseException;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -29,6 +30,7 @@ class MeasurementTimestampConverterTest implements WithAssertions {
         facesContext.unregister();
     }
 
+    @DisplayName("getAsString")
     @Nested
     class GetAsString {
         private final UIComponent component = new OutputLabel();
@@ -44,6 +46,7 @@ class MeasurementTimestampConverterTest implements WithAssertions {
         }
     }
 
+    @DisplayName("getAsObject")
     @Nested
     class GetAsObject {
         private final UIComponent component = new InputText();
