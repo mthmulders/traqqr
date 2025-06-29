@@ -16,6 +16,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>domain</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>provided</scope>
@@ -41,19 +46,14 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.json.bind</groupId>
-      <artifactId>jakarta.json.bind-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>it.mulders.traqqr</groupId>
-      <artifactId>domain</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
 
     <dependency>
@@ -66,9 +66,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
     </dependency>
   </dependencies>
-
 </project>
