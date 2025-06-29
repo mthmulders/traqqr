@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 public class InMemoryMeasurementRepository implements MeasurementRepository {
@@ -32,6 +33,11 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
                 .skip(pagination.offset())
                 .limit(pagination.limit())
                 .toList();
+    }
+
+    @Override
+    public Stream<Measurement> exampleStreamingFindForBatchJob() {
+        return Stream.empty();
     }
 
     @Override
