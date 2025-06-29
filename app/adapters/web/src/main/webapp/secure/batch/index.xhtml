@@ -1,0 +1,73 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        template="/WEB-INF/layout-closed.xhtml">
+  <f:loadBundle basename="com.corejsf.messages" var="msgs"/>
+
+  <ui:define name="title">Batch Jobs</ui:define>
+
+  <ui:define name="content">
+
+    <p:tabView dynamic="true" cache="true">
+      <p:tab title="Overview">
+        <h:form id="data-form">
+          <p:dataTable id="batchJobs" rowKey="#{batchJob.id}"
+                       var="batchJob" value="${manageBatchJobsView.batchJobsForSelectedBatchJobType}"
+                       rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+                       currentPageReportTemplate="{startRecord} - {endRecord} of {totalRecords} batch jobs"
+                       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                       editable="false" stripedRows="true">
+            <p:column headerText="Job Type">
+              <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(batchJob.type.name())]}" />
+            </p:column>
+            <p:column headerText="Status">
+              <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobStatus.'.concat(batchJob.status.name())]}" />
+            </p:column>
+            <p:column headerText="Started at">
+              <h:outputText value="#{batchJob.started}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+            </p:column>
+            <p:column headerText="Ended at">
+              <h:outputText value="#{batchJob.ended}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+            </p:column>
+            <p:column headerText="Items processed">
+              <h:outputText value="#{batchJob.itemsProcessed}" />
+            </p:column>
+
+          </p:dataTable>
+        </h:form>
+      </p:tab>
+      <p:tab title="Actions">
+        <h:form id="actions-form">
+          <p:outputLabel for="vehicle" value="Select Batch Job Type: " />
+          <p:selectOneMenu id="vehicle" value="#{manageBatchJobsView.selectedBatchJobType}"
+                           converter="batchJobTypeConverter">
+            <p:ajax event="change" update="@form" listener="#{manageBatchJobsView.populateBatchJobsForSelectedBatchJobType}" />
+            <f:selectItem itemLabel=""
+                          itemValue="#{null}"
+                          noSelectionOption="true"/>
+            <f:selectItems value="#{manageBatchJobsView.batchJobTypes}"
+                           var="item"
+                           itemLabel="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(item.name())]}"/>
+          </p:selectOneMenu>
+
+          <p:commandButton icon="pi pi-bolt" class="ui-button-secondary"
+                           action="#{manageBatchJobsView.startBatchJob()}"
+                           style="margin: 0.5rem"
+                           value="Start new job"
+                           styleClass="ui-button-danger"
+                           rendered="#{manageBatchJobsView.selectedBatchJobType != null}"
+                           process="@this">
+          </p:commandButton>
+        </h:form>
+      </p:tab>
+    </p:tabView>
+
+    <h:form id="form">
+
+
+    </h:form>
+  </ui:define>
+</ui:composition>

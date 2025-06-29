@@ -10,6 +10,7 @@
         <class>it.mulders.traqqr.jpa.measurements.MeasurementEntity</class>
         <class>it.mulders.traqqr.jpa.measurements.BatteryEntity</class>
         <class>it.mulders.traqqr.jpa.measurements.GpsLocationEntity</class>
+        <class>it.mulders.traqqr.jpa.batch.JobItemEntity</class>
 
         <properties>
             <property name="eclipselink.logging.level" value="FINER" />

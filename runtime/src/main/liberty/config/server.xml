@@ -2,8 +2,11 @@
 <server description="traqqr-dev-server">
     <featureManager>
         <feature>appSecurity-5.0</feature>
+        <feature>batch-2.1</feature>
+        <feature>batchManagement-1.0</feature>
         <feature>beanValidation-3.0</feature>
         <feature>cdi-4.0</feature>
+        <feature>enterpriseBeans-4.0</feature>
         <feature>expressionLanguage-5.0</feature>
         <feature>faces-4.0</feature>
         <feature>jsonb-3.0</feature>
@@ -33,6 +36,21 @@
     <application location="traqqr.ear" name="traqqr" />
 
     <!-- Enable detailed logging for Jakarta Persistence API.
+    <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
+         role that allows Batch Admin access. -->
+    <authorization-roles id="com.ibm.ws.batch">
+        <security-role name="batchAdmin">
+            <!-- https://openliberty.io/docs/latest/admin-center.html -->
+            <group access-id="group:https://accounts.google.com/batchAdmin" name="batchAdmin" />
+        </security-role>
+    </authorization-roles>
+
+    <batchPersistence>
+        <jobStore   createTables="true"
+                    dataSourceRef="traqqr-datasource"
+                    schema="batch" />
+    </batchPersistence>
+
     <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
      -->
     <!-- Enable detailed logging for Jakarta Security.

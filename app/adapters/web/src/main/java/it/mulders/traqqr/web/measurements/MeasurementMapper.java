@@ -17,6 +17,9 @@ import org.mapstruct.Mapping;
         nullValueIterableMappingStrategy = RETURN_DEFAULT,
         injectionStrategy = CONSTRUCTOR)
 public interface MeasurementMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "vehicle.ownerId", ignore = true)
+    @Mapping(target = "vehicle.authorisations", ignore = true)
     @Mapping(target = "battery.soc", source = "measurementDto.batterySoc")
     Measurement measurementDtoToMeasurement(
             MeasurementDTO measurementDto,
