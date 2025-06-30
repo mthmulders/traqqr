@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class BatchJob {
+public final class BatchJob {
     private final UUID id = UUID.randomUUID();
     private final OffsetDateTime started;
-    private OffsetDateTime ended;
-    private OffsetDateTime lastUpdated;
+    private final OffsetDateTime ended;
+    private final OffsetDateTime lastUpdated;
     private final BatchJobType type;
-    private BatchJobStatus status;
+    private final BatchJobStatus status;
     private final Map<BatchJobItemStatus, Long> itemsProcessedByStatus;
     private final Long instanceId;
     private final Long executionId;
@@ -85,11 +85,13 @@ public class BatchJob {
                 && status == batchJob.status
                 && Objects.equals(itemsProcessedByStatus, batchJob.itemsProcessedByStatus)
                 && Objects.equals(instanceId, batchJob.instanceId)
+                && Objects.equals(lastUpdated, batchJob.lastUpdated)
                 && Objects.equals(executionId, batchJob.executionId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, started, ended, type, status, itemsProcessedByStatus, instanceId, executionId);
+        return Objects.hash(
+                id, started, ended, type, status, itemsProcessedByStatus, instanceId, executionId, lastUpdated);
     }
 }
