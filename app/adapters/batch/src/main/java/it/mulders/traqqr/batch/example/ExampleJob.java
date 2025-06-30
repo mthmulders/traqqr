@@ -17,8 +17,12 @@ import org.slf4j.LoggerFactory;
 public class ExampleJob {
     private static final Logger logger = LoggerFactory.getLogger(ExampleJob.class);
 
+    private final JobOperator jobOperator;
+
     @Inject
-    private JobOperator jobOperator;
+    public ExampleJob(JobOperator jobOperator) {
+        this.jobOperator = jobOperator;
+    }
 
     public void startManual(@Observes @Any JobStartRequestedEvent event) {
         logger.debug("Received JobStartRequestedEvent: process_type={}", event.jobType());
