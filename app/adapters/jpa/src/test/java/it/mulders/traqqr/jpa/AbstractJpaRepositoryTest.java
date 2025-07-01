@@ -1,14 +1,20 @@
 package it.mulders.traqqr.jpa;
 
+import it.mulders.traqqr.domain.measurements.Measurement;
+import it.mulders.traqqr.domain.measurements.Source;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
+import it.mulders.traqqr.jpa.batch.BatchJobItemMapper;
 import it.mulders.traqqr.jpa.measurements.MeasurementMapper;
 import it.mulders.traqqr.jpa.vehicles.VehicleMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.RollbackException;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import org.assertj.core.api.WithAssertions;
@@ -29,6 +35,7 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
     protected static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER =
             new PostgreSQLContainer<>("postgres:16.6-alpine");
 
+    protected final BatchJobItemMapper batchJobItemMapper = MapStructHelper.getMapper(BatchJobItemMapper.class);
     protected final MeasurementMapper measurementMapper = MapStructHelper.getMapper(MeasurementMapper.class);
     protected final VehicleMapper vehicleMapper = MapStructHelper.getMapper(VehicleMapper.class);
 
@@ -107,5 +114,17 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
 
     protected Vehicle createVehicle(String code, String ownerId) {
         return new Vehicle(code, "Vehicle Description", ownerId, new ArrayList<>(), BigDecimal.valueOf(55));
+    }
+
+    protected Measurement createMeasurement(Vehicle vehicle) {
+        return new Measurement(
+                UUID.randomUUID(),
+                OffsetDateTime.now(),
+                OffsetDateTime.now().minus(5, ChronoUnit.SECONDS),
+                1_000,
+                new Measurement.Battery((byte) 80),
+                new Measurement.Location(55.0, 6.0),
+                Source.API,
+                vehicle);
     }
 }

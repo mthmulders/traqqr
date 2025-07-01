@@ -9,5 +9,5 @@ public interface BatchJobItemRepository {
     void save(BatchJobItem<?> item);
 
     @SuppressWarnings("rawtypes")
-    void saveAll(Collection<BatchJobItem> items);
+    void saveAll(Collection<BatchJobItem<?>> items);
 }

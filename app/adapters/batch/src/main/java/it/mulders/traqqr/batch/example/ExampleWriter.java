@@ -7,7 +7,10 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Dependent
 @Named("exampleWriter")
@@ -24,7 +27,9 @@ public class ExampleWriter extends AbstractItemWriter {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void writeItems(List<Object> items) throws Exception {
         // The items are the individual return values of ExampleProcessor#processItem
-        var batchJobItemList = items.stream().map(BatchJobItem.class::cast).toList();
+        Collection<BatchJobItem<?>> batchJobItemList = items.stream()
+                .map(BatchJobItem.class::cast)
+                .collect(Collectors.<BatchJobItem<?>, ArrayList<BatchJobItem<?>>>toCollection(ArrayList::new));
         batchJobItemRepository.saveAll(batchJobItemList);
     }
 }
