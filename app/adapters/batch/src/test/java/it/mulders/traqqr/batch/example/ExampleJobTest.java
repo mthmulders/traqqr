@@ -4,8 +4,11 @@ import it.mulders.traqqr.batch.shared.DummyJobOperator;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ExampleJobTest implements WithAssertions {
     private final DummyJobOperator jobOperator = new DummyJobOperator();
     private final ExampleJob job = new ExampleJob(jobOperator);
