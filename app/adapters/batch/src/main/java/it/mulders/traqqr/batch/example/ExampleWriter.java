@@ -8,13 +8,15 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Dependent
 @Named("exampleWriter")
 public class ExampleWriter extends AbstractItemWriter {
+    private static final Logger log = LoggerFactory.getLogger(ExampleWriter.class);
+
     // Components
     private final BatchJobItemRepository batchJobItemRepository;
 
@@ -25,11 +27,20 @@ public class ExampleWriter extends AbstractItemWriter {
 
     @Override
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void writeItems(List<Object> items) throws Exception {
+    public void writeItems(List<Object> items) {
         // The items are the individual return values of ExampleProcessor#processItem
-        Collection<BatchJobItem<?>> batchJobItemList = items.stream()
-                .map(BatchJobItem.class::cast)
-                .collect(Collectors.<BatchJobItem<?>, ArrayList<BatchJobItem<?>>>toCollection(ArrayList::new));
-        batchJobItemRepository.saveAll(batchJobItemList);
+        var result = new ArrayList<BatchJobItem<?>>();
+
+        // Not using the Streams API because it has trouble inferring the type
+        // of the Collector to use.
+        items.forEach(item -> {
+            if (item instanceof BatchJobItem<?> batchJobItem) {
+                result.add(batchJobItem);
+            } else {
+                log.warn("Unexpected item type {}", item.getClass());
+            }
+        });
+
+        batchJobItemRepository.saveAll(result);
     }
 }
