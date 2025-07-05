@@ -85,7 +85,6 @@
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>mem</artifactId>
-      <scope>test</scope>
     </dependency>
     <!-- Tied to the JAX-RS implementation that OpenLiberty uses. -->
     <dependency>

@@ -41,6 +41,10 @@
       <artifactId>web</artifactId>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>batch</artifactId>
+    </dependency>
 
     <!-- shared application modules  -->
     <dependency>
@@ -60,6 +64,16 @@
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.batch</groupId>
+      <artifactId>jakarta.batch-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.ejb</groupId>
+      <artifactId>jakarta.ejb-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -161,9 +175,13 @@
               <artifactId>web</artifactId>
               <contextRoot>/</contextRoot>
             </webModule>
+            <jarModule>
+              <groupId>it.mulders.traqqr</groupId>
+              <artifactId>batch</artifactId>
+            </jarModule>
           </modules>
           <packagingExcludes>**/postgresql*.jar,**/*checker-qual*.jar</packagingExcludes>
-          <skinnyWars>true</skinnyWars>
+          <skinnyModules>true</skinnyModules>
         </configuration>
       </plugin>
 
@@ -180,7 +198,7 @@
               <location>jdbc</location>
             </dependencyGroup>
           </copyDependencies>
-          <looseApplication>false</looseApplication>
+          <looseApplication>true</looseApplication>
           <mergeServerEnv>true</mergeServerEnv>
           <runtimeArtifact>
             <groupId>io.openliberty</groupId>

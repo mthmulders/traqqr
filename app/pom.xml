@@ -17,6 +17,7 @@
     <module>config</module>
     <module>domain</module>
     <module>adapters/api</module>
+    <module>adapters/batch</module>
     <module>adapters/jpa</module>
     <module>adapters/mem</module>
     <module>adapters/web</module>
