@@ -11,13 +11,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @ApplicationScoped
 public class BatchJobConverter {
     public BatchJob convert(final JobInstance instance, final JobExecution execution) {
-        return convert(instance, execution, new HashMap<>());
+        return convert(instance, execution, new EnumMap<>(BatchJobItemStatus.class));
     }
 
     public BatchJob convert(
