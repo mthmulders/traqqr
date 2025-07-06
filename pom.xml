@@ -310,6 +310,8 @@
         <sonar.organization>mthmulders-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+
+        <sonar.coverage.exclusions>app/adapters/mem/**/*</sonar.coverage.exclusions>
       </properties>
 
       <build>
