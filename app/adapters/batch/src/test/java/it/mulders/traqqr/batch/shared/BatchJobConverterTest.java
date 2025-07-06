@@ -8,10 +8,14 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Stream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BatchJobConverterTest implements WithAssertions {
@@ -66,5 +70,19 @@ class BatchJobConverterTest implements WithAssertions {
         var result = converter.convert(instance, execution, counts);
 
         assertThat(result.getItemsProcessed()).isEqualTo(7L);
+    }
+
+    @MethodSource("batchJobStatus")
+    @ParameterizedTest
+    void should_convert_status(BatchStatus input, BatchJobStatus output) {
+        assertThat(converter.fromBatchStatus(input)).isEqualTo(output);
+    }
+
+    static Stream<Arguments> batchJobStatus() {
+        return Stream.of(
+                Arguments.arguments(BatchStatus.COMPLETED, BatchJobStatus.COMPLETED),
+                Arguments.arguments(BatchStatus.STARTING, BatchJobStatus.RUNNING),
+                Arguments.arguments(BatchStatus.STARTED, BatchJobStatus.RUNNING),
+                Arguments.arguments(BatchStatus.FAILED, BatchJobStatus.FAILED));
     }
 }

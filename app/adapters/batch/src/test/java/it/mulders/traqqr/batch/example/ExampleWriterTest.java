@@ -37,6 +37,7 @@ class ExampleWriterTest implements WithAssertions {
                 Map.of(BatchJobItemStatus.PROCESSED, 1L),
                 1L,
                 1L);
+        var vehicle = new Vehicle("00000", "Example", "nobody", Collections.emptyList(), new BigDecimal(80_000));
         var measurement = new Measurement(
                 UUID.randomUUID(),
                 now.minusHours(1),
@@ -45,7 +46,7 @@ class ExampleWriterTest implements WithAssertions {
                 new Measurement.Battery((byte) 85),
                 new Measurement.Location(0.0, 0.0),
                 Source.API,
-                new Vehicle("00000", "Example", "nobody", Collections.emptyList(), new BigDecimal(80_000)));
+                vehicle);
 
         var item = new BatchJobItem<>(batchJob, BatchJobItemStatus.PROCESSED, measurement);
         exampleWriter.writeItems(List.of(item));

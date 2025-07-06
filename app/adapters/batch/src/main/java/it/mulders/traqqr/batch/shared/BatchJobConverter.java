@@ -46,7 +46,7 @@ public class BatchJobConverter {
         };
     }
 
-    private BatchJobStatus fromBatchStatus(final BatchStatus batchStatus) {
+    BatchJobStatus fromBatchStatus(final BatchStatus batchStatus) {
         return switch (batchStatus) {
             case COMPLETED -> BatchJobStatus.COMPLETED;
             case FAILED -> BatchJobStatus.FAILED;
