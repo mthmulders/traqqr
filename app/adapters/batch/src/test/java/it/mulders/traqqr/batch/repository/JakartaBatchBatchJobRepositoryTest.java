@@ -1,7 +1,7 @@
 package it.mulders.traqqr.batch.repository;
 
-import it.mulders.traqqr.batch.shared.BatchJobConverter;
 import it.mulders.traqqr.batch.jakarta.DummyJobOperator;
+import it.mulders.traqqr.batch.shared.BatchJobConverter;
 import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;

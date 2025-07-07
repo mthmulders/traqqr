@@ -7,6 +7,18 @@ import java.util.Properties;
 public class DummyJobContext implements JobContext {
     private final Properties props = new Properties();
 
+    private final int jobExecutionId;
+    private final int jobInstanceId;
+
+    public DummyJobContext(int jobExecutionId, int jobInstanceId) {
+        this.jobExecutionId = jobExecutionId;
+        this.jobInstanceId = jobInstanceId;
+    }
+
+    public DummyJobContext() {
+        this(0, 0);
+    }
+
     @Override
     public String getJobName() {
         return "";
@@ -22,12 +34,12 @@ public class DummyJobContext implements JobContext {
 
     @Override
     public long getInstanceId() {
-        return 0;
+        return jobInstanceId;
     }
 
     @Override
     public long getExecutionId() {
-        return 0;
+        return jobExecutionId;
     }
 
     @Override
