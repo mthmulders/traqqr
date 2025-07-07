@@ -2,7 +2,7 @@ package it.mulders.traqqr.batch.example;
 
 import static it.mulders.traqqr.batch.shared.Constants.BATCH_JOB_PROPERTY;
 
-import it.mulders.traqqr.batch.shared.DummyJobContext;
+import it.mulders.traqqr.batch.jakarta.DummyJobContext;
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobItem;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;

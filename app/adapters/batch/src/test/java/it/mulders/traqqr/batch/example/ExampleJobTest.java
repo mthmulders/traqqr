@@ -1,6 +1,6 @@
 package it.mulders.traqqr.batch.example;
 
-import it.mulders.traqqr.batch.shared.DummyJobOperator;
+import it.mulders.traqqr.batch.jakarta.DummyJobOperator;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
 import org.assertj.core.api.WithAssertions;

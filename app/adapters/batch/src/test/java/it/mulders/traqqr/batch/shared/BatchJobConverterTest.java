@@ -1,5 +1,7 @@
 package it.mulders.traqqr.batch.shared;
 
+import it.mulders.traqqr.batch.jakarta.DummyJobExecution;
+import it.mulders.traqqr.batch.jakarta.DummyJobInstance;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.BatchJobStatus;
 import it.mulders.traqqr.domain.batch.BatchJobType;

@@ -1,4 +1,4 @@
-package it.mulders.traqqr.batch.shared;
+package it.mulders.traqqr.batch.jakarta;
 
 import jakarta.batch.operations.JobExecutionAlreadyCompleteException;
 import jakarta.batch.operations.JobExecutionIsRunningException;
