@@ -2,7 +2,6 @@ package it.mulders.traqqr.web.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
-import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.shared.Pagination;
 import java.util.List;
 import java.util.Map;
