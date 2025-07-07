@@ -21,7 +21,7 @@ class TraqqrJobListenerTest implements WithAssertions {
     private final TraqqrJobListener listener = new TraqqrJobListener(jobOperator, jobContext, batchJobConverter);
 
     @Test
-    void should_expose_BatchJob_through_job_properties() {
+    void beforeJob_should_expose_BatchJob_through_job_properties() {
         // Arrange
         jobOperator.start("example", new Properties());
 
@@ -38,5 +38,10 @@ class TraqqrJobListenerTest implements WithAssertions {
                             .asInstanceOf(InstanceOfAssertFactories.type(BatchJob.class))
                             .hasFieldOrPropertyWithValue("type", BatchJobType.EXAMPLE);
                 });
+    }
+
+    @Test
+    void afterJob_should_not_crash() {
+        listener.afterJob();
     }
 }
