@@ -22,7 +22,9 @@ import java.util.Properties;
 import java.util.Set;
 
 public class DummyJobOperator implements JobOperator {
-    public static record RequestedJobStart(String jobXMLName, Properties jobParameters, Date createTime) {
+    private static final String[] DUMMY_JOB_NAMES = {"example_01", "example_02", "example_03", "example"};
+
+    public record RequestedJobStart(String jobXMLName, Properties jobParameters, Date createTime) {
         RequestedJobStart(String jobXMLName, Properties jobParameters) {
             this(jobXMLName, jobParameters, new Date());
         }
@@ -32,18 +34,30 @@ public class DummyJobOperator implements JobOperator {
 
     @Override
     public Set<String> getJobNames() throws JobSecurityException {
-        return Set.of();
+        return Set.of(DUMMY_JOB_NAMES);
     }
 
     @Override
     public int getJobInstanceCount(String jobName) throws NoSuchJobException, JobSecurityException {
-        return 0;
+        return switch (jobName) {
+            case "example_01" -> 1;
+            case "example_02" -> 2;
+            case "example_03", "example" -> 3;
+            default -> 0;
+        };
     }
 
     @Override
     public List<JobInstance> getJobInstances(String jobName, int start, int count)
             throws NoSuchJobException, JobSecurityException {
-        return List.of();
+        if ("example".equals(jobName)) {
+            return List.of(
+                    new DummyJobInstance(1L, "example"),
+                    new DummyJobInstance(2L, "example"),
+                    new DummyJobInstance(3L, "example"));
+        } else {
+            return List.of();
+        }
     }
 
     @Override
@@ -87,7 +101,20 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public List<JobExecution> getJobExecutions(JobInstance instance)
             throws NoSuchJobInstanceException, JobSecurityException {
-        return List.of();
+        if ("example".equals(instance.getJobName())) {
+            return List.of(new DummyJobExecution(
+                    instance.getInstanceId(),
+                    instance.getJobName(),
+                    BatchStatus.STARTED,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null));
+        } else {
+            return List.of();
+        }
     }
 
     @Override
