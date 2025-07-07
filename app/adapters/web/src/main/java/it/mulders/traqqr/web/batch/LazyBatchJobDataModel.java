@@ -13,7 +13,7 @@ import org.primefaces.model.SortMeta;
 public class LazyBatchJobDataModel extends LazyDataModel<BatchJob> {
     private final BatchJobRepository batchJobRepository;
 
-    public LazyBatchJobDataModel(final BatchJobRepository batchJobRepository, final BatchJobType selectedBatchJobType) {
+    public LazyBatchJobDataModel(final BatchJobRepository batchJobRepository) {
         this.batchJobRepository = batchJobRepository;
     }
 

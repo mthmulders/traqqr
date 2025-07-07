@@ -14,7 +14,7 @@ import org.primefaces.model.LazyDataModel;
 
 class LazyBatchJobDataModelTest implements WithAssertions {
     private final InMemoryBatchJobRepository repository = new InMemoryBatchJobRepository();
-    private final LazyDataModel<BatchJob> model = new LazyBatchJobDataModel(repository, BatchJobType.EXAMPLE);
+    private final LazyDataModel<BatchJob> model = new LazyBatchJobDataModel(repository);
 
     @Test
     void fetch_single_item() {
