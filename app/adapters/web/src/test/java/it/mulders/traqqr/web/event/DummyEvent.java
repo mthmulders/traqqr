@@ -3,7 +3,6 @@ package it.mulders.traqqr.web.event;
 import jakarta.enterprise.event.Event;
 import jakarta.enterprise.event.NotificationOptions;
 import jakarta.enterprise.util.TypeLiteral;
-
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ public class DummyEvent<T> implements Event<T> {
     public <U extends T> CompletionStage<U> fireAsync(U event, NotificationOptions options) {
         return null;
     }
-
 
     @Override
     public Event<T> select(Annotation... qualifiers) {

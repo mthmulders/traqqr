@@ -13,7 +13,10 @@ public class InMemoryBatchJobItemRepository implements BatchJobItemRepository {
 
     @Override
     public Map<BatchJobItemStatus, Long> findItemCountsForJobInstanceAndExecution(Long instanceId, Long executionId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Map.of(
+                BatchJobItemStatus.PROCESSED, 1L,
+                BatchJobItemStatus.FAILED, 0L,
+                BatchJobItemStatus.NO_PROCESSING_NECESSARY, 1L);
     }
 
     @Override
