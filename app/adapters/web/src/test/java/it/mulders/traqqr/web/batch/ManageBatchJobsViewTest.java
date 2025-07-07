@@ -5,8 +5,11 @@ import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
 import it.mulders.traqqr.mem.batch.InMemoryBatchJobRepository;
 import it.mulders.traqqr.web.event.DummyEvent;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ManageBatchJobsViewTest implements WithAssertions {
     private final InMemoryBatchJobRepository repository = new InMemoryBatchJobRepository();
     private final DummyEvent<JobStartRequestedEvent> event = new DummyEvent<>();

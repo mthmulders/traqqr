@@ -9,9 +9,12 @@ import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.stream.IntStream;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.primefaces.model.LazyDataModel;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LazyBatchJobDataModelTest implements WithAssertions {
     private final InMemoryBatchJobRepository repository = new InMemoryBatchJobRepository();
     private final LazyDataModel<BatchJob> model = new LazyBatchJobDataModel(repository);
