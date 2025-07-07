@@ -26,7 +26,7 @@ public class ManageBatchJobsView implements Serializable {
 
     // Data
     private final Collection<BatchJobType> batchJobTypes = List.of(BatchJobType.values());
-    private LazyDataModel<BatchJob> batchJobsForSelectedBatchJobType;
+    private LazyDataModel<BatchJob> batchJobs;
     private BatchJobType selectedBatchJobType;
 
     @Inject
@@ -34,7 +34,7 @@ public class ManageBatchJobsView implements Serializable {
             final BatchJobRepository batchJobRepository, final Event<JobStartRequestedEvent> jobStartRequestedEvent) {
         this.batchJobRepository = batchJobRepository;
         this.jobStartRequestedEvent = jobStartRequestedEvent;
-        this.batchJobsForSelectedBatchJobType = new LazyBatchJobDataModel(batchJobRepository);
+        this.batchJobs = new LazyBatchJobDataModel(batchJobRepository);
     }
 
     public void startBatchJob() {
@@ -55,11 +55,7 @@ public class ManageBatchJobsView implements Serializable {
         this.selectedBatchJobType = selectedBatchJobType;
     }
 
-    public void populateBatchJobsForSelectedBatchJobType() {
-        this.batchJobsForSelectedBatchJobType = new LazyBatchJobDataModel(batchJobRepository);
-    }
-
-    public LazyDataModel<BatchJob> getBatchJobsForSelectedBatchJobType() {
-        return batchJobsForSelectedBatchJobType;
+    public LazyDataModel<BatchJob> getBatchJobs() {
+        return batchJobs;
     }
 }

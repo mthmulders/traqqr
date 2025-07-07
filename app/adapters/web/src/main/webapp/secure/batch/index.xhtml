@@ -11,11 +11,12 @@
 
   <ui:define name="content">
 
-    <p:tabView dynamic="true" cache="true">
+    <p:tabView dynamic="true" cache="true" id="tabView">
+      <p:ajax event="tabChange" update=":tabView, :batchJobs" />
       <p:tab title="Overview">
         <h:form id="data-form">
           <p:dataTable id="batchJobs" rowKey="#{batchJob.id}"
-                       var="batchJob" value="${manageBatchJobsView.batchJobsForSelectedBatchJobType}"
+                       var="batchJob" value="${manageBatchJobsView.batchJobs}"
                        rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
                        currentPageReportTemplate="{startRecord} - {endRecord} of {totalRecords} batch jobs"
                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -44,7 +45,7 @@
           <p:outputLabel for="vehicle" value="Select Batch Job Type: " />
           <p:selectOneMenu id="vehicle" value="#{manageBatchJobsView.selectedBatchJobType}"
                            converter="batchJobTypeConverter">
-            <p:ajax event="change" update="@form" listener="#{manageBatchJobsView.populateBatchJobsForSelectedBatchJobType}" />
+            <p:ajax event="change" update="@form" />
             <f:selectItem itemLabel=""
                           itemValue="#{null}"
                           noSelectionOption="true"/>
