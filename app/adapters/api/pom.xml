@@ -84,6 +84,10 @@
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
+      <artifactId>fakes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
       <artifactId>mem</artifactId>
     </dependency>
     <!-- Tied to the JAX-RS implementation that OpenLiberty uses. -->

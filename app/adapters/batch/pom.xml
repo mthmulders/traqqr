@@ -88,5 +88,9 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>fakes</artifactId>
+    </dependency>
   </dependencies>
 </project>

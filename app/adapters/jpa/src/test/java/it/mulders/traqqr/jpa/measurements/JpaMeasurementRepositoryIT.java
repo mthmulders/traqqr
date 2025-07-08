@@ -1,5 +1,8 @@
 package it.mulders.traqqr.jpa.measurements;
 
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.measurements.Source;
@@ -21,7 +24,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_save_measurement() {
         // Arrange
-        var vehicle = createVehicle("000000");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement = createMeasurement(vehicle);
 
@@ -41,7 +44,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_save_measurement_without_id() {
         // Arrange
-        var vehicle = createVehicle("000001");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement = new Measurement(
                 null,
@@ -69,7 +72,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_find_measurements_for_vehicle() {
         // Arrange
-        var vehicle = createVehicle("000002");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement1 = createMeasurement(vehicle);
         var measurement2 = createMeasurement(vehicle);
@@ -91,7 +94,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_find_paginated_measurements_for_vehicle() {
         // Arrange
-        var vehicle = createVehicle("000004");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement1 = createMeasurement(vehicle);
         var measurement2 = createMeasurement(vehicle);
@@ -119,7 +122,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_count_measurements_for_vehicle() {
         // Arrange
-        var vehicle = createVehicle("000003");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement = createMeasurement(vehicle);
 
@@ -135,7 +138,7 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     @Test
     void should_remove_measurement() {
         // Arrange
-        var vehicle = createVehicle("000005");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
         var measurement = createMeasurement(vehicle);
         runTransactional(() -> repository.save(measurement));

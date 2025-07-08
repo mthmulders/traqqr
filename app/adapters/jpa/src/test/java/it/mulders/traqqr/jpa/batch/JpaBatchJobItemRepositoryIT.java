@@ -1,5 +1,8 @@
 package it.mulders.traqqr.jpa.batch;
 
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobItem;
 import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
@@ -32,7 +35,7 @@ class JpaBatchJobItemRepositoryIT extends AbstractJpaRepositoryTest<BatchJobItem
         var instanceId = 1L;
         var executionId = 1L;
 
-        var vehicle = createVehicle("000000");
+        var vehicle = createVehicle();
 
         runTransactional(() -> {
             var vehicleEntity = vehicleMapper.vehicleToVehicleEntity(vehicle);

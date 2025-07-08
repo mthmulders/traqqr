@@ -118,6 +118,10 @@
       <artifactId>mem</artifactId>
     </dependency>
     <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>fakes</artifactId>
+    </dependency>
+    <dependency>
       <groupId>jakarta.json</groupId>
       <artifactId>jakarta.json-api</artifactId>
       <scope>test</scope>

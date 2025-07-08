@@ -1,16 +1,14 @@
 package it.mulders.traqqr.api.measurements;
 
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.api.measurements.dto.MeasurementDto;
-import it.mulders.traqqr.domain.vehicles.Authorisation;
-import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.Response;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Map;
-import java.util.Set;
 import org.assertj.core.api.WithAssertions;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -28,12 +26,8 @@ class MeasurementResourceTest implements WithAssertions {
 
     @Test
     void testRegisterMeasurement_Success() {
-        var vehicle = new Vehicle(
-                "code123",
-                "description",
-                "ownerId",
-                Set.of(Authorisation.fromInput("hashedKey123")),
-                BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle();
+        var authorisation = vehicle.regenerateKey();
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto(
@@ -42,9 +36,10 @@ class MeasurementResourceTest implements WithAssertions {
                 new MeasurementDto.BatteryDto((byte) 80),
                 new MeasurementDto.LocationDto(52.0, 4.0));
 
-        var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "hashedKey123")));
+        var headers = new ResteasyHttpHeaders(
+                new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", authorisation.getRawKey())));
 
-        var response = resource.registerMeasurement("code123", measurementDto, headers);
+        var response = resource.registerMeasurement(vehicle.code(), measurementDto, headers);
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
         assertThat(measurementRepository.findByVehicle(vehicle)).isNotNull().anySatisfy(measurement -> {
@@ -71,7 +66,7 @@ class MeasurementResourceTest implements WithAssertions {
 
     @Test
     void testRegisterMeasurement_Unauthorized() {
-        var vehicle = new Vehicle("code123", "description", "ownerId", null, BigDecimal.valueOf(50.0));
+        var vehicle = createVehicle();
         vehicleRepository.save(vehicle);
 
         var measurementDto = new MeasurementDto(
@@ -82,7 +77,7 @@ class MeasurementResourceTest implements WithAssertions {
 
         var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey")));
 
-        var response = resource.registerMeasurement("code123", measurementDto, headers);
+        var response = resource.registerMeasurement(vehicle.code(), measurementDto, headers);
         assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 }

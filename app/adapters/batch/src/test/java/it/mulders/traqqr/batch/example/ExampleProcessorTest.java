@@ -1,6 +1,8 @@
 package it.mulders.traqqr.batch.example;
 
 import static it.mulders.traqqr.batch.shared.Constants.BATCH_JOB_PROPERTY;
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.batch.jakarta.DummyJobContext;
 import it.mulders.traqqr.domain.batch.BatchJob;
@@ -9,14 +11,9 @@ import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.BatchJobStatus;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.measurements.Measurement;
-import it.mulders.traqqr.domain.measurements.Source;
-import it.mulders.traqqr.domain.vehicles.Vehicle;
 import jakarta.batch.runtime.context.JobContext;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.UUID;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,17 +46,7 @@ class ExampleProcessorTest implements WithAssertions {
 
     @Test
     void should_create_BatchJobItem_with_Measurement() {
-        var now = OffsetDateTime.now();
-        var vehicle = new Vehicle("0000", "Example", "0000", new ArrayList<>(), BigDecimal.ONE);
-        var measurement = new Measurement(
-                UUID.randomUUID(),
-                now.minusHours(1),
-                now.minusHours(1),
-                3_000,
-                new Measurement.Battery((byte) 85),
-                new Measurement.Location(0.0, 0.0),
-                Source.API,
-                vehicle);
+        var measurement = createMeasurement(createVehicle());
 
         var result = processor.processItem(measurement);
 

@@ -16,6 +16,7 @@
   <modules>
     <module>config</module>
     <module>domain</module>
+    <module>fakes</module>
     <module>adapters/api</module>
     <module>adapters/batch</module>
     <module>adapters/jpa</module>

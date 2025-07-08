@@ -1,12 +1,12 @@
 package it.mulders.traqqr.jpa.vehicles;
 
-import it.mulders.traqqr.domain.user.Owner;
+import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import jakarta.persistence.RollbackException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_find_vehicle_by_code() {
-        var vehicle = createVehicle("000001");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var result = repository.findByCode(vehicle.code());
@@ -55,7 +55,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_remove_vehicle() {
-        var vehicle = createVehicle("000002");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         runTransactional(() -> repository.removeVehicle(vehicle));
@@ -65,7 +65,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_save_vehicle() {
-        var vehicle = createVehicle("000006");
+        var vehicle = createVehicle();
 
         runTransactional(() -> repository.save(vehicle));
 
@@ -96,10 +96,10 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle() {
-        var original = createVehicle("000009");
+        var original = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(original));
-        var updated = new Vehicle(
-                "000009", "should_update_vehicle_v2", FAKE_OWNER_ID, new ArrayList<>(), BigDecimal.valueOf(50.0));
+        var updated = createVehicle(
+                original.code(), original.ownerId(), "Updated Vehicle Description", original.netBatteryCapacity());
 
         runTransactional(() -> repository.update(updated));
 
@@ -108,7 +108,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle_with_authorisation() {
-        var vehicle = createVehicle("000010");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var authorisation = vehicle.regenerateKey();
@@ -124,7 +124,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
 
     @Test
     void should_update_vehicle_with_new_and_updated_authorisation() {
-        var vehicle = createVehicle("000011");
+        var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
         var authorisation1 = vehicle.regenerateKey();
@@ -149,25 +149,5 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
                         assertThat(authorisation.getInvalidatedAt()).isNull();
                     });
                 });
-    }
-
-    private Owner createOwner(String ownerId) {
-        return new Owner() {
-
-            @Override
-            public String code() {
-                return ownerId;
-            }
-
-            @Override
-            public String displayName() {
-                return "Fake Owner";
-            }
-
-            @Override
-            public String profilePictureUrl() {
-                return "n/a";
-            }
-        };
     }
 }
