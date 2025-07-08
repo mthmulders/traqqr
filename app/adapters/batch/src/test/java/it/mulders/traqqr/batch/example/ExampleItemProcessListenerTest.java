@@ -18,7 +18,7 @@ class ExampleItemProcessListenerTest implements WithAssertions {
     private final ExampleItemProcessListener listener = new ExampleItemProcessListener();
 
     @Test
-    void onProcessError_should_rethrow_Exception() throws Exception {
+    void onProcessError_should_rethrow_Exception() {
         var vehicle = new Vehicle("00000", "vehicle", "owner00", emptyList(), new BigDecimal(85));
         var item = new Measurement(
                 UUID.randomUUID(),

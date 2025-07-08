@@ -15,7 +15,7 @@ class TraqqrChunkListenerTest implements WithAssertions {
     }
 
     @Test
-    void onError_should_rethrow_Exception() throws Exception {
+    void onError_should_rethrow_Exception() {
         var ex = new Exception();
         assertThatThrownBy(() -> listener.onError(ex)).isEqualTo(ex);
     }
