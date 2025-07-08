@@ -42,7 +42,7 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
     @Override
     public Collection<BatchJob> findPaginated(Pagination pagination) {
         var offsets =
-                jobOperator.getJobNames().stream().collect(toMap(Function.identity(), (key) -> pagination.offset()));
+                jobOperator.getJobNames().stream().collect(toMap(Function.identity(), key -> pagination.offset()));
 
         var jobNameIterator = jobOperator.getJobNames().iterator();
 
