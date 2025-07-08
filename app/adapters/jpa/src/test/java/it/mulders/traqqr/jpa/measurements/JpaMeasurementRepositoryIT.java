@@ -3,6 +3,7 @@ package it.mulders.traqqr.jpa.measurements;
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.measurements.Source;
+import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import java.time.OffsetDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,6 +81,34 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
 
         // Act
         var measurements = repository.findByVehicle(vehicle);
+
+        // Assert
+        assertThat(measurements).hasSize(2).allSatisfy(found -> {
+            assertThat(found.vehicle().code()).isEqualTo(vehicle.code());
+        });
+    }
+
+    @Test
+    void should_find_paginated_measurements_for_vehicle() {
+        // Arrange
+        var vehicle = createVehicle("000004");
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var measurement1 = createMeasurement(vehicle);
+        var measurement2 = createMeasurement(vehicle);
+        var measurement3 = createMeasurement(vehicle);
+        var measurement4 = createMeasurement(vehicle);
+        var measurement5 = createMeasurement(vehicle);
+
+        runTransactional(() -> {
+            repository.save(measurement1);
+            repository.save(measurement2);
+            repository.save(measurement3);
+            repository.save(measurement4);
+            repository.save(measurement5);
+        });
+
+        // Act
+        var measurements = repository.findByVehicle(vehicle, new Pagination(2, 2));
 
         // Assert
         assertThat(measurements).hasSize(2).allSatisfy(found -> {
