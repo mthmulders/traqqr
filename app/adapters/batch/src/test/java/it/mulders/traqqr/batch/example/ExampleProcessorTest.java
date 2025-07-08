@@ -20,8 +20,11 @@ import java.util.UUID;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ExampleProcessorTest implements WithAssertions {
     private final JobContext jobContext = new DummyJobContext();
     private final ExampleProcessor processor = new ExampleProcessor(jobContext);

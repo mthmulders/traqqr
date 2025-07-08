@@ -37,7 +37,7 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
 
     @Override
     public Stream<Measurement> exampleStreamingFindForBatchJob() {
-        return Stream.empty();
+        return measurements.stream();
     }
 
     @Override
