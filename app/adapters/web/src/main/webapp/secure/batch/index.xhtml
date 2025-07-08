@@ -11,8 +11,7 @@
 
   <ui:define name="content">
 
-    <p:tabView dynamic="true" cache="true" id="tabView">
-      <p:ajax event="tabChange" update=":tabView, :batchJobs" />
+    <p:tabView dynamic="true" cache="false" id="tabView">
       <p:tab title="Overview">
         <h:form id="data-form">
           <p:dataTable id="batchJobs" rowKey="#{batchJob.id}"
@@ -65,10 +64,5 @@
         </h:form>
       </p:tab>
     </p:tabView>
-
-    <h:form id="form">
-
-
-    </h:form>
   </ui:define>
 </ui:composition>
