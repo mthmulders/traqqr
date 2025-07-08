@@ -35,7 +35,6 @@
 
     <application location="traqqr.ear" name="traqqr" />
 
-    <!-- Enable detailed logging for Jakarta Persistence API.
     <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
          role that allows Batch Admin access. -->
     <authorization-roles id="com.ibm.ws.batch">
