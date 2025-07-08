@@ -82,11 +82,22 @@
         <version>2.0.17</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>2.0.17</version>
+        <scope>test</scope>
+      </dependency>
 
       <!-- project dependencies -->
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>config</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>batch</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -110,6 +121,7 @@
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>mem</artifactId>
         <version>${project.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
@@ -304,6 +316,8 @@
         <sonar.organization>mthmulders-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+
+        <sonar.coverage.exclusions>app/adapters/mem/**/*,**/src/test/java/**/*</sonar.coverage.exclusions>
       </properties>
 
       <build>

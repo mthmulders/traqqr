@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,6 +87,22 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     }
 
     @Override
+    public Stream<Measurement> exampleStreamingFindForBatchJob() {
+        var query = this.em.createQuery(
+                """
+                        select m
+                        from Measurement m
+                        where not exists (
+                            select 1
+                            from JobItem ji
+                            where ji.itemId = m.id
+                        )
+                        """,
+                MeasurementEntity.class);
+        return query.setMaxResults(100).getResultStream().map(mapper::measurementEntityToMeasurement);
+    }
+
+    @Override
     public long countByVehicle(Vehicle vehicle) {
         log.debug("Counting measurements; vehicle={}", vehicle.code());
         return this.em
@@ -107,7 +124,6 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     public void removeMeasurement(Measurement measurement) {
         findEntityById(measurement.id()).ifPresent(entity -> {
             try {
-                em.joinTransaction();
                 em.remove(entity);
                 em.flush();
                 log.debug("Measurement removed; id={}", measurement.id());

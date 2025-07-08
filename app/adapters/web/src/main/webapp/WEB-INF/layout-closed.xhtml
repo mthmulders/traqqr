@@ -48,6 +48,13 @@
                     containerStyleClass="#{view.viewId.contains('/secure/measurements') ? 'selected-menu-item' : ''}"
             />
 
+            <p:menuitem
+                value="Batch Jobs"
+                icon="pi pi-cog"
+                url="/secure/batch"
+                containerStyleClass="#{view.viewId.contains('/secure/batch') ? 'selected-menu-item' : ''}"
+            />
+
             <f:facet name="end">
                 <p:commandButton value="Log out" icon="pi pi-fw pi-power-off" action="#{sessionBean.logout(request)}" ajax="false" />
             </f:facet>

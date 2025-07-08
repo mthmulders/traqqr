@@ -3,6 +3,7 @@ package it.mulders.traqqr.domain.measurements;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public interface MeasurementRepository {
     void save(Measurement measurement);
@@ -10,6 +11,8 @@ public interface MeasurementRepository {
     Collection<Measurement> findByVehicle(Vehicle vehicle);
 
     Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination);
+
+    Stream<Measurement> exampleStreamingFindForBatchJob();
 
     long countByVehicle(Vehicle vehicle);
 

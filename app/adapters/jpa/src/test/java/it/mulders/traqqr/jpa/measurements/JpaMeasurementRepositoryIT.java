@@ -3,11 +3,9 @@ package it.mulders.traqqr.jpa.measurements;
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.measurements.Source;
-import it.mulders.traqqr.domain.vehicles.Vehicle;
+import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -91,6 +89,34 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
     }
 
     @Test
+    void should_find_paginated_measurements_for_vehicle() {
+        // Arrange
+        var vehicle = createVehicle("000004");
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var measurement1 = createMeasurement(vehicle);
+        var measurement2 = createMeasurement(vehicle);
+        var measurement3 = createMeasurement(vehicle);
+        var measurement4 = createMeasurement(vehicle);
+        var measurement5 = createMeasurement(vehicle);
+
+        runTransactional(() -> {
+            repository.save(measurement1);
+            repository.save(measurement2);
+            repository.save(measurement3);
+            repository.save(measurement4);
+            repository.save(measurement5);
+        });
+
+        // Act
+        var measurements = repository.findByVehicle(vehicle, new Pagination(2, 2));
+
+        // Assert
+        assertThat(measurements).hasSize(2).allSatisfy(found -> {
+            assertThat(found.vehicle().code()).isEqualTo(vehicle.code());
+        });
+    }
+
+    @Test
     void should_count_measurements_for_vehicle() {
         // Arrange
         var vehicle = createVehicle("000003");
@@ -106,15 +132,18 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
         assertThat(result).isEqualTo(1);
     }
 
-    private Measurement createMeasurement(Vehicle vehicle) {
-        return new Measurement(
-                UUID.randomUUID(),
-                OffsetDateTime.now(),
-                OffsetDateTime.now().minus(5, ChronoUnit.SECONDS),
-                1_000,
-                new Measurement.Battery((byte) 80),
-                new Measurement.Location(55.0, 6.0),
-                Source.API,
-                vehicle);
+    @Test
+    void should_remove_measurement() {
+        // Arrange
+        var vehicle = createVehicle("000005");
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var measurement = createMeasurement(vehicle);
+        runTransactional(() -> repository.save(measurement));
+
+        // Act
+        runTransactional(() -> repository.removeMeasurement(measurement));
+
+        // Assert
+        assertThat(repository.findByVehicle(vehicle)).isEmpty();
     }
 }

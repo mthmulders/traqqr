@@ -10,6 +10,10 @@
         <action-listener>org.primefaces.application.DialogActionListener</action-listener>
         <el-resolver>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver</el-resolver>
         <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+        <resource-bundle>
+            <base-name>it.mulders.traqqr.web.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
         <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
     </application>
 
