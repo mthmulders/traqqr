@@ -131,4 +131,19 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
         // Assert
         assertThat(result).isEqualTo(1);
     }
+
+    @Test
+    void should_remove_measurement() {
+        // Arrange
+        var vehicle = createVehicle("000005");
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var measurement = createMeasurement(vehicle);
+        runTransactional(() -> repository.save(measurement));
+
+        // Act
+        runTransactional(() -> repository.removeMeasurement(measurement));
+
+        // Assert
+        assertThat(repository.findByVehicle(vehicle)).isEmpty();
+    }
 }

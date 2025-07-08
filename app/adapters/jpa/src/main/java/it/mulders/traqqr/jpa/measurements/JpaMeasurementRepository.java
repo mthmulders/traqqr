@@ -124,7 +124,6 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     public void removeMeasurement(Measurement measurement) {
         findEntityById(measurement.id()).ifPresent(entity -> {
             try {
-                em.joinTransaction();
                 em.remove(entity);
                 em.flush();
                 log.debug("Measurement removed; id={}", measurement.id());
