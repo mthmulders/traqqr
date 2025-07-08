@@ -30,11 +30,20 @@ public class DummyJobOperator implements JobOperator {
         }
     }
 
+    private final Set<String> knownJobNames;
     private final List<RequestedJobStart> requestedJobStarts = new ArrayList<>();
+
+    public DummyJobOperator() {
+        this(DUMMY_JOB_NAMES);
+    }
+
+    public DummyJobOperator(String[] knownJobNames) {
+        this.knownJobNames = Set.of(knownJobNames);
+    }
 
     @Override
     public Set<String> getJobNames() throws JobSecurityException {
-        return Set.of(DUMMY_JOB_NAMES);
+        return knownJobNames;
     }
 
     @Override

@@ -15,6 +15,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -43,6 +44,12 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
     public Collection<BatchJob> findPaginated(final Pagination pagination) {
         var jobNames = jobOperator.getJobNames();
         log.debug("Find all jobs; job_names={}, offset={}, limit={}", jobNames, pagination.offset(), pagination.limit());
+
+        if (jobNames.isEmpty()) {
+            log.warn("Find all jobs; no job names found!");
+            return List.of();
+        }
+
         var offsets =
                 jobNames.stream().collect(toMap(Function.identity(), key -> pagination.offset()));
 

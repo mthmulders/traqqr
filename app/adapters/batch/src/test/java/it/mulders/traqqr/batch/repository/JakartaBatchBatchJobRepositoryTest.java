@@ -23,6 +23,19 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
             new JakartaBatchBatchJobRepository(jobOperator, itemRepository, batchJobConverter);
 
     @Test
+    void should_not_crash_when_no_job_names_known() {
+        // Arrange
+        var jobNames = new String[]{};
+
+        // Act
+        var repo = new JakartaBatchBatchJobRepository(new DummyJobOperator(jobNames), itemRepository, batchJobConverter);
+
+        // Assert
+        assertThat(repo.count()).isEqualTo(0);
+        assertThat(repo.findPaginated(new Pagination(0, 1))).isEmpty();
+    }
+
+    @Test
     void should_count_jobs() {
         // Act
         var result = repository.count();
