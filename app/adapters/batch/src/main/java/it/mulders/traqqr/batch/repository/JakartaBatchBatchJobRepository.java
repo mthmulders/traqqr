@@ -40,11 +40,13 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
     }
 
     @Override
-    public Collection<BatchJob> findPaginated(Pagination pagination) {
+    public Collection<BatchJob> findPaginated(final Pagination pagination) {
+        var jobNames = jobOperator.getJobNames();
+        log.debug("Find all jobs; job_names={}, offset={}, limit={}", jobNames, pagination.offset(), pagination.limit());
         var offsets =
-                jobOperator.getJobNames().stream().collect(toMap(Function.identity(), key -> pagination.offset()));
+                jobNames.stream().collect(toMap(Function.identity(), key -> pagination.offset()));
 
-        var jobNameIterator = jobOperator.getJobNames().iterator();
+        var jobNameIterator = jobNames.iterator();
 
         // First, retrieve enough job instances and executions to be sure to meet the offset + limit.
         // Don't fetch the item counts just yet - we will that later.
@@ -59,6 +61,7 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
                 var executions = fetchJobExecutions(instance).toList();
                 jobInstanceWithExecutions.addAll(executions);
             }
+            log.debug("Find all jobs; job_instances_found={}", jobInstanceWithExecutions.size());
         } while (jobInstanceWithExecutions.size() < pagination.offset() + pagination.limit()
                 && jobNameIterator.hasNext());
         // Make sure the intermediate list will have enough items to accommodate for the limit including the offset, but
