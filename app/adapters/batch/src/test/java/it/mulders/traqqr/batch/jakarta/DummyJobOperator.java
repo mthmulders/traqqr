@@ -85,11 +85,15 @@ public class DummyJobOperator implements JobOperator {
 
     @Override
     public void stop(long executionId)
-            throws NoSuchJobExecutionException, JobExecutionNotRunningException, JobSecurityException {}
+            throws NoSuchJobExecutionException, JobExecutionNotRunningException, JobSecurityException {
+        // Intentionally left empty. Tests do not rely on anything happening here.
+    }
 
     @Override
     public void abandon(long executionId)
-            throws NoSuchJobExecutionException, JobExecutionIsRunningException, JobSecurityException {}
+            throws NoSuchJobExecutionException, JobExecutionIsRunningException, JobSecurityException {
+        // Intentionally left empty. Tests do not rely on anything happening here.
+    }
 
     @Override
     public JobInstance getJobInstance(long executionId) throws NoSuchJobExecutionException, JobSecurityException {

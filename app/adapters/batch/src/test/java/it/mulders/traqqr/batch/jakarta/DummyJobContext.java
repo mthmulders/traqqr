@@ -30,7 +30,9 @@ public class DummyJobContext implements JobContext {
     }
 
     @Override
-    public void setTransientUserData(Object data) {}
+    public void setTransientUserData(Object data) {
+        // Intentionally left empty. Tests do not rely on anything happening here.
+    }
 
     @Override
     public long getInstanceId() {
@@ -58,5 +60,7 @@ public class DummyJobContext implements JobContext {
     }
 
     @Override
-    public void setExitStatus(String status) {}
+    public void setExitStatus(String status) {
+        // Intentionally left empty. Tests do not rely on anything happening here.
+    }
 }
