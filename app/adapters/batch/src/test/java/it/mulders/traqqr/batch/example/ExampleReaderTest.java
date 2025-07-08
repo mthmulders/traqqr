@@ -18,9 +18,6 @@ import static java.util.Collections.emptyList;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ExampleReaderTest implements WithAssertions {
-    private final MeasurementRepository repository = new InMemoryMeasurementRepository();
-    private final ExampleReader reader = new ExampleReader(repository);
-
     @Test
     void should_return_null_when_no_items() {
         // Arrange

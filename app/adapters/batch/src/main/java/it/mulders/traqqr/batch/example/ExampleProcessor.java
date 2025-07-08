@@ -11,8 +11,6 @@ import jakarta.batch.runtime.context.JobContext;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import java.security.SecureRandom;
-import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +18,6 @@ import org.slf4j.LoggerFactory;
 @Named("exampleProcessor")
 public class ExampleProcessor implements ItemProcessor {
     private final Logger logger = LoggerFactory.getLogger(ExampleProcessor.class);
-    private final Random random = new SecureRandom();
 
     // Data
     private final JobContext jobContext;
