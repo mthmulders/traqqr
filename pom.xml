@@ -323,7 +323,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
 
-        <sonar.coverage.exclusions>app/adapters/mem/**/*,**/src/test/java/**/*</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>app/adapters/mem/**/*,**/src/test/java/**/*,app/fakes/**/*</sonar.coverage.exclusions>
       </properties>
 
       <build>
