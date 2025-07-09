@@ -1,5 +1,8 @@
 package it.mulders.traqqr.web.vehicles;
 
+import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.MockFacesContext;
@@ -10,9 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
-
-import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
-import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
