@@ -31,7 +31,6 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     public Optional<Vehicle> findByCode(final String code) {
         return vehicles.stream()
                 .filter(vehicle -> code.equals(vehicle.code()))
-                .map(this::clone)
                 .findAny();
     }
 
@@ -47,7 +46,6 @@ public class InMemoryVehicleRepository implements VehicleRepository {
         return vehicles.stream()
                 .filter(vehicle -> owner.code().equals(vehicle.ownerId()))
                 .filter(vehicle -> code.equals(vehicle.code()))
-                .map(this::clone)
                 .findAny();
     }
 
@@ -81,11 +79,5 @@ public class InMemoryVehicleRepository implements VehicleRepository {
 
     private Runnable handleVehicleNotFound(final Vehicle vehicle) {
         return () -> log.error("Vehicle not found; code={}", vehicle.code());
-    }
-
-    private Vehicle clone(final Vehicle vehicle) {
-        var authorisations = vehicle.authorisations() == null ? null : new HashSet<>(vehicle.authorisations());
-        return new Vehicle(
-                vehicle.code(), vehicle.description(), vehicle.ownerId(), authorisations, vehicle.netBatteryCapacity());
     }
 }
