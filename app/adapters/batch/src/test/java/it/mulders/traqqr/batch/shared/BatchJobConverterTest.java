@@ -74,17 +74,39 @@ class BatchJobConverterTest implements WithAssertions {
         assertThat(result.getItemsProcessed()).isEqualTo(7L);
     }
 
-    @MethodSource("batchJobStatus")
+    @MethodSource("batchJobStatuses")
     @ParameterizedTest
     void should_convert_status(BatchStatus input, BatchJobStatus output) {
         assertThat(converter.fromBatchStatus(input)).isEqualTo(output);
     }
 
-    static Stream<Arguments> batchJobStatus() {
+    @Test
+    void should_fail_on_unexpected_status() {
+        assertThatThrownBy(() -> converter.fromBatchStatus(BatchStatus.ABANDONED)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> batchJobStatuses() {
         return Stream.of(
                 Arguments.arguments(BatchStatus.COMPLETED, BatchJobStatus.COMPLETED),
                 Arguments.arguments(BatchStatus.STARTING, BatchJobStatus.RUNNING),
                 Arguments.arguments(BatchStatus.STARTED, BatchJobStatus.RUNNING),
                 Arguments.arguments(BatchStatus.FAILED, BatchJobStatus.FAILED));
+    }
+
+    @MethodSource("batchJobNames")
+    @ParameterizedTest
+    void should_convert_job_name(String input, BatchJobType output) {
+        assertThat(converter.fromJobName(input)).isEqualTo(output);
+    }
+
+    @Test
+    void should_fail_on_unexpected_job_name() {
+        assertThatThrownBy(() -> converter.fromJobName("unexpected")).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> batchJobNames() {
+        return Stream.of(
+                Arguments.arguments("example", BatchJobType.EXAMPLE)
+        );
     }
 }

@@ -39,10 +39,10 @@ public class BatchJobConverter {
         return input == null ? null : OffsetDateTime.ofInstant(input.toInstant(), ZoneId.systemDefault());
     }
 
-    private BatchJobType fromJobName(final String jobName) {
+    BatchJobType fromJobName(final String jobName) {
         return switch (jobName) {
             case "example" -> BatchJobType.EXAMPLE;
-            default -> throw new IllegalStateException("Unexpected job name: " + jobName);
+            default -> throw new IllegalArgumentException("Unexpected job name: " + jobName);
         };
     }
 
@@ -51,7 +51,7 @@ public class BatchJobConverter {
             case COMPLETED -> BatchJobStatus.COMPLETED;
             case FAILED -> BatchJobStatus.FAILED;
             case STARTING, STARTED -> BatchJobStatus.RUNNING;
-            default -> throw new IllegalStateException("Unexpected batch status: " + batchStatus);
+            default -> throw new IllegalArgumentException("Unexpected batch status: " + batchStatus);
         };
     }
 }
