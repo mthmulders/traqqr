@@ -25,7 +25,7 @@ class MeasurementResourceTest implements WithAssertions {
             new MeasurementResource(measurementMapper, measurementRepository, vehicleRepository);
 
     @Test
-    void testRegisterMeasurement_Success() {
+    void with_valid_key_for_vehicle_should_register_measurement() {
         var vehicle = createVehicle();
         var authorisation = vehicle.regenerateKey();
         vehicleRepository.save(vehicle);
@@ -51,7 +51,7 @@ class MeasurementResourceTest implements WithAssertions {
     }
 
     @Test
-    void testRegisterMeasurement_VehicleNotFound() {
+    void with_non_existing_vehicle_should_not_register_measurement() {
         var measurementDto = new MeasurementDto(
                 OffsetDateTime.now(),
                 1000,
@@ -65,7 +65,7 @@ class MeasurementResourceTest implements WithAssertions {
     }
 
     @Test
-    void testRegisterMeasurement_Unauthorized() {
+    void with_invalid_key_for_vehicle_should_not_register_measurement() {
         var vehicle = createVehicle();
         vehicleRepository.save(vehicle);
 
@@ -76,6 +76,23 @@ class MeasurementResourceTest implements WithAssertions {
                 new MeasurementDto.LocationDto(52.0, 4.0));
 
         var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of("X-VEHICLE-API-KEY", "invalidKey")));
+
+        var response = resource.registerMeasurement(vehicle.code(), measurementDto, headers);
+        assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());
+    }
+
+    @Test
+    void without_key_should_not_register_measurement() {
+        var vehicle = createVehicle();
+        vehicleRepository.save(vehicle);
+
+        var measurementDto = new MeasurementDto(
+                OffsetDateTime.now(),
+                1000,
+                new MeasurementDto.BatteryDto((byte) 80),
+                new MeasurementDto.LocationDto(52.0, 4.0));
+
+        var headers = new ResteasyHttpHeaders(new MultivaluedHashMap<>(Map.of()));
 
         var response = resource.registerMeasurement(vehicle.code(), measurementDto, headers);
         assertThat(response.getStatus()).isEqualTo(Response.Status.UNAUTHORIZED.getStatusCode());
