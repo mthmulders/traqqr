@@ -29,6 +29,7 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
 
     // Components
     private final FacesContext facesContext;
+    private final PrimeFaces primeFaces;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
@@ -38,8 +39,12 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
 
     @Inject
     public RegenerateVehicleAuthorisationView(
-            FacesContext facesContext, final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository) {
+            final FacesContext facesContext,
+            final PrimeFaces primeFaces,
+            final VehicleMapper vehicleMapper,
+            final VehicleRepository vehicleRepository) {
         this.facesContext = facesContext;
+        this.primeFaces = primeFaces;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
 
@@ -72,7 +77,7 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
                 .closeOnEscape(true)
                 .responsive(true)
                 .build();
-        PrimeFaces.current().dialog().openDynamic("regenerate-authorisation", options, null);
+        primeFaces.dialog().openDynamic("regenerate-authorisation", options, null);
     }
 
     private void logVehicleNotFound() {

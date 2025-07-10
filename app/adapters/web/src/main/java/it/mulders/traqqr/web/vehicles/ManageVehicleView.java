@@ -25,6 +25,7 @@ public class ManageVehicleView implements Serializable {
 
     // Components
     private final FacesContext facesContext;
+    private final PrimeFaces primeFaces;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
@@ -35,8 +36,13 @@ public class ManageVehicleView implements Serializable {
 
     @Inject
     public ManageVehicleView(
-            FacesContext facesContext, VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
+            FacesContext facesContext,
+            PrimeFaces primeFaces,
+            VehicleMapper vehicleMapper,
+            VehicleRepository vehicleRepository,
+            Owner owner) {
         this.facesContext = facesContext;
+        this.primeFaces = primeFaces;
         this.owner = owner;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
@@ -71,7 +77,7 @@ public class ManageVehicleView implements Serializable {
 
         var msg = new FacesMessage("Vehicle %s removed".formatted(selectedVehicle.getCode()));
         facesContext.addMessage(null, msg);
-        PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
+        primeFaces.ajax().update("form:messages", "form:vehicles");
 
         this.selectedVehicle = null;
         populateVehicles();
@@ -101,13 +107,13 @@ public class ManageVehicleView implements Serializable {
                 .closeOnEscape(true)
                 .responsive(true)
                 .build();
-        PrimeFaces.current().dialog().openDynamic(viewName, options, null);
+        primeFaces.dialog().openDynamic(viewName, options, null);
     }
 
     public void onVehicleUpdated(SelectEvent<FacesMessage> event) {
         var msg = event.getObject();
         facesContext.addMessage(null, msg);
-        PrimeFaces.current().ajax().update("form:messages");
+        primeFaces.ajax().update("form:messages");
         populateVehicles();
     }
 }

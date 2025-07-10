@@ -8,6 +8,7 @@ import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.FacesContextMock;
+import it.mulders.traqqr.web.prime.PrimeFacesMock;
 import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -26,7 +27,8 @@ class ManageVehicleViewTest implements WithAssertions {
     };
     private final FacesContext facesContext = new FacesContextMock();
 
-    private final ManageVehicleView view = new ManageVehicleView(facesContext, mapper, repository, owner);
+    private final ManageVehicleView view =
+            new ManageVehicleView(facesContext, new PrimeFacesMock(), mapper, repository, owner);
 
     @Test
     void should_populate_vehicles_on_creation() {

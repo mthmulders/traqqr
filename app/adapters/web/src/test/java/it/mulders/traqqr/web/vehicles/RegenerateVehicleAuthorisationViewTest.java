@@ -7,6 +7,7 @@ import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.DummyUIComponent;
 import it.mulders.traqqr.web.faces.FacesContextMock;
+import it.mulders.traqqr.web.prime.PrimeFacesMock;
 import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +21,8 @@ class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
     private final InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
 
-    private final RegenerateVehicleAuthorisationView view =
-            new RegenerateVehicleAuthorisationView(facesContext, vehicleMapper, vehicleRepository);
+    private final RegenerateVehicleAuthorisationView view = new RegenerateVehicleAuthorisationView(
+            facesContext, new PrimeFacesMock(), vehicleMapper, vehicleRepository);
 
     @BeforeEach
     void prepareRawKeyComponent() {
