@@ -40,11 +40,17 @@ public class MaintainVehicleView implements Serializable {
 
         this.selectedVehicle =
                 (VehicleDTO) facesContext.getExternalContext().getFlash().get("selectedVehicle");
+        if (selectedVehicle.getCode() != null) {
+            log.info("Maintaining vehicle; code={}", selectedVehicle.getCode());
+        } else {
+            log.info("Creating new vehicle");
+        }
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
     public void saveVehicle() {
         if (selectedVehicle.getCode() == null) {
+            log.info("Storing new vehicle");
             selectedVehicle.setCode(RandomStringUtils.generateRandomIdentifier(8));
             this.vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
@@ -52,6 +58,7 @@ public class MaintainVehicleView implements Serializable {
                     new FacesMessage(SEVERITY_INFO, "Success", "Vehicle %s saved".formatted(selectedVehicle.getCode()));
             PrimeFaces.current().dialog().closeDynamic(msg);
         } else {
+            log.info("Updating existing vehicle; code={}", selectedVehicle.getCode());
             vehicleRepository.update(this.vehicleMapper.vehicleDtoToVehicle(selectedVehicle, owner));
 
             var msg = new FacesMessage(
