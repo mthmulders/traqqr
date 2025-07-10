@@ -6,7 +6,7 @@ import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.DummyUIComponent;
-import it.mulders.traqqr.web.faces.MockFacesContext;
+import it.mulders.traqqr.web.faces.FacesContextMock;
 import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class RegenerateVehicleAuthorisationViewTest implements WithAssertions {
-    private final FacesContext facesContext = new MockFacesContext();
+    private final FacesContext facesContext = new FacesContextMock();
     private final InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
 

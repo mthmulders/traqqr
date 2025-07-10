@@ -11,10 +11,10 @@ import jakarta.faces.lifecycle.Lifecycle;
 import jakarta.faces.render.RenderKit;
 import java.util.Iterator;
 
-public class MockFacesContext extends FacesContext {
+public class FacesContextMock extends FacesContext {
     @Override
     public Application getApplication() {
-        return new MockApplication();
+        return new ApplicationMock();
     }
 
     @Override

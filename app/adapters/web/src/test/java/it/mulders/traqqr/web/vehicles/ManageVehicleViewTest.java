@@ -7,7 +7,7 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
-import it.mulders.traqqr.web.faces.MockFacesContext;
+import it.mulders.traqqr.web.faces.FacesContextMock;
 import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -24,7 +24,7 @@ class ManageVehicleViewTest implements WithAssertions {
             this.save(vehicle);
         }
     };
-    private final FacesContext facesContext = new MockFacesContext();
+    private final FacesContext facesContext = new FacesContextMock();
 
     private final ManageVehicleView view = new ManageVehicleView(facesContext, mapper, repository, owner);
 

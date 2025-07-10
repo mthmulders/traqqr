@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class MockApplication extends Application {
+public class ApplicationMock extends Application {
     @Override
     public ActionListener getActionListener() {
         return null;

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MeasurementTimestampConverterTest implements WithAssertions {
-    private final MockFacesContext facesContext = new MockFacesContext();
+    private final FacesContextMock facesContext = new FacesContextMock();
     private final MeasurementTimestampConverter converter = new MeasurementTimestampConverter();
 
     private static final OffsetDateTime INPUT =

@@ -9,7 +9,7 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
-import it.mulders.traqqr.web.faces.MockFacesContext;
+import it.mulders.traqqr.web.faces.FacesContextMock;
 import it.mulders.traqqr.web.measurements.model.MeasurementDTO;
 import it.mulders.traqqr.web.user.DummyOwner;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
@@ -18,7 +18,7 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 
 class AddMeasurementViewTest implements WithAssertions {
-    private final MockFacesContext facesContext = new MockFacesContext();
+    private final FacesContextMock facesContext = new FacesContextMock();
     private final MeasurementMapper measurementMapper = new MeasurementMapperImpl();
     private final MeasurementRepository measurementRepository = new InMemoryMeasurementRepository();
     private final Owner owner = DummyOwner.builder()
