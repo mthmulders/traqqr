@@ -27,10 +27,10 @@
               <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobStatus.'.concat(batchJob.status.name())]}" />
             </p:column>
             <p:column headerText="Started at">
-              <h:outputText value="#{batchJob.started}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+              <h:outputText value="#{batchJob.started}" converter="traqqr.MeasurementTimestampConverter" />
             </p:column>
             <p:column headerText="Ended at">
-              <h:outputText value="#{batchJob.ended}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+              <h:outputText value="#{batchJob.ended}" converter="traqqr.MeasurementTimestampConverter" />
             </p:column>
             <p:column headerText="Items processed">
               <h:outputText value="#{batchJob.itemsProcessed}" />

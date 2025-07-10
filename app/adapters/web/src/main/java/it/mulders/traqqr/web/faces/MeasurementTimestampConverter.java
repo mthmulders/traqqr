@@ -13,7 +13,10 @@ import java.util.Locale;
 
 @FacesConverter("traqqr.MeasurementTimestampConverter")
 public class MeasurementTimestampConverter implements Converter<OffsetDateTime> {
-    private static final DateTimeFormatter FORMAT = new DateTimeFormatterBuilder()
+    private static final DateTimeFormatter DISPLAY_FORMAT = new DateTimeFormatterBuilder()
+            .appendPattern("dd MMM uuuu, HH:mm:ss (O)")
+            .toFormatter(Locale.ROOT);
+    private static final DateTimeFormatter PARSE_FORMAT = new DateTimeFormatterBuilder()
             .appendPattern("dd MMM uuuu, HH:mm:ss")
             .toFormatter(Locale.ROOT);
 
@@ -26,7 +29,7 @@ public class MeasurementTimestampConverter implements Converter<OffsetDateTime> 
             return null;
         }
 
-        return OffsetDateTime.of(LocalDateTime.parse(value, FORMAT), ZoneOffset.UTC);
+        return OffsetDateTime.of(LocalDateTime.parse(value, PARSE_FORMAT), ZoneOffset.UTC);
     }
 
     @Override
@@ -35,6 +38,6 @@ public class MeasurementTimestampConverter implements Converter<OffsetDateTime> 
             return "";
         }
 
-        return value.format(FORMAT);
+        return value.format(DISPLAY_FORMAT);
     }
 }

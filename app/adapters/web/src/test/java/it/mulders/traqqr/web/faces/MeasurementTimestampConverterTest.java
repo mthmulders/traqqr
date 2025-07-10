@@ -30,7 +30,7 @@ class MeasurementTimestampConverterTest implements WithAssertions {
 
         @Test
         void should_format_measurement_timestamp() {
-            assertThat(converter.getAsString(facesContext, component, INPUT)).isEqualTo("07 Jan 2025, 22:14:13");
+            assertThat(converter.getAsString(facesContext, component, INPUT)).isEqualTo("07 Jan 2025, 22:14:13 (GMT)");
         }
 
         @Test
