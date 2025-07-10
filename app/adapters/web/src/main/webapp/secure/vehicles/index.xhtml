@@ -67,7 +67,6 @@
                     <p:commandButton icon="pi pi-plus"
                                      value="Add"
                                      action="#{manageVehicleView.createVehicle}">
-                        <p:resetInput target=":dialogs:vehicle-details-content" />
                         <p:ajax event="dialogReturn" listener="#{manageVehicleView.onVehicleUpdated}" update="form:vehicles form:messages"/>
                     </p:commandButton>
                 </f:facet>
