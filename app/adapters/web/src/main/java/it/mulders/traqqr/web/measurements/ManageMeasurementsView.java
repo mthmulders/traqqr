@@ -26,6 +26,7 @@ public class ManageMeasurementsView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ManageMeasurementsView.class);
 
     // Components
+    private final FacesContext facesContext;
     private final MeasurementRepository measurementRepository;
     private final VehicleMapper vehicleMapper;
 
@@ -41,10 +42,12 @@ public class ManageMeasurementsView implements Serializable {
 
     @Inject
     public ManageMeasurementsView(
+            FacesContext facesContext,
             MeasurementRepository measurementRepository,
             VehicleMapper vehicleMapper,
             VehicleRepository vehicleRepository,
             Owner owner) {
+        this.facesContext = facesContext;
         this.measurementRepository = measurementRepository;
         this.vehicleMapper = vehicleMapper;
         this.owner = owner;
@@ -116,7 +119,7 @@ public class ManageMeasurementsView implements Serializable {
         measurementRepository.removeMeasurement(selectedMeasurement);
 
         var msg = new FacesMessage("1 measurement removed");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        facesContext.addMessage(null, msg);
         PrimeFaces.current().ajax().update("form:messages", "form:measurements");
 
         this.selectedMeasurement = null;

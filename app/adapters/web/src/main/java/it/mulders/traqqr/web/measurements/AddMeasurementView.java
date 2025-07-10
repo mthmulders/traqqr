@@ -26,6 +26,7 @@ public class AddMeasurementView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(AddMeasurementView.class);
 
     // Components
+    private final FacesContext facesContext;
     private final MeasurementMapper measurementMapper;
     private final MeasurementRepository measurementRepository;
     private final VehicleRepository vehicleRepository;
@@ -41,11 +42,13 @@ public class AddMeasurementView implements Serializable {
 
     @Inject
     public AddMeasurementView(
+            FacesContext facesContext,
             MeasurementMapper measurementMapper,
             MeasurementRepository measurementRepository,
             VehicleMapper vehicleMapper,
             VehicleRepository vehicleRepository,
             Owner owner) {
+        this.facesContext = facesContext;
         this.measurementMapper = measurementMapper;
         this.measurementRepository = measurementRepository;
         this.vehicleMapper = vehicleMapper;
@@ -73,7 +76,7 @@ public class AddMeasurementView implements Serializable {
         this.measurementRepository.save(measurement);
 
         var msg = new FacesMessage(SEVERITY_INFO, "Success", "Measurement saved".formatted(selectedVehicle.getCode()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        facesContext.addMessage(null, msg);
 
         return "return-measurement-list";
     }

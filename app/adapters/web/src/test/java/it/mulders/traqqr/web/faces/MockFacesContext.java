@@ -12,17 +12,9 @@ import jakarta.faces.render.RenderKit;
 import java.util.Iterator;
 
 public class MockFacesContext extends FacesContext {
-    public MockFacesContext() {
-        setCurrentInstance(this);
-    }
-
-    public void unregister() {
-        setCurrentInstance(null);
-    }
-
     @Override
     public Application getApplication() {
-        return null;
+        return new MockApplication();
     }
 
     @Override

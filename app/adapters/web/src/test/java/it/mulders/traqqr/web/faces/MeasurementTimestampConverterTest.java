@@ -8,7 +8,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeParseException;
 import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,11 +23,6 @@ class MeasurementTimestampConverterTest implements WithAssertions {
 
     private static final OffsetDateTime INPUT =
             OffsetDateTime.of(LocalDate.of(2025, Month.JANUARY, 7), LocalTime.of(22, 14, 13, 0), ZoneOffset.UTC);
-
-    @AfterAll
-    static void cleanupFacesContext() {
-        facesContext.unregister();
-    }
 
     @DisplayName("getAsString")
     @Nested

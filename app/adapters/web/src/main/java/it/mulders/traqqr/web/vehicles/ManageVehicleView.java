@@ -24,6 +24,7 @@ public class ManageVehicleView implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ManageVehicleView.class);
 
     // Components
+    private final FacesContext facesContext;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
@@ -33,7 +34,9 @@ public class ManageVehicleView implements Serializable {
     private Collection<VehicleDTO> vehicles;
 
     @Inject
-    public ManageVehicleView(VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
+    public ManageVehicleView(
+            FacesContext facesContext, VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
+        this.facesContext = facesContext;
         this.owner = owner;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
@@ -67,7 +70,7 @@ public class ManageVehicleView implements Serializable {
         log.debug("Vehicle removed; code={}", selectedVehicle.getCode());
 
         var msg = new FacesMessage("Vehicle %s removed".formatted(selectedVehicle.getCode()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        facesContext.addMessage(null, msg);
         PrimeFaces.current().ajax().update("form:messages", "form:vehicles");
 
         this.selectedVehicle = null;
@@ -75,17 +78,17 @@ public class ManageVehicleView implements Serializable {
     }
 
     public void editVehicle(final VehicleDTO vehicle) {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", vehicle);
+        facesContext.getExternalContext().getFlash().put("selectedVehicle", vehicle);
         openDialog("edit");
     }
 
     public void createVehicle() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", new VehicleDTO());
+        facesContext.getExternalContext().getFlash().put("selectedVehicle", new VehicleDTO());
         openDialog("edit");
     }
 
     public void regenerateApiKey(final VehicleDTO vehicle) {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedVehicle", vehicle);
+        facesContext.getExternalContext().getFlash().put("selectedVehicle", vehicle);
         openDialog("regenerate-authorisation");
     }
 
@@ -103,7 +106,7 @@ public class ManageVehicleView implements Serializable {
 
     public void onVehicleUpdated(SelectEvent<FacesMessage> event) {
         var msg = event.getObject();
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        facesContext.addMessage(null, msg);
         PrimeFaces.current().ajax().update("form:messages");
         populateVehicles();
     }

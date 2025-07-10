@@ -28,6 +28,7 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
     private UIComponent rawKey;
 
     // Components
+    private final FacesContext facesContext;
     private final VehicleMapper vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
@@ -37,14 +38,13 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
 
     @Inject
     public RegenerateVehicleAuthorisationView(
-            final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository) {
+            FacesContext facesContext, final VehicleMapper vehicleMapper, final VehicleRepository vehicleRepository) {
+        this.facesContext = facesContext;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
 
-        this.selectedVehicle = (VehicleDTO) FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getFlash()
-                .get("selectedVehicle");
+        this.selectedVehicle =
+                (VehicleDTO) facesContext.getExternalContext().getFlash().get("selectedVehicle");
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
@@ -62,7 +62,7 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
 
         var msg = new FacesMessage(
                 SEVERITY_WARN, "Please note", "You will see this API key only once. Make sure to write it down!");
-        FacesContext.getCurrentInstance().addMessage(getRawKeyClientId(), msg);
+        facesContext.addMessage(getRawKeyClientId(), msg);
 
         var options = DialogFrameworkOptions.builder()
                 .resizable(false)
@@ -100,7 +100,6 @@ public class RegenerateVehicleAuthorisationView implements Serializable {
     }
 
     private String getRawKeyClientId() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        return rawKey.getClientId(context);
+        return rawKey.getClientId(facesContext);
     }
 }

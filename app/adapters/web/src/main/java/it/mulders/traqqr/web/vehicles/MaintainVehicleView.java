@@ -32,15 +32,14 @@ public class MaintainVehicleView implements Serializable {
     ;
 
     @Inject
-    public MaintainVehicleView(VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
+    public MaintainVehicleView(
+            FacesContext facesContext, VehicleMapper vehicleMapper, VehicleRepository vehicleRepository, Owner owner) {
         this.owner = owner;
         this.vehicleMapper = vehicleMapper;
         this.vehicleRepository = vehicleRepository;
 
-        this.selectedVehicle = (VehicleDTO) FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getFlash()
-                .get("selectedVehicle");
+        this.selectedVehicle =
+                (VehicleDTO) facesContext.getExternalContext().getFlash().get("selectedVehicle");
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

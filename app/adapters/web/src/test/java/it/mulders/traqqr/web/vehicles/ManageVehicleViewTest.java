@@ -7,6 +7,8 @@ import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
+import it.mulders.traqqr.web.faces.MockFacesContext;
+import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -22,8 +24,9 @@ class ManageVehicleViewTest implements WithAssertions {
             this.save(vehicle);
         }
     };
+    private final FacesContext facesContext = new MockFacesContext();
 
-    private final ManageVehicleView view = new ManageVehicleView(mapper, repository, owner);
+    private final ManageVehicleView view = new ManageVehicleView(facesContext, mapper, repository, owner);
 
     @Test
     void should_populate_vehicles_on_creation() {
@@ -34,5 +37,17 @@ class ManageVehicleViewTest implements WithAssertions {
 
         // Assert
         assertThat(result).isNotNull().hasSize(1);
+    }
+
+    @Test
+    void delete_should_remove_vehicle() {
+        // Arrange
+        view.setSelectedVehicle(mapper.vehicleToDto(vehicle));
+
+        // Act
+        view.deleteVehicle();
+
+        // Assert
+        assertThat(repository.findByOwner(owner)).isEmpty();
     }
 }

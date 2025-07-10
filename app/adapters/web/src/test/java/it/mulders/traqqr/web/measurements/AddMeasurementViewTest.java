@@ -15,12 +15,10 @@ import it.mulders.traqqr.web.user.DummyOwner;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;
 import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 class AddMeasurementViewTest implements WithAssertions {
-    private static final MockFacesContext facesContext = new MockFacesContext();
-
+    private final MockFacesContext facesContext = new MockFacesContext();
     private final MeasurementMapper measurementMapper = new MeasurementMapperImpl();
     private final MeasurementRepository measurementRepository = new InMemoryMeasurementRepository();
     private final Owner owner = DummyOwner.builder()
@@ -29,13 +27,8 @@ class AddMeasurementViewTest implements WithAssertions {
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
     private final VehicleRepository vehicleRepository = new InMemoryVehicleRepository();
 
-    private final AddMeasurementView view =
-            new AddMeasurementView(measurementMapper, measurementRepository, vehicleMapper, vehicleRepository, owner);
-
-    @AfterAll
-    static void cleanupFacesContext() {
-        facesContext.unregister();
-    }
+    private final AddMeasurementView view = new AddMeasurementView(
+            facesContext, measurementMapper, measurementRepository, vehicleMapper, vehicleRepository, owner);
 
     @Test
     void should_lookup_preselected_vehicle() {
