@@ -82,7 +82,8 @@ class BatchJobConverterTest implements WithAssertions {
 
     @Test
     void should_fail_on_unexpected_status() {
-        assertThatThrownBy(() -> converter.fromBatchStatus(BatchStatus.ABANDONED)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> converter.fromBatchStatus(BatchStatus.ABANDONED))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> batchJobStatuses() {
@@ -105,8 +106,6 @@ class BatchJobConverterTest implements WithAssertions {
     }
 
     static Stream<Arguments> batchJobNames() {
-        return Stream.of(
-                Arguments.arguments("example", BatchJobType.EXAMPLE)
-        );
+        return Stream.of(Arguments.arguments("example", BatchJobType.EXAMPLE));
     }
 }

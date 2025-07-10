@@ -43,15 +43,15 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
     @Override
     public Collection<BatchJob> findPaginated(final Pagination pagination) {
         var jobNames = jobOperator.getJobNames();
-        log.debug("Find all jobs; job_names={}, offset={}, limit={}", jobNames, pagination.offset(), pagination.limit());
+        log.debug(
+                "Find all jobs; job_names={}, offset={}, limit={}", jobNames, pagination.offset(), pagination.limit());
 
         if (jobNames.isEmpty()) {
             log.warn("Find all jobs; no job names found!");
             return List.of();
         }
 
-        var offsets =
-                jobNames.stream().collect(toMap(Function.identity(), key -> pagination.offset()));
+        var offsets = jobNames.stream().collect(toMap(Function.identity(), key -> pagination.offset()));
 
         var jobNameIterator = jobNames.iterator();
 
