@@ -1,5 +1,6 @@
 package it.mulders.traqqr.web.faces;
 
+import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import jakarta.faces.component.UIComponent;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,12 +14,10 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.outputlabel.OutputLabel;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MeasurementTimestampConverterTest implements WithAssertions {
-    private static final MockFacesContext facesContext = new MockFacesContext();
+    private final MockFacesContext facesContext = new MockFacesContext();
     private final MeasurementTimestampConverter converter = new MeasurementTimestampConverter();
 
     private static final OffsetDateTime INPUT =
@@ -27,7 +26,7 @@ class MeasurementTimestampConverterTest implements WithAssertions {
     @DisplayName("getAsString")
     @Nested
     class GetAsString {
-        private final UIComponent component = new OutputLabel();
+        private final UIComponent component = new DummyUIComponent(RandomStringUtils.generateRandomIdentifier(5));
 
         @Test
         void should_format_measurement_timestamp() {
@@ -43,7 +42,7 @@ class MeasurementTimestampConverterTest implements WithAssertions {
     @DisplayName("getAsObject")
     @Nested
     class GetAsObject {
-        private final UIComponent component = new InputText();
+        private final UIComponent component = new DummyUIComponent(RandomStringUtils.generateRandomIdentifier(5));
 
         @Test
         void should_not_accept_null_context() {
