@@ -44,10 +44,10 @@
                         <i class="pi #{measurement.source() == 'API' ? 'pi-cog' : 'pi-user'}"></i>
                     </p:column>
                     <p:column headerText="Registered at">
-                        <h:outputText value="#{measurement.registrationTimestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+                        <h:outputText value="#{measurement.registrationTimestamp()}" converter="traqqr.MeasurementTimestampConverter" />
                     </p:column>
                     <p:column headerText="Measured at">
-                        <h:outputText value="#{measurement.measurementTimestamp()}" converter="traqqr.MeasurementTimestampConverter" /> (UTC)
+                        <h:outputText value="#{measurement.measurementTimestamp()}" converter="traqqr.MeasurementTimestampConverter" />
                     </p:column>
                     <p:column headerText="Odometer">
                         <h:outputText value="#{measurement.odometer()}" />
