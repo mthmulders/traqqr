@@ -4,6 +4,7 @@ import it.mulders.traqqr.web.faces.FacesContextMock;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.model.DialogFrameworkOptions;
 
 public class PrimeFacesMock extends PrimeFaces {
+    private final DialogMock dialog = new DialogMock();
+
     public PrimeFacesMock() {
         setCurrent(this);
     }
@@ -23,26 +26,8 @@ public class PrimeFacesMock extends PrimeFaces {
     }
 
     @Override
-    public Dialog dialog() {
-        return new Dialog() {
-            @Override
-            public void openDynamic(String outcome) {}
-
-            @Override
-            public void openDynamic(String outcome, DialogFrameworkOptions options, Map<String, List<String>> params) {}
-
-            @Override
-            public void openDynamic(String outcome, Map<String, Object> options, Map<String, List<String>> params) {}
-
-            @Override
-            public void closeDynamic(Object data) {}
-
-            @Override
-            public void showMessageDynamic(FacesMessage message) {}
-
-            @Override
-            public void showMessageDynamic(FacesMessage message, boolean escape) {}
-        };
+    public DialogMock dialog() {
+        return dialog;
     }
 
     @Override
@@ -104,5 +89,39 @@ public class PrimeFacesMock extends PrimeFaces {
                 return null;
             }
         };
+    }
+
+    public class DialogMock extends Dialog {
+        private final List<String> openedDialogs = new ArrayList<>();
+
+        @Override
+        public void openDynamic(String outcome) {}
+
+        @Override
+        public void openDynamic(String outcome, DialogFrameworkOptions options, Map<String, List<String>> params) {
+            openedDialogs.add(outcome);
+        }
+
+        @Override
+        public void openDynamic(String outcome, Map<String, Object> options, Map<String, List<String>> params) {
+            openedDialogs.add(outcome);
+        }
+
+        @Override
+        public void closeDynamic(Object data) {}
+
+        @Override
+        public void showMessageDynamic(FacesMessage message) {}
+
+        @Override
+        public void showMessageDynamic(FacesMessage message, boolean escape) {}
+
+        public void reset() {
+            this.openedDialogs.clear();
+        }
+
+        public List<String> openedDialogs() {
+            return openedDialogs;
+        }
     }
 }

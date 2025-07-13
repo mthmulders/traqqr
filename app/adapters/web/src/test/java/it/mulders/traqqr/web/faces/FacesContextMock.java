@@ -12,6 +12,8 @@ import jakarta.faces.render.RenderKit;
 import java.util.Iterator;
 
 public class FacesContextMock extends FacesContext {
+    private final ExternalContext externalContext = new MockExternalContext();
+
     @Override
     public Application getApplication() {
         return new ApplicationMock();
@@ -29,7 +31,7 @@ public class FacesContextMock extends FacesContext {
 
     @Override
     public ExternalContext getExternalContext() {
-        return new MockExternalContext();
+        return externalContext;
     }
 
     @Override

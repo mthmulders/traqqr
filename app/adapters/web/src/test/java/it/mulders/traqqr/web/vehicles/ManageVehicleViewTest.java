@@ -9,6 +9,7 @@ import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.FacesContextMock;
 import it.mulders.traqqr.web.prime.PrimeFacesMock;
+import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.context.FacesContext;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -26,9 +27,10 @@ class ManageVehicleViewTest implements WithAssertions {
         }
     };
     private final FacesContext facesContext = new FacesContextMock();
+    private final PrimeFacesMock primeFacesMock = new PrimeFacesMock();
 
     private final ManageVehicleView view =
-            new ManageVehicleView(facesContext, new PrimeFacesMock(), mapper, repository, owner);
+            new ManageVehicleView(facesContext, primeFacesMock, mapper, repository, owner);
 
     @Test
     void should_populate_vehicles_on_creation() {
@@ -51,5 +53,66 @@ class ManageVehicleViewTest implements WithAssertions {
 
         // Assert
         assertThat(repository.findByOwner(owner)).isEmpty();
+    }
+
+    @Test
+    void should_open_dialog_for_new_vehicle() {
+        // Arrange
+        primeFacesMock.dialog().reset();
+
+        // Act
+        view.createVehicle();
+
+        // Assert
+        assertThat(primeFacesMock.dialog().openedDialogs())
+                .hasSize(1)
+                .singleElement()
+                .isEqualTo("edit");
+    }
+
+    @Test
+    void should_create_new_vehicle_for_editing() {
+        // Arrange
+        primeFacesMock.dialog().reset();
+
+        // Act
+        view.createVehicle();
+
+        // Assert
+        assertThat(facesContext.getExternalContext().getFlash().size()).isGreaterThan(0);
+        assertThat(facesContext.getExternalContext().getFlash()).anySatisfy((key, value) -> {
+            assertThat(value).isInstanceOf(VehicleDTO.class);
+        });
+    }
+
+    @Test
+    void should_open_dialog_for_editing_existing_vehicle() {
+        // Arrange
+        primeFacesMock.dialog().reset();
+        var vehicle = createVehicle();
+
+        // Act
+        view.editVehicle(mapper.vehicleToDto(vehicle));
+
+        // Assert
+        assertThat(primeFacesMock.dialog().openedDialogs())
+                .hasSize(1)
+                .singleElement()
+                .isEqualTo("edit");
+    }
+
+    @Test
+    void should_select_vehicle_for_editing() {
+        // Arrange
+        primeFacesMock.dialog().reset();
+        var vehicle = createVehicle();
+        var dto = mapper.vehicleToDto(vehicle);
+
+        // Act
+        view.editVehicle(dto);
+
+        // Assert
+        assertThat(facesContext.getExternalContext().getFlash().containsValue(dto))
+                .isTrue();
     }
 }

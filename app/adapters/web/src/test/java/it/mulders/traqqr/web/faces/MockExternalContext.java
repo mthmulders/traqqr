@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class MockExternalContext extends ExternalContext {
+    private final Flash flash = new MockFlash();
+
     @Override
     public void dispatch(String path) throws IOException {
         // Only used in tests, no implementation necessary.
@@ -197,6 +199,6 @@ public class MockExternalContext extends ExternalContext {
 
     @Override
     public Flash getFlash() {
-        return new MockFlash();
+        return flash;
     }
 }
