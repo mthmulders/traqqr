@@ -32,10 +32,6 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>domain</artifactId>
     </dependency>
-    <dependency>
-      <groupId>it.mulders.traqqr</groupId>
-      <artifactId>jpa</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>jakarta.enterprise</groupId>
