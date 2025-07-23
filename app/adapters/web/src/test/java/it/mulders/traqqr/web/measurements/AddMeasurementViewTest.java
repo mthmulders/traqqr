@@ -15,8 +15,11 @@ import it.mulders.traqqr.web.user.DummyOwner;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AddMeasurementViewTest implements WithAssertions {
     private final FacesContextMock facesContext = new FacesContextMock();
     private final MeasurementMapper measurementMapper = new MeasurementMapperImpl();

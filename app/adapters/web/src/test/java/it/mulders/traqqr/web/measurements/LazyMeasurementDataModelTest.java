@@ -11,9 +11,12 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.primefaces.model.LazyDataModel;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LazyMeasurementDataModelTest implements WithAssertions {
     private final MeasurementRepository repository = new InMemoryMeasurementRepository();
     private final Vehicle selectedVehicle = createVehicle();
