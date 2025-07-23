@@ -41,12 +41,12 @@
       <artifactId>web</artifactId>
       <type>war</type>
     </dependency>
+
+    <!-- shared application modules  -->
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>batch</artifactId>
     </dependency>
-
-    <!-- shared application modules  -->
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>config</artifactId>
