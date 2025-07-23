@@ -29,9 +29,7 @@ public class InMemoryVehicleRepository implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> findByCode(final String code) {
-        return vehicles.stream()
-                .filter(vehicle -> code.equals(vehicle.code()))
-                .findAny();
+        return vehicles.stream().filter(vehicle -> code.equals(vehicle.code())).findAny();
     }
 
     @Override

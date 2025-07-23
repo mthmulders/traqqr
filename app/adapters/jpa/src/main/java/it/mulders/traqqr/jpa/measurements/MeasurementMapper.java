@@ -4,6 +4,7 @@ import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
+import it.mulders.traqqr.jpa.batch.BatchJobItemMapper;
 import it.mulders.traqqr.jpa.vehicles.VehicleMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,7 +13,7 @@ import org.mapstruct.MappingConstants.ComponentModel;
 @Mapper(
         componentModel = ComponentModel.JAKARTA_CDI,
         nullValueIterableMappingStrategy = RETURN_DEFAULT,
-        uses = {VehicleMapper.class},
+        uses = {BatchJobItemMapper.class, VehicleMapper.class},
         injectionStrategy = CONSTRUCTOR)
 public interface MeasurementMapper {
     @Mapping(target = "vehicle", ignore = true)

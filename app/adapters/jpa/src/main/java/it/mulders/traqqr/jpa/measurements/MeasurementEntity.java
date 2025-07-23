@@ -22,7 +22,7 @@ import java.util.UUID;
 @Entity(name = "Measurement")
 @Table(name = "measurement")
 public class MeasurementEntity {
-    enum Source {
+    public enum Source {
         API,
         USER
     }

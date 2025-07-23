@@ -50,7 +50,7 @@ class BatchJobConverterTest implements WithAssertions {
     }
 
     @Test
-    void should_calculate_total_processed_items_count() {
+    void should_calculate_total_number_of_processed_items() {
         var end = Instant.now();
         var start = Instant.now().minusSeconds(10);
         var instance = new DummyJobInstance(1, "example");
@@ -71,7 +71,7 @@ class BatchJobConverterTest implements WithAssertions {
 
         var result = converter.convert(instance, execution, counts);
 
-        assertThat(result.getItemsProcessed()).isEqualTo(7L);
+        assertThat(result.getTotalItemsProcessed()).isEqualTo(7L);
     }
 
     @MethodSource("batchJobStatuses")

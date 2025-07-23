@@ -33,9 +33,23 @@
               <h:outputText value="#{batchJob.ended}" converter="traqqr.MeasurementTimestampConverter" />
             </p:column>
             <p:column headerText="Items processed">
-              <h:outputText value="#{batchJob.itemsProcessed}" />
+              <p:badge value="#{batchJob.itemsProcessedSuccess}"
+                       severity="success"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessedSuccess != 0}">
+              </p:badge>
+              <p:badge value="#{batchJob.itemsProcessingNotNecessary}"
+                       severity="info"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessingNotNecessary != 0}">
+              </p:badge>
+              <p:badge value="#{batchJob.itemsProcessingFailed}"
+                       severity="danger"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessingFailed != 0}">
+              </p:badge>
+              <p:outputLabel rendered="#{batchJob.totalItemsProcessed == 0}">none</p:outputLabel>
             </p:column>
-
           </p:dataTable>
         </h:form>
       </p:tab>

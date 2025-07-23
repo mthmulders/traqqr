@@ -28,7 +28,8 @@ public class LazyMeasurementDataModel extends LazyDataModel<Measurement> {
     public List<Measurement> load(
             int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         var pagination = new Pagination(first, pageSize);
-        return List.copyOf(this.measurementRepository.findByVehicle(selectedVehicle, pagination));
+        var result = this.measurementRepository.findByVehicle(selectedVehicle, pagination);
+        return List.copyOf(result);
     }
 
     @Override

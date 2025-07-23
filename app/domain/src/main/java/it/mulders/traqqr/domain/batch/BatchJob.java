@@ -59,12 +59,23 @@ public final class BatchJob {
         return status;
     }
 
-    public Map<BatchJobItemStatus, Long> getItemsProcessedByStatus() {
-        return itemsProcessedByStatus;
+    public Long getItemsProcessedSuccess() {
+        return itemsProcessedByStatus.getOrDefault(BatchJobItemStatus.PROCESSED, 0L);
     }
 
-    public Long getItemsProcessed() {
-        return itemsProcessedByStatus.values().stream().mapToLong(i -> i).sum();
+    public Long getItemsProcessingFailed() {
+        return itemsProcessedByStatus.getOrDefault(BatchJobItemStatus.FAILED, 0L);
+    }
+
+    public Long getItemsProcessingNotNecessary() {
+        return itemsProcessedByStatus.getOrDefault(BatchJobItemStatus.NO_PROCESSING_NECESSARY, 0L);
+    }
+
+    public Long getTotalItemsProcessed() {
+        return itemsProcessedByStatus.values()
+                .stream()
+                .mapToLong(Long::valueOf)
+                .sum();
     }
 
     public Long getInstanceId() {
