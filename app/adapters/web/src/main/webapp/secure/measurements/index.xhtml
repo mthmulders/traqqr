@@ -41,7 +41,9 @@
                              paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              editable="false" stripedRows="true">
                     <p:column style="width:1rem" ariaHeaderText="Source">
-                        <i class="pi #{measurement.source() == 'API' ? 'pi-cog' : 'pi-user'}"></i>
+                        <span class="pi #{measurement.source() == 'API' ? 'pi-cog' : 'pi-user'}"
+                              title="#{measurement.source() == 'API' ? 'Automated' : 'Manual'}">
+                        </span>
                     </p:column>
                     <p:column headerText="Registered at">
                         <h:outputText value="#{measurement.registrationTimestamp()}" converter="traqqr.MeasurementTimestampConverter" />
@@ -61,6 +63,7 @@
                     </p:column>
                     <p:column style="width:3rem" ariaHeaderText="Actions">
                         <p:commandButton icon="pi pi-trash" class="ui-button-warning"
+                                         title="Delete measurement"
                                          oncomplete="PF('deleteMeasurementDialog').show()"
                                          style="margin: 0.5rem"
                                          styleClass="ui-button-danger"

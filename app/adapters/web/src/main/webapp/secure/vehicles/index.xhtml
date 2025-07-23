@@ -43,6 +43,7 @@
                         <p:commandButton icon="pi pi-key"
                                          styleClass="ui-button-secondary"
                                          style="margin: 0.5rem"
+                                         title="Regenerate API key"
                                          action="#{manageVehicleView.regenerateApiKey(vehicle)}"
                                          process="@this">
                             <p:ajax event="dialogReturn" listener="#{manageVehicleView.onVehicleUpdated}" update="form:vehicles form:messages"/>
@@ -50,12 +51,14 @@
                         <p:commandButton icon="pi pi-pencil"
                                          action="#{manageVehicleView.editVehicle(vehicle)}"
                                          styleClass="ui-button-secondary"
-                                         style="margin: 0.5rem">
+                                         style="margin: 0.5rem"
+                                         title="Edit vehicle">
                             <p:ajax event="dialogReturn" listener="#{manageVehicleView.onVehicleUpdated}" update="form:vehicles form:messages"/>
                         </p:commandButton>
                         <p:commandButton icon="pi pi-trash" class="ui-button-warning"
                                          oncomplete="PF('deleteVehicleDialog').show()"
                                          style="margin: 0.5rem"
+                                         title="Delete vehicle"
                                          styleClass="ui-button-danger"
                                          process="@this">
                             <f:setPropertyActionListener value="#{vehicle}" target="#{manageVehicleView.selectedVehicle}" />
