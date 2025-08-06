@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="traqqr-dev-server">
     <featureManager>
-        <feature>appSecurity-5.0</feature>
-        <feature>batch-2.1</feature>
+        <platform>jakartaee-10.0</platform>
+
+        <!-- Features managed by the Jakarta EE platform -->
+        <feature>appSecurity</feature>
+        <feature>batch</feature>
+        <feature>beanValidation</feature>
+        <feature>cdi</feature>
+        <feature>enterpriseBeans</feature>
+        <feature>expressionLanguage</feature>
+        <feature>faces</feature>
+        <feature>jsonb</feature>
+        <feature>persistence</feature>
+        <feature>restfulWS</feature>
+        <feature>servlet</feature>
+
+        <!-- Non-Jakarta features -->
         <feature>batchManagement-1.0</feature>
-        <feature>beanValidation-3.0</feature>
-        <feature>cdi-4.0</feature>
-        <feature>enterpriseBeans-4.0</feature>
-        <feature>expressionLanguage-5.0</feature>
-        <feature>faces-4.0</feature>
-        <feature>jsonb-3.0</feature>
-        <feature>persistence-3.1</feature>
-        <feature>restfulWS-3.1</feature>
-        <feature>servlet-6.0</feature>
     </featureManager>
 
     <variable name="jdbc.hostname" defaultValue="localhost" />
