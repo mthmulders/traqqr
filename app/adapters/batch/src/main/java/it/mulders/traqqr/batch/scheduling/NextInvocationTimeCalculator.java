@@ -12,7 +12,6 @@ public class NextInvocationTimeCalculator {
     private static final String WILDCARD_CHAR = "*";
 
     public OffsetDateTime calculateNextInvocationTime(final OffsetDateTime after, final Schedule schedule) {
-        log.debug("Calculating next invocation time; after={}, schedule={}", after, schedule);
         var intermediate = after;
 
         // 1. Calculate the next minute.
@@ -21,6 +20,8 @@ public class NextInvocationTimeCalculator {
         intermediate = processHourSpec(after, intermediate, schedule);
         // 3. Calculate the next day.
         intermediate = processDayOfMonthSpec(after, intermediate, schedule);
+
+        log.debug("Calculated next invocation time; after={}, schedule={}, result={}", after, schedule, intermediate);
 
         return intermediate;
     }
