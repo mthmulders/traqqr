@@ -12,7 +12,8 @@ import jakarta.inject.Inject;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class DefaultSimpleScheduler implements Scheduler {
     private final TimingWorker timingWorker = new TimingWorker();
 
     // Data
-    private final Stack<ScheduledMethod> pendingInvocations = new Stack<>();
+    private final List<ScheduledMethod> pendingInvocations = new LinkedList<>();
 
     // Configuration
     private final Duration sleepDuration;
@@ -65,7 +66,7 @@ public class DefaultSimpleScheduler implements Scheduler {
             while (true) {
                 if (!pendingInvocations.isEmpty()) {
                     var now = OffsetDateTime.now(clock);
-                    var next = pendingInvocations.peek();
+                    var next = pendingInvocations.getFirst();
                     var nextInvocation = next.nextInvocation;
                     var wakeup = now.plus(sleepDuration);
 
