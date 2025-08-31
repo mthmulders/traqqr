@@ -1,6 +1,5 @@
 package it.mulders.traqqr.batch.scheduling;
 
-import jakarta.annotation.security.RunAs;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.spi.AfterDeploymentValidation;
 import jakarta.enterprise.inject.spi.Bean;
@@ -16,9 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  * A CDI extension that invokes {@link @Scheduled}-annotated methods according to the schedule that the annotation
  * specifies.
- * Heavily inspired by the (now unmaintained) <a href="https://github.com/mirkosertic/cdicron">CDICron</a> codebase, but simplified for this project.
+ * Heavily inspired by the (now unmaintained) <a href="https://github.com/mirkosertic/cdicron">CDICron</a> codebase,
+ * but simplified for this project.
  */
-@RunAs("batchSubmitter")
 public class SchedulingExtension implements Extension {
     private static final Logger logger = LoggerFactory.getLogger(SchedulingExtension.class);
 
