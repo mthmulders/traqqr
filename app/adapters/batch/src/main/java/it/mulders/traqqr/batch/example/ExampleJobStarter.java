@@ -1,7 +1,9 @@
 package it.mulders.traqqr.batch.example;
 
+import it.mulders.traqqr.batch.scheduling.Scheduled;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
+import it.mulders.traqqr.libertysecurity.SecurityWrapper;
 import jakarta.annotation.security.RunAs;
 import jakarta.batch.operations.JobOperator;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,14 +16,20 @@ import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 @RunAs("batchSubmitter")
-public class ExampleJob {
-    private static final Logger logger = LoggerFactory.getLogger(ExampleJob.class);
-
-    private final JobOperator jobOperator;
+public class ExampleJobStarter {
+    private static final Logger logger = LoggerFactory.getLogger(ExampleJobStarter.class);
 
     @Inject
-    public ExampleJob(JobOperator jobOperator) {
+    private JobOperator jobOperator;
+
+    @Inject
+    private SecurityWrapper wrapper;
+
+    public ExampleJobStarter() {}
+
+    protected ExampleJobStarter(JobOperator jobOperator, SecurityWrapper wrapper) {
         this.jobOperator = jobOperator;
+        this.wrapper = wrapper;
     }
 
     public void startManual(@Observes @Any JobStartRequestedEvent event) {
@@ -31,7 +39,15 @@ public class ExampleJob {
         }
     }
 
-    private void doStart() {
+    @Scheduled(hour = "*", minute = "15")
+    public void startAutomatic() {
+        wrapper.execute(() -> {
+            doStart();
+            return null;
+        });
+    }
+
+    void doStart() {
         var executionId = jobOperator.start("example", new Properties());
         var jobInstance = jobOperator.getJobInstance(executionId);
         var jobExecution = jobOperator.getJobExecution(executionId);

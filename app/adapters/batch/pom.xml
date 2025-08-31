@@ -23,6 +23,10 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>mem</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>liberty-security-adapter</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>jakarta.annotation</groupId>
@@ -40,9 +44,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.ejb</groupId>
-      <artifactId>jakarta.ejb-api</artifactId>
-      <scope>provided</scope>
+      <groupId>jakarta.enterprise.concurrent</groupId>
+      <artifactId>jakarta.enterprise.concurrent-api</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.inject</groupId>

@@ -134,6 +134,11 @@
         <artifactId>jpa</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>liberty-security-adapter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
