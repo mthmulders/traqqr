@@ -196,4 +196,22 @@ class NextInvocationTimeCalculatorTest implements WithAssertions {
             assertThat(result).isEqualTo(after.plusDays(8).withHour(1).withMinute(4));
         }
     }
+
+    @DisplayName("Observed misbehaviour during development")
+    @Nested
+    class Bugfixes {
+        @Test
+        void should_not_increment_higher_fields_when_lower_field_already_led_to_new_value() {
+            // Arrange
+            var now = OffsetDateTime.parse("2025-08-31T14:03:29.445223+02:00");
+            var schedule = new Schedule("*", "*", "*/5");
+
+            // Act
+            var result = calculator.calculateNextInvocationTime(now, schedule);
+
+            // Assert
+            var expected = OffsetDateTime.parse("2025-08-31T14:08:29.445223+02:00");
+            assertThat(result).isEqualTo(expected);
+        }
+    }
 }

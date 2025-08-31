@@ -47,7 +47,7 @@ public class NextInvocationTimeCalculator {
             final OffsetDateTime after, OffsetDateTime intermediate, final Schedule schedule) {
         var hourSpec = schedule.hour();
         if (WILDCARD_CHAR.equals(hourSpec)) {
-            if (intermediate.getHour() == after.getHour()) {
+            if (intermediate.equals(after)) {
                 intermediate = intermediate.plusHours(1);
             }
         } else if (hourSpec.contains(WILDCARD_CHAR)) {
@@ -67,7 +67,7 @@ public class NextInvocationTimeCalculator {
             final OffsetDateTime after, OffsetDateTime intermediate, final Schedule schedule) {
         var dayOfMonthSpec = schedule.dayOfMonth();
         if (WILDCARD_CHAR.equals(dayOfMonthSpec)) {
-            if (intermediate.getDayOfMonth() == after.getDayOfMonth()) {
+            if (intermediate.equals(after)) {
                 intermediate = intermediate.plusDays(1);
             }
         } else if (dayOfMonthSpec.contains(WILDCARD_CHAR)) {
