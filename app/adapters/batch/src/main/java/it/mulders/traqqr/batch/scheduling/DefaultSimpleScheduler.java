@@ -56,6 +56,7 @@ public class DefaultSimpleScheduler implements Scheduler {
         private static final Logger logger = LoggerFactory.getLogger(TimingWorker.class);
 
         @Override
+        @SuppressWarnings("java:S2189") // the 'while true' will terminate when the thread is interrupted
         public void run() {
             //
             // Super-naive: check at a fixed interval if there's work to do.
