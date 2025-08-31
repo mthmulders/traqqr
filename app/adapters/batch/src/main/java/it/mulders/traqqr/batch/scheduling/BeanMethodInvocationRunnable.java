@@ -2,6 +2,7 @@ package it.mulders.traqqr.batch.scheduling;
 
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,8 @@ class BeanMethodInvocationRunnable implements Runnable {
 
         try {
             method.invoke(beanInstance);
-        } catch (Exception e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             logger.error("Failed to invoke method", e);
-            throw new RuntimeException(e);
         }
     }
 
@@ -44,7 +44,7 @@ class BeanMethodInvocationRunnable implements Runnable {
         var creationalContext = beanManager.createCreationalContext(bean);
         try {
             return beanManager.getReference(bean, bean.getBeanClass(), creationalContext);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             logger.error("Failed to instantiate scheduler", e);
             throw new RuntimeException(e);
         }
