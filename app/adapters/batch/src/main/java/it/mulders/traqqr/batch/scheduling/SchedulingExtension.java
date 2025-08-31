@@ -56,9 +56,7 @@ public class SchedulingExtension implements Extension {
 
         // Instantiate the scheduler
         var scheduler = instantiateScheduler(beanManager);
-        methodsToSchedule.forEach(it -> {
-            scheduler.schedule(it.schedule, it.runnable);
-        });
+        methodsToSchedule.forEach(it -> scheduler.schedule(it.schedule, it.runnable));
     }
 
     private Scheduler instantiateScheduler(BeanManager beanManager) {
