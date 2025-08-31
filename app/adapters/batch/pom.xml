@@ -87,10 +87,22 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>fakes</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.clocky</groupId>
+      <artifactId>clocky</artifactId>
+      <version>0.4.6</version>
+      <scope>test</scope>
+    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.slf4j</groupId>-->
+    <!--      <artifactId>slf4j-simple</artifactId>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
   </dependencies>
 </project>

@@ -1,0 +1,121 @@
+package it.mulders.traqqr.batch.scheduling;
+
+import static java.util.Comparator.comparing;
+
+import jakarta.annotation.Resource;
+import jakarta.annotation.security.RunAs;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Destroyed;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@ApplicationScoped
+@RunAs("bob")
+public class DefaultSimpleScheduler implements Scheduler {
+    private static final Logger logger = LoggerFactory.getLogger(DefaultSimpleScheduler.class);
+
+    // Components
+    @Inject
+    private Clock clock;
+
+    @Resource
+    private ExecutorService executor;
+
+    private final NextInvocationTimeCalculator nextInvocationTimeCalculator = new NextInvocationTimeCalculator();
+    private final TimingWorker timingWorker = new TimingWorker();
+
+    // Data
+    private final Stack<ScheduledMethod> pendingInvocations = new Stack<>();
+
+    // Configuration
+    private final Duration sleepDuration;
+
+    public DefaultSimpleScheduler() {
+        this.sleepDuration = Duration.ofMinutes(1);
+    }
+
+    protected DefaultSimpleScheduler(final Clock clock, final Duration sleepDuration, final ExecutorService executor) {
+        this.clock = clock;
+        this.sleepDuration = sleepDuration;
+        this.executor = executor;
+    }
+
+    public void startBackgroundThread(@Observes @Initialized(ApplicationScoped.class) Object ignored) {
+        logger.info("Starting background thread for scheduler");
+        executor.submit(timingWorker);
+    }
+
+    private class TimingWorker implements Runnable {
+        private static final Logger logger = LoggerFactory.getLogger(TimingWorker.class);
+
+        @Override
+        public void run() {
+            //
+            // Super-naive: check at a fixed interval if there's work to do.
+            //
+
+            while (true) {
+                if (!pendingInvocations.isEmpty()) {
+                    var now = OffsetDateTime.now(clock);
+                    var next = pendingInvocations.peek();
+                    var nextInvocation = next.nextInvocation;
+                    var wakeup = now.plus(sleepDuration);
+
+                    logger.debug(
+                            "Executing first scheduled task; now={}, next_invocation={}, next_wakeup={}",
+                            now,
+                            nextInvocation,
+                            wakeup);
+
+                    if (wakeup.isAfter(nextInvocation)) {
+                        logger.debug("Executing first scheduled task; delegate={}", next.delegate);
+                        executor.submit(next.delegate);
+                        pendingInvocations.remove(next);
+
+                        schedule(next.schedule, next.delegate);
+                    }
+                }
+
+                try {
+                    Thread.sleep(sleepDuration);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
+
+    public void stopBackgroundThread(@Observes @Destroyed(ApplicationScoped.class) Object ignored) {
+        logger.info("Stopping background thread for scheduler");
+        executor.shutdown();
+    }
+
+    @Override
+    public void schedule(final Schedule schedule, final Runnable runnable) {
+        logger.debug("Scheduling next invocation; method={}", runnable);
+
+        var now = OffsetDateTime.now(clock);
+        var nextInvocation = nextInvocationTimeCalculator.calculateNextInvocationTime(now, schedule);
+
+        var scheduledMethod = new ScheduledMethod(runnable, nextInvocation, schedule);
+        pendingInvocations.add(scheduledMethod);
+
+        pendingInvocations.sort(comparing(ScheduledMethod::nextInvocation));
+    }
+
+    private record ScheduledMethod(Runnable delegate, OffsetDateTime nextInvocation, Schedule schedule)
+            implements Runnable {
+
+        @Override
+        public void run() {
+            delegate.run();
+        }
+    }
+}
