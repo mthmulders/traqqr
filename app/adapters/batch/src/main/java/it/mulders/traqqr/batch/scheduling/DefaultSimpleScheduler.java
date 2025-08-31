@@ -3,7 +3,6 @@ package it.mulders.traqqr.batch.scheduling;
 import static java.util.Comparator.comparing;
 
 import jakarta.annotation.Resource;
-import jakarta.annotation.security.RunAs;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Destroyed;
 import jakarta.enterprise.context.Initialized;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
-@RunAs("bob")
 public class DefaultSimpleScheduler implements Scheduler {
     private static final Logger logger = LoggerFactory.getLogger(DefaultSimpleScheduler.class);
 
