@@ -17,7 +17,7 @@ class BeanMethodInvocationRunnable implements Runnable {
     private final BeanManager beanManager;
     private final Method method;
 
-    private Object beanInstance = null;
+    protected Object beanInstance = null;
 
     public BeanMethodInvocationRunnable(Bean<?> bean, BeanManager beanManager, Method method) {
         this.bean = bean;
