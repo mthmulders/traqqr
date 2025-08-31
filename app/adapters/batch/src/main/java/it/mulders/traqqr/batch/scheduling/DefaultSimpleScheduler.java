@@ -86,6 +86,8 @@ public class DefaultSimpleScheduler implements Scheduler {
                 try {
                     Thread.sleep(sleepDuration);
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
                 }
             }
         }
