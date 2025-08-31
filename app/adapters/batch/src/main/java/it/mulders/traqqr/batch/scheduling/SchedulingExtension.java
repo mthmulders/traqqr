@@ -63,7 +63,7 @@ public class SchedulingExtension implements Extension {
         var creationalContext = beanManager.createCreationalContext(schedulerBean);
         try {
             return (Scheduler) beanManager.getReference(schedulerBean, schedulerBean.getBeanClass(), creationalContext);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             logger.error("Failed to instantiate scheduler", e);
             throw new RuntimeException(e);
         }
