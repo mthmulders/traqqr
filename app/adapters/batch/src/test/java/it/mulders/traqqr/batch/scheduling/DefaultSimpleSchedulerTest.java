@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class DefaultSimpleSchedulerIT implements WithAssertions {
+class DefaultSimpleSchedulerTest implements WithAssertions {
     private final AdvanceableTime time = new AdvanceableTime(Instant.EPOCH);
     private final ManualClock clock = new ManualClock(time);
 
