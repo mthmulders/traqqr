@@ -29,7 +29,8 @@ class BeanMethodInvocationRunnable implements Runnable {
     public void run() {
         synchronized (this) {
             if (beanInstance == null) {
-                beanInstance = instantiateBean();
+                var creationalContext = beanManager.createCreationalContext(bean);
+                beanInstance = beanManager.getReference(bean, bean.getBeanClass(), creationalContext);
             }
         }
 
@@ -37,16 +38,6 @@ class BeanMethodInvocationRunnable implements Runnable {
             method.invoke(beanInstance);
         } catch (IllegalAccessException | InvocationTargetException e) {
             logger.error("Failed to invoke method", e);
-        }
-    }
-
-    private Object instantiateBean() {
-        var creationalContext = beanManager.createCreationalContext(bean);
-        try {
-            return beanManager.getReference(bean, bean.getBeanClass(), creationalContext);
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            logger.error("Failed to instantiate scheduler", e);
-            throw new RuntimeException(e);
         }
     }
 
