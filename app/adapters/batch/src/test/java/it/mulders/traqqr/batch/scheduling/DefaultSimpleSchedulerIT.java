@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.assertj.core.api.WithAssertions;
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -40,7 +41,7 @@ class DefaultSimpleSchedulerIT implements WithAssertions {
      * two chances at picking up the scheduled task.
      */
     @Test
-    void submitting_a_method_invocation_should_execute_it() throws InterruptedException {
+    void submitting_a_method_invocation_should_execute_it() {
         // Arrange
         var invocationCount = new AtomicInteger(0);
         Runnable action = invocationCount::incrementAndGet;
@@ -49,9 +50,13 @@ class DefaultSimpleSchedulerIT implements WithAssertions {
         assertThat(invocationCount.get()).isEqualTo(0);
         scheduler.schedule(new Schedule("*", "*", "*"), action);
         time.advanceBy(Duration.ofMinutes(1)); // fake time
-        Thread.sleep(Duration.ofSeconds(1)); // real time
 
         // Assert
-        assertThat(invocationCount.get()).isEqualTo(1);
+        Awaitility.await()
+                .pollInterval(Duration.ofMillis(10))
+                .atMost(Duration.ofSeconds(1))
+                .untilAsserted(() -> {
+                    assertThat(invocationCount.get()).isEqualTo(1);
+                });
     }
 }
