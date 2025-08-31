@@ -66,7 +66,7 @@ public class DefaultSimpleScheduler implements Scheduler {
                 if (!pendingInvocations.isEmpty()) {
                     var now = OffsetDateTime.now(clock);
                     var next = pendingInvocations.getFirst();
-                    var nextInvocation = next.nextInvocation;
+                    var nextInvocation = next.timestamp;
                     var wakeup = now.plus(sleepDuration);
 
                     logger.debug(
@@ -77,7 +77,7 @@ public class DefaultSimpleScheduler implements Scheduler {
 
                     if (wakeup.isAfter(nextInvocation)) {
                         logger.debug("Executing first scheduled task; delegate={}", next.delegate);
-                        executor.submit(next.delegate);
+                        executor.submit(next);
                         pendingInvocations.remove(next);
 
                         schedule(next.schedule, next.delegate);
@@ -109,10 +109,10 @@ public class DefaultSimpleScheduler implements Scheduler {
         var scheduledMethod = new ScheduledMethod(runnable, nextInvocation, schedule);
         pendingInvocations.add(scheduledMethod);
 
-        pendingInvocations.sort(comparing(ScheduledMethod::nextInvocation));
+        pendingInvocations.sort(comparing(ScheduledMethod::timestamp));
     }
 
-    private record ScheduledMethod(Runnable delegate, OffsetDateTime nextInvocation, Schedule schedule)
+    private record ScheduledMethod(Runnable delegate, OffsetDateTime timestamp, Schedule schedule)
             implements Runnable {
 
         @Override
