@@ -52,24 +52,11 @@
       </p:tab>
       <p:tab title="Actions">
         <h:form id="actions-form">
-          <p:outputLabel for="vehicle" value="Select Batch Job Type: " />
-          <p:selectOneMenu id="vehicle" value="#{manageBatchJobsView.selectedBatchJobType}"
-                           converter="batchJobTypeConverter">
-            <p:ajax event="change" update="@form" />
-            <f:selectItem itemLabel=""
-                          itemValue="#{null}"
-                          noSelectionOption="true"/>
-            <f:selectItems value="#{manageBatchJobsView.batchJobTypes}"
-                           var="item"
-                           itemLabel="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(item.name())]}"/>
-          </p:selectOneMenu>
-
           <p:commandButton icon="pi pi-bolt" class="ui-button-secondary"
-                           action="#{manageBatchJobsView.startBatchJob()}"
+                           action="#{manageBatchJobsView.startExampleBatchJob()}"
                            style="margin: 0.5rem"
-                           value="Start new job"
+                           value="Start Example batch job"
                            styleClass="ui-button-danger"
-                           rendered="#{manageBatchJobsView.selectedBatchJobType != null}"
                            process="@this">
           </p:commandButton>
         </h:form>

@@ -37,9 +37,13 @@ public class ManageBatchJobsView implements Serializable {
         this.latestRuns = new LazyLatestBatchJobRunsDataModel(batchJobRepository);
     }
 
-    public void startBatchJob() {
-        log.info("Starting batch job; type={}", selectedBatchJobType);
-        var event = new JobStartRequestedEvent(selectedBatchJobType);
+    public void startExampleBatchJob() {
+        startBatchJob(BatchJobType.EXAMPLE);
+    }
+
+    private void startBatchJob(BatchJobType type) {
+        log.info("Starting batch job; type={}", type);
+        var event = new JobStartRequestedEvent(type);
         jobStartRequestedEvent.fire(event);
     }
 

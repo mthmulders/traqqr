@@ -16,12 +16,11 @@ class ManageBatchJobsViewTest implements WithAssertions {
     private final ManageBatchJobsView view = new ManageBatchJobsView(repository, event);
 
     @Test
-    void should_start_batch_job() {
+    void should_start_example_batch_job() {
         // Arrange
-        view.setSelectedBatchJobType(BatchJobType.EXAMPLE);
 
         // Act
-        view.startBatchJob();
+        view.startExampleBatchJob();
 
         // Assert
         assertThat(event.getFiredEvents()).singleElement().satisfies(firedEvent -> {
