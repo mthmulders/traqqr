@@ -72,10 +72,7 @@ public final class BatchJob {
     }
 
     public Long getTotalItemsProcessed() {
-        return itemsProcessedByStatus.values()
-                .stream()
-                .mapToLong(Long::valueOf)
-                .sum();
+        return itemsProcessedByStatus.values().stream().mapToLong(Long::valueOf).sum();
     }
 
     public Long getInstanceId() {

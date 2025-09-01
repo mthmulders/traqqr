@@ -1,5 +1,8 @@
 package it.mulders.traqqr.web.measurements;
 
+import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.measurements.MeasurementRepository;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
@@ -14,9 +17,6 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
-import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
-
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ManageMeasurementsViewTest implements WithAssertions {
     private final Owner owner = createOwner();
@@ -25,11 +25,14 @@ class ManageMeasurementsViewTest implements WithAssertions {
     private final FacesContextMock facesContext = new FacesContextMock();
     private final MeasurementRepository measurementRepository = new InMemoryMeasurementRepository();
     private final VehicleMapper vehicleMapper = new VehicleMapperImpl();
-    private final VehicleRepository vehicleRepository = new InMemoryVehicleRepository() {{
-        this.save(vehicle);
-    }};
+    private final VehicleRepository vehicleRepository = new InMemoryVehicleRepository() {
+        {
+            this.save(vehicle);
+        }
+    };
 
-    private final ManageMeasurementsView view = new ManageMeasurementsView(facesContext, measurementRepository, vehicleMapper, vehicleRepository, owner);
+    private final ManageMeasurementsView view =
+            new ManageMeasurementsView(facesContext, measurementRepository, vehicleMapper, vehicleRepository, owner);
 
     @Test
     void should_populate_vehicles() {

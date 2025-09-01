@@ -7,8 +7,8 @@ import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.shared.Pagination;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
