@@ -12,13 +12,10 @@
   <ui:define name="content">
 
     <p:tabView dynamic="true" cache="false" id="tabView">
-      <p:tab title="Overview">
+      <p:tab title="Latest runs">
         <h:form id="data-form">
-          <p:dataTable id="batchJobs" rowKey="#{batchJob.id}"
-                       var="batchJob" value="${manageBatchJobsView.batchJobs}"
-                       rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
-                       currentPageReportTemplate="{startRecord} - {endRecord} of {totalRecords} batch jobs"
-                       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+          <p:dataTable id="batchJobs" rowKey="#{batchJob.id}" lazy="true"
+                       var="batchJob" value="${manageBatchJobsView.latestRuns}"
                        editable="false" stripedRows="true">
             <p:column headerText="Job Type">
               <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(batchJob.type.name())]}" />

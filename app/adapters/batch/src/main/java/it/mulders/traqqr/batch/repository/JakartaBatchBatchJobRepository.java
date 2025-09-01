@@ -1,5 +1,6 @@
 package it.mulders.traqqr.batch.repository;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toMap;
 
 import it.mulders.traqqr.batch.shared.BatchJobConverter;
@@ -7,6 +8,7 @@ import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
+import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.shared.Pagination;
 import jakarta.batch.operations.JobOperator;
 import jakarta.batch.runtime.JobExecution;
@@ -14,10 +16,12 @@ import jakarta.batch.runtime.JobInstance;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +101,10 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
         return new JobInstanceWithExecutionAndItems(instance, execution, itemsProcessed);
     }
 
+    private Stream<JobInstance> fetchLatestJobExecutions(String jobName) {
+        return fetchJobExecutions(jobName, 0, 1);
+    }
+
     private Stream<JobInstance> fetchJobExecutions(String jobName, int offset, int limit) {
         log.debug("Fetching job executions; job_name={}, offset={}, limit={}", jobName, offset, limit);
         return jobOperator.getJobInstances(jobName, offset, limit).stream();
@@ -131,6 +139,18 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
                 .parallel()
                 .mapToInt(jobOperator::getJobInstanceCount)
                 .sum();
+    }
+
+    @Override
+    public List<BatchJob> findLatestRunsPerBatchJobType() {
+        return Arrays.stream(BatchJobType.values())
+                .map(batchJobConverter::jobNameFromBatchJobType)
+                .flatMap(this::fetchLatestJobExecutions)
+                .flatMap(this::fetchJobExecutions)
+                .map(this::fetchItemsForExecution)
+                .map(this::mapToDomain)
+                .sorted(comparing(BatchJob::getLastUpdated))
+                .collect(Collectors.toList());
     }
 
     private record JobInstanceWithExecution(JobInstance instance, JobExecution execution) {}

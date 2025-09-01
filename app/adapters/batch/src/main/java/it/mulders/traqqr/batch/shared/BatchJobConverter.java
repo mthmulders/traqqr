@@ -12,10 +12,18 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
 public class BatchJobConverter {
+    // Data
+    private final Map<BatchJobType, String> typeToNameMapping = new HashMap<>();
+
+    public BatchJobConverter() {
+        typeToNameMapping.put(BatchJobType.EXAMPLE, "example");
+    }
+
     public BatchJob convert(final JobInstance instance, final JobExecution execution) {
         return convert(instance, execution, new EnumMap<>(BatchJobItemStatus.class));
     }
@@ -39,11 +47,16 @@ public class BatchJobConverter {
         return input == null ? null : OffsetDateTime.ofInstant(input.toInstant(), ZoneId.systemDefault());
     }
 
-    BatchJobType fromJobName(final String jobName) {
-        return switch (jobName) {
-            case "example" -> BatchJobType.EXAMPLE;
-            default -> throw new IllegalArgumentException("Unexpected job name: " + jobName);
-        };
+    public BatchJobType fromJobName(final String jobName) {
+        return typeToNameMapping.entrySet().stream()
+                .filter(entry -> jobName.equals(entry.getValue()))
+                .findAny()
+                .map(Map.Entry::getKey)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected job name: " + jobName));
+    }
+
+    public String jobNameFromBatchJobType(final BatchJobType batchJobType) {
+        return typeToNameMapping.get(batchJobType);
     }
 
     BatchJobStatus fromBatchStatus(final BatchStatus batchStatus) {

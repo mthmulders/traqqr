@@ -70,4 +70,21 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
             assertThat(job.getType()).isEqualTo(BatchJobType.EXAMPLE);
         });
     }
+
+    @Test
+    void should_find_latest_run_per_BatchJobType() {
+        // Arrange
+
+        // Act
+        var result = repository.findLatestRunsPerBatchJobType();
+        var resultPerType = result.stream().collect(groupingBy(BatchJob::getType));
+
+        // Assert
+        resultPerType.keySet().forEach(type -> assertThat(resultPerType.get(type))
+                .isNotNull()
+                .singleElement()
+                .satisfies(job -> assertThat(job.getType()).isEqualTo(type)));
+        Arrays.stream(BatchJobType.values())
+                .forEach(type -> assertThat(resultPerType).containsKey(type));
+    }
 }
