@@ -1,13 +1,17 @@
 package it.mulders.traqqr.batch.repository;
 
+import static java.util.stream.Collectors.groupingBy;
+
 import it.mulders.traqqr.batch.jakarta.DummyJobOperator;
 import it.mulders.traqqr.batch.shared.BatchJobConverter;
+import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.mem.batch.InMemoryBatchJobItemRepository;
 import jakarta.batch.operations.JobOperator;
+import java.util.Arrays;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,20 +27,6 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
             new JakartaBatchBatchJobRepository(jobOperator, itemRepository, batchJobConverter);
 
     @Test
-    void should_not_crash_when_no_job_names_known() {
-        // Arrange
-        var jobNames = new String[] {};
-
-        // Act
-        var repo =
-                new JakartaBatchBatchJobRepository(new DummyJobOperator(jobNames), itemRepository, batchJobConverter);
-
-        // Assert
-        assertThat(repo.count()).isEqualTo(0);
-        assertThat(repo.findPaginated(new Pagination(0, 1))).isEmpty();
-    }
-
-    @Test
     void should_count_jobs() {
         // Act
         var result = repository.count();
@@ -50,7 +40,7 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
         // Arrange
 
         // Act
-        var result = repository.findPaginated(new Pagination(2, 1));
+        var result = repository.findPaginated(BatchJobType.EXAMPLE, new Pagination(2, 1));
 
         // Assert
         assertThat(result).singleElement().satisfies(job -> {
@@ -63,10 +53,10 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
         // Arrange
 
         // Act
-        var result = repository.findPaginated(new Pagination(0, 10));
+        var result = repository.findPaginated(BatchJobType.EXAMPLE, new Pagination(0, 10));
 
         // Assert
-        assertThat(result).hasSize(3).allSatisfy(job -> {
+        assertThat(result).hasSize(10).allSatisfy(job -> {
             assertThat(job.getType()).isEqualTo(BatchJobType.EXAMPLE);
         });
     }

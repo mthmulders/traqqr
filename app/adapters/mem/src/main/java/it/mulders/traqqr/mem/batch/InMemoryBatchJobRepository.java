@@ -16,8 +16,9 @@ public class InMemoryBatchJobRepository implements BatchJobRepository {
     private final List<BatchJob> batchJobs = new ArrayList<>();
 
     @Override
-    public Collection<BatchJob> findPaginated(Pagination pagination) {
+    public Collection<BatchJob> findPaginated(BatchJobType batchJobType, Pagination pagination) {
         return batchJobs.stream()
+                .filter(item -> batchJobType.equals(item.getType()))
                 .skip(pagination.offset())
                 .limit(pagination.limit())
                 .toList();
@@ -26,6 +27,13 @@ public class InMemoryBatchJobRepository implements BatchJobRepository {
     @Override
     public long count() {
         return batchJobs.size();
+    }
+
+    @Override
+    public long count(BatchJobType batchJobType) {
+        return batchJobs.stream()
+                .filter(item -> batchJobType.equals(item.getType()))
+                .count();
     }
 
     @Override

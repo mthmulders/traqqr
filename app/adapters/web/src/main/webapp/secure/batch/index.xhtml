@@ -13,12 +13,61 @@
 
     <p:tabView dynamic="true" cache="false" id="tabView">
       <p:tab title="Latest runs">
-        <h:form id="data-form">
-          <p:dataTable id="batchJobs" rowKey="#{batchJob.id}" lazy="true"
+        <h:form id="latest-runs-form">
+          <p:dataTable id="latestBatchJobs" rowKey="#{batchJob.id}" lazy="true"
                        var="batchJob" value="${manageBatchJobsView.latestRuns}"
                        editable="false" stripedRows="true">
             <p:column headerText="Job Type">
               <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(batchJob.type.name())]}" />
+            </p:column>
+            <p:column headerText="Status">
+              <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobStatus.'.concat(batchJob.status.name())]}" />
+            </p:column>
+            <p:column headerText="Started at">
+              <h:outputText value="#{batchJob.started}" converter="traqqr.MeasurementTimestampConverter" />
+            </p:column>
+            <p:column headerText="Ended at">
+              <h:outputText value="#{batchJob.ended}" converter="traqqr.MeasurementTimestampConverter" />
+            </p:column>
+            <p:column headerText="Items processed">
+              <p:badge value="#{batchJob.itemsProcessedSuccess}"
+                       severity="success"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessedSuccess != 0}">
+              </p:badge>
+              <p:badge value="#{batchJob.itemsProcessingNotNecessary}"
+                       severity="info"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessingNotNecessary != 0}">
+              </p:badge>
+              <p:badge value="#{batchJob.itemsProcessingFailed}"
+                       severity="danger"
+                       styleClass="mr-2"
+                       visible="#{batchJob.itemsProcessingFailed != 0}">
+              </p:badge>
+              <p:outputLabel rendered="#{batchJob.totalItemsProcessed == 0}">none</p:outputLabel>
+            </p:column>
+          </p:dataTable>
+        </h:form>
+      </p:tab>
+      <p:tab title="All runs">
+        <h:form id="all-runs-form">
+          <p:dataTable id="batchJobsForType" widgetVar="batchJobsForType" rowKey="#{batchJob.id}"
+                       var="batchJob" value="${manageBatchJobsView.filteredBatchJobs}"
+                       rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+                       currentPageReportTemplate="{startRecord} - {endRecord} of {totalRecords} batch jobs"
+                       emptyMessage="Select a type of batch job to inspect all runs"
+                       editable="false" stripedRows="true">
+            <p:column headerText="Job Type" filterBy="#{batchJob.type}">
+              <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(batchJob.type.name())]}" />
+              <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('batchJobsForType').filter()" >
+                  <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true"/>
+                  <f:selectItems value="#{manageBatchJobsView.batchJobTypes}"
+                                 var="item"
+                                 itemLabel="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(item.name())]}"/>
+                </p:selectOneMenu>
+              </f:facet>
             </p:column>
             <p:column headerText="Status">
               <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobStatus.'.concat(batchJob.status.name())]}" />

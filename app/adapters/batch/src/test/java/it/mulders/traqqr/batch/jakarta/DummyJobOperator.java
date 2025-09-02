@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class DummyJobOperator implements JobOperator {
     private static final String[] DUMMY_JOB_NAMES = {"example_01", "example_02", "example_03", "example"};
@@ -60,10 +61,10 @@ public class DummyJobOperator implements JobOperator {
     public List<JobInstance> getJobInstances(String jobName, int start, int count)
             throws NoSuchJobException, JobSecurityException {
         if ("example".equals(jobName)) {
-            return List.of(
-                    new DummyJobInstance(1L, "example"),
-                    new DummyJobInstance(2L, "example"),
-                    new DummyJobInstance(3L, "example"));
+            return IntStream.range(start, start + count)
+                    .mapToObj(i -> new DummyJobInstance(i, "example"))
+                    .map(JobInstance.class::cast)
+                    .toList();
         } else {
             return List.of();
         }

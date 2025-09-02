@@ -2,6 +2,7 @@ package it.mulders.traqqr.web.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
+import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.shared.Pagination;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +19,24 @@ public class LazyBatchJobDataModel extends LazyDataModel<BatchJob> {
 
     @Override
     public int count(Map<String, FilterMeta> filterBy) {
-        return (int) this.batchJobRepository.count();
+        if (filterBy.containsKey("type")) {
+            return (int) this.batchJobRepository.count();
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public List<BatchJob> load(
             int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         var pagination = new Pagination(first, pageSize);
-        var jobs = this.batchJobRepository.findPaginated(pagination);
-        return List.copyOf(jobs);
+        if (filterBy.containsKey("type")) {
+            var batchJobType =
+                    BatchJobType.valueOf((String) filterBy.get("type").getFilterValue());
+            return List.copyOf(this.batchJobRepository.findPaginated(batchJobType, pagination));
+        } else {
+            return List.of();
+        }
     }
 
     @Override
