@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +121,7 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
                 .map(this::fetchItemsForExecution)
                 .map(this::mapToDomain)
                 .sorted(comparing(BatchJob::getLastUpdated))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private record JobInstanceWithExecution(JobInstance instance, JobExecution execution) {}

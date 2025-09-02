@@ -12,13 +12,12 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
 public class BatchJobConverter {
     // Data
-    private final Map<BatchJobType, String> typeToNameMapping = new HashMap<>();
+    private final Map<BatchJobType, String> typeToNameMapping = new EnumMap<>(BatchJobType.class);
 
     public BatchJobConverter() {
         typeToNameMapping.put(BatchJobType.EXAMPLE, "example");

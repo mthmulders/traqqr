@@ -1,7 +1,6 @@
 package it.mulders.traqqr.mem.batch;
 
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toList;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobRepository;
@@ -49,7 +48,7 @@ public class InMemoryBatchJobRepository implements BatchJobRepository {
                     .ifPresent(result::add);
         });
 
-        return result.stream().sorted(comparing(BatchJob::getLastUpdated)).collect(toList());
+        return result.stream().sorted(comparing(BatchJob::getLastUpdated)).toList();
     }
 
     public void addBatchJob(BatchJob batchJob) {
