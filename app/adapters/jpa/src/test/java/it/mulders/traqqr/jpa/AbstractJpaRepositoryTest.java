@@ -47,9 +47,7 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
                 "jakarta.persistence.jdbc.password", password);
 
         var flyway = Flyway.configure()
-                .locations(
-                        new Location("filesystem:src/main/resources/db/migration"),
-                        new Location("filesystem:src/main/resources/db/migration-postgresql"))
+                .locations(new Location("filesystem:src/main/resources/db/migration"))
                 .dataSource(url, username, password)
                 .load();
         try {
