@@ -55,18 +55,23 @@
                     schema="batch" />
     </batchPersistence>
 
-    <!-- Enable detailed logging for Jakarta Persistence API. -->
-    <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
+    <!--    -->
+    <logging isoDateFormat="true" />
 
+    <!-- Enable detailed logging for Jakarta Persistence API.
+    <logging traceSpecification="eclipselink.sql=all"
+             isoDateFormat="true" />
+    -->
     <!-- Enable detailed logging for Jakarta Security.
-    <logging traceSpecification="*=audit:com.ibm.ws.security.jwt.*=finer:com.ibm.wsspi*=fine=enabled:com.ibm.websphere.security*=fine=enabled" maxFiles="8" maxFileSize="200" />
-     -->
+    <logging traceSpecification="*=audit:com.ibm.ws.security.jwt.*=finer:com.ibm.wsspi*=fine=enabled:com.ibm.websphere.security*=fine=enabled"
+             isoDateFormat="true" />
+    -->
     <!-- Enable detailed logging for CDI.
-    <logging traceSpecification="*=audit:org.jboss.weld.context.*=finest" maxFiles="8" maxFileSize="200" />
+    <logging traceSpecification="*=audit:org.jboss.weld.context.*=finest"
+             isoDateFormat="true" />
      -->
 
     <applicationMonitor dropinsEnabled="false" />
-    <logging isoDateFormat="true" />
     <webContainer deferServletLoad="false" />
     <cdi12 enableImplicitBeanArchives="false" />
 </server>
