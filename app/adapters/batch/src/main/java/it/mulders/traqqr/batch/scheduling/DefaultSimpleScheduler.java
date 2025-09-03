@@ -112,8 +112,7 @@ public class DefaultSimpleScheduler implements Scheduler {
         pendingInvocations.sort(comparing(ScheduledMethod::timestamp));
     }
 
-    private record ScheduledMethod(Runnable delegate, OffsetDateTime timestamp, Schedule schedule)
-            implements Runnable {
+    private record ScheduledMethod(Runnable delegate, OffsetDateTime timestamp, Schedule schedule) implements Runnable {
 
         @Override
         public void run() {
