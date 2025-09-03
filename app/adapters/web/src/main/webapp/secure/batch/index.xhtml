@@ -52,6 +52,7 @@
       </p:tab>
       <p:tab title="All runs">
         <h:form id="all-runs-form">
+          <p:blockUI block="batchJobsForType" trigger="batchJobTypeFilter" />
           <p:dataTable id="batchJobsForType" widgetVar="batchJobsForType" rowKey="#{batchJob.id}"
                        var="batchJob" value="${manageBatchJobsView.filteredBatchJobs}"
                        rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
@@ -61,7 +62,7 @@
             <p:column headerText="Job Type" filterBy="#{batchJob.type}">
               <h:outputText value="#{msgs['it.mulders.traqqr.domain.batch.BatchJobType.'.concat(batchJob.type.name())]}" />
               <f:facet name="filter">
-                <p:selectOneMenu onchange="PF('batchJobsForType').filter()" >
+                <p:selectOneMenu id="batchJobTypeFilter" onchange="PF('batchJobsForType').filter()" >
                   <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true"/>
                   <f:selectItems value="#{manageBatchJobsView.batchJobTypes}"
                                  var="item"
