@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Scheduled {
-    /** At which hour of the day invocations should take place. Allowed values: [1-31]. */
+    /** At which day of the month invocations should take place. Allowed values: [1-31]. */
     String dayOfMonth() default "*";
     /** At which hour of the day invocations should take place. Allowed values: [0,23]. */
     String hour() default "0";
