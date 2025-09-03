@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <server description="traqqr-dev-server">
   <basicRegistry id="basic" realm="SystemAccountsRealm">
-    <user name="scheduler" password="{xor}PDAtLTo8K3I3MC0sOnI9PisrOi0mciwrPi8zOg==" />
+    <user name="scheduler" password="${SCHEDULER_USER_PASSWORD}" />
     <group name="system-users">
       <member name="scheduler" />
     </group>
