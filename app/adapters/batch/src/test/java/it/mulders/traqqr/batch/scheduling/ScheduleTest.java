@@ -16,9 +16,9 @@ class ScheduleTest implements WithAssertions {
         var schedule = Schedule.fromScheduled(scheduled);
 
         // Assert
-        assertThat(schedule.dayOfMonth()).isEqualTo(schedule.dayOfMonth());
-        assertThat(schedule.hour()).isEqualTo(schedule.hour());
-        assertThat(schedule.minute()).isEqualTo(schedule.minute());
+        assertThat(schedule.dayOfMonth()).isEqualTo(scheduled.dayOfMonth());
+        assertThat(schedule.hour()).isEqualTo(scheduled.hour());
+        assertThat(schedule.minute()).isEqualTo(scheduled.minute());
     }
 
     @Scheduled(dayOfMonth = "1", hour = "2", minute = "3")
