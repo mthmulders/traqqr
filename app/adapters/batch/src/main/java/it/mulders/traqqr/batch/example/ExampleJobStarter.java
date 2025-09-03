@@ -39,7 +39,7 @@ public class ExampleJobStarter {
         }
     }
 
-    @Scheduled(hour = "*", minute = "15")
+    @Scheduled(dayOfMonth = "*", hour = "4", minute = "15")
     public void startAutomatic() {
         wrapper.execute(() -> {
             doStart();
