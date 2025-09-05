@@ -30,21 +30,30 @@ public class SchedulingExtension implements Extension {
 
         // See if this is the actual implementation of the scheduler
         if (Scheduler.class.isAssignableFrom(beanClass)) {
-            logger.info("Registering scheduler; implementation={}", beanClass.getName());
-            schedulerBean = (Bean<Scheduler>) event.getBean();
+            registerSchedulerBeanImplementation(beanClass, event);
             return;
         }
 
         for (Method method : beanClass.getDeclaredMethods()) {
             if (method.isAnnotationPresent(Scheduled.class)) {
-                logger.info("Processing scheduled method; method={}", method);
-                var scheduled = method.getAnnotation(Scheduled.class);
-                var schedule = Schedule.fromScheduled(scheduled);
-                var runnable = new BeanMethodInvocationRunnable(event.getBean(), beanManager, method);
-
-                methodsToSchedule.add(new BeanMethodInvocationWithSchedule(runnable, schedule));
+                registerScheduledMethod(method, event, beanManager);
             }
         }
+    }
+
+    private void registerSchedulerBeanImplementation(Class<?> beanClass, ProcessManagedBean<?> event) {
+        logger.info("Registering scheduler; implementation={}", beanClass.getName());
+        schedulerBean = (Bean<Scheduler>) event.getBean();
+
+    }
+
+    private void registerScheduledMethod(Method method, ProcessManagedBean<?> event, BeanManager beanManager) {
+        logger.info("Processing scheduled method; method={}", method);
+        var scheduled = method.getAnnotation(Scheduled.class);
+        var schedule = Schedule.fromScheduled(scheduled);
+        var runnable = new BeanMethodInvocationRunnable(event.getBean(), beanManager, method);
+
+        methodsToSchedule.add(new BeanMethodInvocationWithSchedule(runnable, schedule));
     }
 
     public void onAfterDeploymentValidation(@Observes AfterDeploymentValidation event, BeanManager beanManager) {
