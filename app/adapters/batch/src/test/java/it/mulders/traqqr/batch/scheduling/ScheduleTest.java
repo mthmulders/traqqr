@@ -22,5 +22,7 @@ class ScheduleTest implements WithAssertions {
     }
 
     @Scheduled(dayOfMonth = "1", hour = "2", minute = "3")
-    public void dummy() {}
+    public void dummy() {
+        // Implementation doesn't matter.
+    }
 }
