@@ -38,7 +38,7 @@ class BeanMethodInvocationRunnableTest implements WithAssertions {
     }
 
     @Test
-    void should_not_initialize_bean_twice() throws ClassNotFoundException, NoSuchMethodException {
+    void should_not_initialize_bean_twice() throws NoSuchMethodException {
         // Arrange
         var performActionMethod = DummyBean.class.getMethod("performAction");
 
