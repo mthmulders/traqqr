@@ -266,6 +266,9 @@
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.13</version>
           <configuration>
+            <includes>
+              <include>it/mulders/traqqr/**/*</include>
+            </includes>
             <propertyName>jacocoArgLine</propertyName>
           </configuration>
         </plugin>
