@@ -24,7 +24,6 @@ public class SchedulingExtension implements Extension {
     private Bean<Scheduler> schedulerBean;
     private final Set<BeanMethodInvocationWithSchedule> methodsToSchedule = new HashSet<>();
 
-    @SuppressWarnings("unchecked")
     public void onProcessBean(@Observes ProcessManagedBean<?> event, BeanManager beanManager) {
         var beanClass = event.getBean().getBeanClass();
 
@@ -41,6 +40,7 @@ public class SchedulingExtension implements Extension {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void registerSchedulerBeanImplementation(Class<?> beanClass, ProcessManagedBean<?> event) {
         logger.info("Registering scheduler; implementation={}", beanClass.getName());
         schedulerBean = (Bean<Scheduler>) event.getBean();
@@ -71,8 +71,7 @@ public class SchedulingExtension implements Extension {
         try {
             return (Scheduler) beanManager.getReference(schedulerBean, schedulerBean.getBeanClass(), creationalContext);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            logger.error("Failed to instantiate scheduler", e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to instantiate scheduler", e);
         }
     }
 
