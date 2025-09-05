@@ -44,7 +44,6 @@ public class SchedulingExtension implements Extension {
     private void registerSchedulerBeanImplementation(Class<?> beanClass, ProcessManagedBean<?> event) {
         logger.info("Registering scheduler; implementation={}", beanClass.getName());
         schedulerBean = (Bean<Scheduler>) event.getBean();
-
     }
 
     private void registerScheduledMethod(Method method, ProcessManagedBean<?> event, BeanManager beanManager) {

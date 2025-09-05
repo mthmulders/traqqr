@@ -2,10 +2,9 @@ package it.mulders.traqqr.batch.scheduling;
 
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.enterprise.inject.spi.CDI;
+import jakarta.enterprise.inject.spi.DeploymentException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-
-import jakarta.enterprise.inject.spi.DeploymentException;
 import org.assertj.core.api.WithAssertions;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -39,12 +38,12 @@ class SchedulingExtensionIT implements WithAssertions {
     @Test
     void should_fail_when_no_scheduler_found() {
         assertThatThrownBy(() -> {
-            try (var container = SeContainerInitializer.newInstance()
-                    .disableDiscovery()
-                    .addExtensions(SchedulingExtension.class)
-                    .addBeanClasses(DummyBean.class, ClockProducer.class)
-                    .initialize()) {
-            }
-        }).isInstanceOf(DeploymentException.class);
+                    try (var container = SeContainerInitializer.newInstance()
+                            .disableDiscovery()
+                            .addExtensions(SchedulingExtension.class)
+                            .addBeanClasses(DummyBean.class, ClockProducer.class)
+                            .initialize()) {}
+                })
+                .isInstanceOf(DeploymentException.class);
     }
 }

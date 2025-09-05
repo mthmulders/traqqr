@@ -1,7 +1,6 @@
 package it.mulders.traqqr.batch.scheduling;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.time.Clock;
 import java.time.Duration;
 import java.util.concurrent.Executors;
