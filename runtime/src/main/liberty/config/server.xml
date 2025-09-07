@@ -41,15 +41,11 @@
     <application location="traqqr.ear" name="traqqr" />
 
     <authorization-roles id="com.ibm.ws.batch">
-        <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
-             role that allows Batch Admin access. -->
         <security-role name="batchAdmin">
-            <!-- https://openliberty.io/docs/latest/admin-center.html -->
+            <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
+                 role that allows Batch Admin access; see https://openliberty.io/docs/latest/admin-center.html -->
             <group access-id="group:https://accounts.google.com/batchAdmin" name="batchAdmin" />
-        </security-role>
-        <!-- Map all users in the system-users group to the application
-             role that allows Batch Admin access. -->
-        <security-role name="batchAdmin">
+            <!-- Map all users in the system-users group to the application role that allows Batch Admin access. -->
             <group name="system-users" />
         </security-role>
     </authorization-roles>
