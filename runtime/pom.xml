@@ -59,6 +59,10 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>jpa</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>liberty-security-adapter</artifactId>
+    </dependency>
 
     <!-- platform dependencies -->
     <dependency>
@@ -79,6 +83,11 @@
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.enterprise.concurrent</groupId>
+      <artifactId>jakarta.enterprise.concurrent-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>

@@ -23,6 +23,10 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>mem</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>liberty-security-adapter</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>jakarta.annotation</groupId>
@@ -40,9 +44,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.ejb</groupId>
-      <artifactId>jakarta.ejb-api</artifactId>
-      <scope>provided</scope>
+      <groupId>jakarta.enterprise.concurrent</groupId>
+      <artifactId>jakarta.enterprise.concurrent-api</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.inject</groupId>
@@ -87,10 +90,52 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>fakes</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.clocky</groupId>
+      <artifactId>clocky</artifactId>
+      <version>0.4.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>4.3.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.weld.se</groupId>
+      <artifactId>weld-se-core</artifactId>
+      <version>5.1.6.Final</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <org.jboss.logging.provider>slf4j</org.jboss.logging.provider>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <org.jboss.logging.provider>slf4j</org.jboss.logging.provider>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

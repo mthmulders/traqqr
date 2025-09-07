@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<server description="traqqr-dev-server">
+  <basicRegistry id="basic" realm="SystemAccountsRealm">
+    <user name="scheduler" password="${SCHEDULER_USER_PASSWORD}" />
+    <group name="system-users">
+      <member name="scheduler" />
+    </group>
+  </basicRegistry>
+</server>

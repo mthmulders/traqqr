@@ -8,7 +8,7 @@
         <feature>batch</feature>
         <feature>beanValidation</feature>
         <feature>cdi</feature>
-        <feature>enterpriseBeans</feature>
+        <feature>concurrent</feature>
         <feature>expressionLanguage</feature>
         <feature>faces</feature>
         <feature>jsonb</feature>
@@ -40,14 +40,17 @@
 
     <application location="traqqr.ear" name="traqqr" />
 
-    <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
-         role that allows Batch Admin access. -->
     <authorization-roles id="com.ibm.ws.batch">
         <security-role name="batchAdmin">
-            <!-- https://openliberty.io/docs/latest/admin-center.html -->
+            <!-- Map the group assignment in TraqqrIdentityStore (prefixed with the SSO provider URI) to the application
+                 role that allows Batch Admin access; see https://openliberty.io/docs/latest/admin-center.html -->
             <group access-id="group:https://accounts.google.com/batchAdmin" name="batchAdmin" />
+            <!-- Map all users in the system-users group to the application role that allows Batch Admin access. -->
+            <group name="system-users" />
         </security-role>
     </authorization-roles>
+
+    <jaasLoginContextEntry id="ClientContainer" name="ClientContainer" />
 
     <batchPersistence>
         <jobStore   createTables="true"
