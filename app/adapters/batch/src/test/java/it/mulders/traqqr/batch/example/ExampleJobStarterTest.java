@@ -4,12 +4,11 @@ import it.mulders.traqqr.batch.jakarta.DummyJobOperator;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
 import it.mulders.traqqr.libertysecurity.SecurityWrapper;
+import java.security.PrivilegedAction;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.security.PrivilegedAction;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ExampleJobStarterTest implements WithAssertions {
