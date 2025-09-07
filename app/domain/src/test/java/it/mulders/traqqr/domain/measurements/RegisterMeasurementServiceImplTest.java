@@ -145,6 +145,73 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
         });
     }
 
+    @Test
+    void should_register_manual_measurement() {
+        // Arrange
+        var measurement = createMeasurement(
+                OffsetDateTime.now().minusSeconds(5), 10_000, new Battery((byte) 75), new Location(0, 0));
+
+        // Act
+        var result = service.registerManualMeasurement(vehicle.code(), measurement);
+
+        // Assert
+        assertThat(result).isEqualTo(RegisterMeasurementOutcome.SUCCESS);
+    }
+
+    @Test
+    void should_link_manual_measurement_to_vehicle() {
+        // Arrange
+        var location = new Location(52.320418, 4.7685652);
+        var measurement =
+                createMeasurement(OffsetDateTime.now().minusSeconds(5), 10_000, new Battery((byte) 75), location);
+
+        // Act
+        service.registerManualMeasurement(vehicle.code(), measurement);
+
+        // Assert
+        var measurements = measurementRepository.findByVehicle(vehicle);
+        assertThat(measurements).anySatisfy(found -> {
+            assertThat(found.vehicle().code()).isEqualTo(vehicle.code());
+            assertThat(found.location()).isEqualTo(location);
+        });
+    }
+
+    @Test
+    void should_force_source_to_be_USER() {
+        // Arrange
+        var location = new Location(52.320418, 4.7685652);
+        var measurement =
+                createMeasurement(OffsetDateTime.now().minusSeconds(5), 10_000, new Battery((byte) 75), location);
+
+        // Act
+        service.registerManualMeasurement(vehicle.code(), measurement);
+
+        // Assert
+        var measurements = measurementRepository.findByVehicle(vehicle);
+        assertThat(measurements).anySatisfy(found -> {
+            assertThat(found.vehicle().code()).isEqualTo(vehicle.code());
+            assertThat(found.source()).isEqualTo(Source.USER);
+        });
+    }
+
+    @Test
+    void should_store_timestamp_of_manual_registration() {
+        // Arrange
+        var location = new Location(52.320418, 4.7685652);
+        var measurement =
+                createMeasurement(OffsetDateTime.now().minusSeconds(5), 10_000, new Battery((byte) 75), location);
+
+        // Act
+        service.registerManualMeasurement(vehicle.code(), measurement);
+
+        // Assert
+        var measurements = measurementRepository.findByVehicle(vehicle);
+        assertThat(measurements).anySatisfy(found -> {
+            assertThat(found.vehicle().code()).isEqualTo(vehicle.code());
+            assertThat(found.registrationTimestamp()).isInThePast();
+        });
+    }
+
     private Measurement createMeasurement(
             OffsetDateTime measurementTimestamp, int odometer, Battery battery, Location location) {
         return new Measurement(null, null, measurementTimestamp, odometer, battery, location, null, null);

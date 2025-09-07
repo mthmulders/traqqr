@@ -36,6 +36,11 @@ class MeasurementResourceTest implements WithAssertions {
             }
         }
 
+        @Override
+        public RegisterMeasurementOutcome registerManualMeasurement(String vehicleCode, Measurement measurement) {
+            throw new IllegalStateException();
+        }
+
         public MultivaluedMap<String, Measurement> getMeasurements() {
             return measurements;
         }

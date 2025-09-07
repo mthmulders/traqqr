@@ -42,6 +42,37 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
         };
     }
 
+    @Override
+    public RegisterMeasurementOutcome registerManualMeasurement(String vehicleCode, Measurement measurement) {
+        return switch (lookupVehicle(vehicleCode)) {
+            case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
+            case VehicleFound found -> {
+                var vehicle = found.vehicle();
+                yield storeMeasurement(measurement, Source.USER, vehicle);
+            }
+        };
+    }
+
+    private RegisterMeasurementOutcome storeMeasurement(Measurement measurement, Source source, Vehicle vehicle) {
+        measurementRepository.save(measurement
+                .withRegistrationTimestamp(OffsetDateTime.now())
+                .withSource(source)
+                .withVehicle(vehicle));
+
+        return RegisterMeasurementOutcome.SUCCESS;
+    }
+
+    private LookupVehicleOutcome lookupVehicle(String vehicleCode) {
+        var maybeVehicle = vehicleRepository.findByCode(vehicleCode);
+
+        if (maybeVehicle.isEmpty()) {
+            logger.info("Registering measurement failed, unknown vehicle; vehicle_code={}", vehicleCode);
+            return new VehicleNotFound();
+        }
+
+        return new VehicleFound(maybeVehicle.get());
+    }
+
     private sealed interface LookupVehicleOutcome {}
 
     private record VehicleNotFound() implements LookupVehicleOutcome {}
