@@ -1,6 +1,7 @@
 package it.mulders.traqqr.domain.measurements;
 
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
+import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -26,25 +27,24 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
     @Override
     public RegisterMeasurementOutcome registerAutomatedMeasurement(
             String vehicleCode, String apiKey, Measurement measurement) {
-        var maybeVehicle = vehicleRepository.findByCode(vehicleCode);
+        return switch (lookupVehicle(vehicleCode)) {
+            case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
+            case VehicleFound found -> {
+                var vehicle = found.vehicle();
 
-        if (maybeVehicle.isEmpty()) {
-            logger.info("Registering measurement failed, unknown vehicle; vehicle_code={}", vehicleCode);
-            return RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
-        }
+                if (apiKey == null || !vehicle.hasAuthorisationWithKey(apiKey)) {
+                    logger.info("Registering measurement failed, invalid API key; vehicle_code={}", vehicleCode);
+                    yield RegisterMeasurementOutcome.UNAUTHORIZED;
+                }
 
-        var vehicle = maybeVehicle.get();
-
-        if (apiKey == null || !vehicle.hasAuthorisationWithKey(apiKey)) {
-            logger.info("Registering measurement failed, invalid API key; vehicle_code={}", vehicleCode);
-            return RegisterMeasurementOutcome.UNAUTHORIZED;
-        }
-
-        measurementRepository.save(measurement
-                .withRegistrationTimestamp(OffsetDateTime.now())
-                .withSource(Source.API)
-                .withVehicle(vehicle));
-
-        return RegisterMeasurementOutcome.SUCCESS;
+                yield storeMeasurement(measurement, Source.API, vehicle);
+            }
+        };
     }
+
+    private sealed interface LookupVehicleOutcome {}
+
+    private record VehicleNotFound() implements LookupVehicleOutcome {}
+
+    private record VehicleFound(Vehicle vehicle) implements LookupVehicleOutcome {}
 }
