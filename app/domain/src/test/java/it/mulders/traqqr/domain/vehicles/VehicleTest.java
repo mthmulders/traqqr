@@ -45,6 +45,20 @@ class VehicleTest implements WithAssertions {
     }
 
     @Test
+    void regenerate_should_return_key() {
+        // Arrange
+        var existingAuthorisation = Authorisation.generate();
+        var authorisations = new HashSet<>(Set.of(existingAuthorisation));
+        var vehicle = new Vehicle("000002", "Vehicle 2", FAKE_OWNER_ID, authorisations, BigDecimal.valueOf(50.0));
+
+        // Act
+        var result = vehicle.regenerateKey();
+
+        // Assert
+        assertThat(result.getRawKey()).isNotNull().isNotBlank();
+    }
+
+    @Test
     void should_be_able_to_verify_authorisation() {
         var existingAuthorisation = Authorisation.generate();
         var authorisations = new HashSet<>(Set.of(existingAuthorisation));

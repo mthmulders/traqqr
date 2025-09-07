@@ -82,4 +82,27 @@ class BatchJobTest implements WithAssertions {
         // Assert
         assertThat(itemsProcessingNotNecessary).isEqualTo(4L);
     }
+
+    @Test
+    void should_calculate_total_number_items() {
+        // Arrange
+        var job = new BatchJob(
+                null,
+                null,
+                null,
+                null,
+                null,
+                Map.of(
+                        BatchJobItemStatus.PROCESSED, 3L,
+                        BatchJobItemStatus.FAILED, 2L,
+                        BatchJobItemStatus.NO_PROCESSING_NECESSARY, 4L),
+                null,
+                null);
+
+        // Act
+        var result = job.getTotalItemsProcessed();
+
+        // Assert
+        assertThat(result).isEqualTo(9L);
+    }
 }

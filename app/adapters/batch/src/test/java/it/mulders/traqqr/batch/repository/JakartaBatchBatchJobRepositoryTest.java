@@ -36,6 +36,17 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
     }
 
     @Test
+    void should_count_by_BatchJobType() {
+        // Arrange
+
+        // Act
+        var result = repository.count(BatchJobType.EXAMPLE);
+
+        // Assert
+        assertThat(result).isEqualTo(3);
+    }
+
+    @Test
     void should_find_single_job_using_pagination() {
         // Arrange
 
