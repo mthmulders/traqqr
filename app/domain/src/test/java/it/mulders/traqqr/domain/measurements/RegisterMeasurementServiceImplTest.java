@@ -79,7 +79,7 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
     }
 
     @Test
-    void should_register_measurement() {
+    void should_register_automated_measurement() {
         // Arrange
         var measurement = createMeasurement(
                 OffsetDateTime.now().minusSeconds(5), 10_000, new Battery((byte) 75), new Location(0, 0));
@@ -92,7 +92,7 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
     }
 
     @Test
-    void should_link_measurement_to_vehicle() {
+    void should_link_automated_measurement_to_vehicle() {
         // Arrange
         var location = new Location(52.320418, 4.7685652);
         var measurement =
@@ -128,7 +128,7 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
     }
 
     @Test
-    void should_store_timestamp_of_registration() {
+    void should_store_timestamp_of_automated_registration() {
         // Arrange
         var location = new Location(52.320418, 4.7685652);
         var measurement =
