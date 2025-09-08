@@ -288,6 +288,8 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
         }
 
         @Override
-        public void removeMeasurement(Measurement measurement) {}
+        public void removeMeasurement(Measurement measurement) {
+            // Intentionally left empty
+        }
     }
 }
