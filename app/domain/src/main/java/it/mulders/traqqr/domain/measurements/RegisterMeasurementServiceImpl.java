@@ -29,16 +29,7 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
             String vehicleCode, String apiKey, Measurement measurement) {
         return switch (lookupVehicle(vehicleCode)) {
             case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
-            case VehicleFound found -> {
-                var vehicle = found.vehicle();
-
-                if (apiKey == null || !vehicle.hasAuthorisationWithKey(apiKey)) {
-                    logger.info("Registering measurement failed, invalid API key; vehicle_code={}", vehicleCode);
-                    yield RegisterMeasurementOutcome.UNAUTHORIZED;
-                }
-
-                yield storeMeasurement(measurement, Source.API, vehicle);
-            }
+            case VehicleFound found -> storeAutomatedMeasurement(measurement, found.vehicle(), apiKey);
         };
     }
 
@@ -46,11 +37,21 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
     public RegisterMeasurementOutcome registerManualMeasurement(String vehicleCode, Measurement measurement) {
         return switch (lookupVehicle(vehicleCode)) {
             case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
-            case VehicleFound found -> {
-                var vehicle = found.vehicle();
-                yield storeMeasurement(measurement, Source.USER, vehicle);
-            }
+            case VehicleFound found -> storeManualMeasurement(measurement, found.vehicle());
         };
+    }
+
+    private RegisterMeasurementOutcome storeAutomatedMeasurement(Measurement measurement, Vehicle vehicle, String apiKey) {
+        if (apiKey == null || !vehicle.hasAuthorisationWithKey(apiKey)) {
+            logger.info("Registering measurement failed, invalid API key; vehicle_code={}", vehicle.code());
+            return RegisterMeasurementOutcome.UNAUTHORIZED;
+        }
+
+        return storeMeasurement(measurement, Source.API, vehicle);
+    }
+
+    private RegisterMeasurementOutcome storeManualMeasurement(Measurement measurement, Vehicle vehicle) {
+        return storeMeasurement(measurement, Source.USER, vehicle);
     }
 
     private RegisterMeasurementOutcome storeMeasurement(Measurement measurement, Source source, Vehicle vehicle) {
