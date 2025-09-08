@@ -76,18 +76,12 @@ public class DefaultSimpleScheduler implements Scheduler {
                             wakeup);
 
                     if (wakeup.isAfter(nextInvocation)) {
-                        logger.debug(
+                        logger.info(
                                 "First scheduled task is due or overdue, executing it; delegate={}", next.delegate);
                         executor.submit(next);
                         pendingInvocations.remove(next);
 
                         schedule(next.schedule, next.delegate);
-                    } else {
-                        logger.debug(
-                                "Nothing to do; now={}, next_invocation={}, next_wakeup={}",
-                                now,
-                                nextInvocation,
-                                wakeup);
                     }
                 }
 
