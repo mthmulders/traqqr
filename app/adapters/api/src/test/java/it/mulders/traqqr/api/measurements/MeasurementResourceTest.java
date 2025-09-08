@@ -5,9 +5,11 @@ import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.WithAssertions;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
@@ -21,7 +23,7 @@ class MeasurementResourceTest implements WithAssertions {
     private final TestRegisterMeasurementService registerMeasurementService = new TestRegisterMeasurementService();
 
     private static class TestRegisterMeasurementService implements RegisterMeasurementService {
-        private final MultivaluedMap<String, Measurement> measurements = new MultivaluedHashMap<>();
+        private final Map<String, Collection<Measurement>> measurements = new HashMap<>();
 
         @Override
         public RegisterMeasurementOutcome registerAutomatedMeasurement(
@@ -31,7 +33,8 @@ class MeasurementResourceTest implements WithAssertions {
             } else if ("invalid-key".equals(apiKey)) {
                 return RegisterMeasurementOutcome.UNAUTHORIZED;
             } else {
-                measurements.add(vehicleCode, measurement);
+                measurements.putIfAbsent(vehicleCode, new ArrayList<>());
+                measurements.get(vehicleCode).add(measurement);
                 return RegisterMeasurementOutcome.SUCCESS;
             }
         }
@@ -41,7 +44,7 @@ class MeasurementResourceTest implements WithAssertions {
             throw new IllegalStateException();
         }
 
-        public MultivaluedMap<String, Measurement> getMeasurements() {
+        public Map<String, Collection<Measurement>> getMeasurements() {
             return measurements;
         }
     }
