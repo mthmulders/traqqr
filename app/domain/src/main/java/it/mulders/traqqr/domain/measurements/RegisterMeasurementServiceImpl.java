@@ -67,7 +67,8 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
         var maybeVehicle = vehicleRepository.findByCode(vehicleCode);
 
         if (maybeVehicle.isEmpty()) {
-            logger.info("Registering measurement failed, unknown vehicle; vehicle_code={}", vehicleCode);
+            var parameterValue = vehicleCode.replaceAll("[\n\r]", "_");
+            logger.info("Registering measurement failed, unknown vehicle; vehicle_code={}", parameterValue);
             return new VehicleNotFound();
         }
 
