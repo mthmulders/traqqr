@@ -67,21 +67,19 @@ public class DefaultSimpleScheduler implements Scheduler {
                     var now = OffsetDateTime.now(clock);
                     var next = pendingInvocations.getFirst();
                     var nextInvocation = next.timestamp;
-                    var wakeup = now.plus(sleepDuration);
 
                     logger.debug(
-                            "Inspecting first scheduled task; now={}, next_invocation={}, next_wakeup={}",
+                            "Inspecting first scheduled task; now={}, next_invocation={}",
                             now,
-                            nextInvocation,
-                            wakeup);
+                            nextInvocation);
 
-                    if (wakeup.isAfter(nextInvocation)) {
+                    if (now.isAfter(nextInvocation)) {
                         logger.info(
                                 "First scheduled task is due or overdue, executing it; delegate={}", next.delegate);
                         executor.submit(next);
-                        pendingInvocations.remove(next);
+                        pendingInvocations.removeFirst();
 
-                        schedule(next.schedule, next.delegate);
+                        schedule(next.schedule, nextInvocation, next.delegate);
                     }
                 }
 
@@ -102,10 +100,13 @@ public class DefaultSimpleScheduler implements Scheduler {
 
     @Override
     public void schedule(final Schedule schedule, final Runnable runnable) {
+        schedule(schedule, OffsetDateTime.now(clock), runnable);
+    }
+
+    private void schedule(final Schedule schedule, final OffsetDateTime after, final Runnable runnable) {
         logger.debug("Scheduling next invocation; method={}", runnable);
 
-        var now = OffsetDateTime.now(clock);
-        var nextInvocation = nextInvocationTimeCalculator.calculateNextInvocationTime(now, schedule);
+        var nextInvocation = nextInvocationTimeCalculator.calculateNextInvocationTime(after, schedule);
 
         var scheduledMethod = new ScheduledMethod(runnable, nextInvocation, schedule);
         pendingInvocations.add(scheduledMethod);

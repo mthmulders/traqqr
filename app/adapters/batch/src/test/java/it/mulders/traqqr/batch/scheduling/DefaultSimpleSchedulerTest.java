@@ -49,7 +49,7 @@ class DefaultSimpleSchedulerTest implements WithAssertions {
         // Act
         assertThat(invocationCount.get()).isEqualTo(0);
         scheduler.schedule(new Schedule("*", "*", "*"), action);
-        time.advanceBy(Duration.ofMinutes(1)); // fake time
+        time.advanceBy(Duration.ofMinutes(2)); // fake time
 
         // Assert
         Awaitility.await()
