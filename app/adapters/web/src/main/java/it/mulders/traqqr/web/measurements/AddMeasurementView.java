@@ -17,6 +17,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +30,13 @@ public class AddMeasurementView implements Serializable {
     private final FacesContext facesContext;
     private final MeasurementMapper measurementMapper;
     private final RegisterMeasurementService registerMeasurementService;
-    private final VehicleRepository vehicleRepository;
-    private final VehicleMapper vehicleMapper;
 
     // Parameters
     private String preselectedVehicleCode;
 
     // Data
     private MeasurementDTO measurementDTO;
-    private final Owner owner;
+    private final Collection<VehicleDTO> ownersVehicles;
     private VehicleDTO selectedVehicle;
 
     @Inject
@@ -51,18 +50,17 @@ public class AddMeasurementView implements Serializable {
         this.facesContext = facesContext;
         this.measurementMapper = measurementMapper;
         this.registerMeasurementService = registerMeasurementService;
-        this.vehicleMapper = vehicleMapper;
-        this.vehicleRepository = vehicleRepository;
-
-        this.owner = owner;
+        this.ownersVehicles = vehicleRepository.findByOwner(owner).stream()
+                .map(vehicleMapper::vehicleToDto)
+                .toList();
 
         this.measurementDTO = new MeasurementDTO();
     }
 
     public void selectVehicle() {
-        vehicleRepository
-                .findByOwnerAndCode(owner, preselectedVehicleCode)
-                .map(vehicleMapper::vehicleToDto)
+        ownersVehicles.stream()
+                .filter(vehicle -> preselectedVehicleCode.equals(vehicle.getCode()))
+                .findAny()
                 .ifPresent(this::setSelectedVehicle);
     }
 
