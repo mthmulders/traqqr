@@ -96,5 +96,4 @@ class AddMeasurementViewTest implements WithAssertions {
             return measurements;
         }
     }
-    ;
 }

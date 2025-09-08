@@ -48,7 +48,6 @@ class MeasurementResourceTest implements WithAssertions {
             return measurements;
         }
     }
-    ;
 
     private final MeasurementResource resource = new MeasurementResource(measurementMapper, registerMeasurementService);
 
