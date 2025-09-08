@@ -6,6 +6,11 @@ updates:
       interval: daily
       time: "04:00"
     open-pull-requests-limit: 10
+    ignore:
+      # These needs to align with the version of OpenLiberty
+      - dependency-name: "com.ibm.websphere.appserver.api:com.ibm.websphere.appserver.api.basics"
+      - dependency-name: "com.ibm.websphere.appserver.api:com.ibm.websphere.appserver.api.security"
+      - dependency-name: "org.jboss.weld.se:weld-se-core"
   - package-ecosystem: docker
     directory: /runtime
     schedule:
