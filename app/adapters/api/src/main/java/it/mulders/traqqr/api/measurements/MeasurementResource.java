@@ -1,8 +1,7 @@
 package it.mulders.traqqr.api.measurements;
 
 import it.mulders.traqqr.api.measurements.dto.MeasurementDto;
-import it.mulders.traqqr.domain.measurements.MeasurementRepository;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,14 +14,12 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import java.time.OffsetDateTime;
 
 @ApplicationScoped
 @Path("/v1/vehicle/{code}/measurement")
 public class MeasurementResource {
     private MeasurementMapper measurementMapper;
-    private MeasurementRepository measurementRepository;
-    private VehicleRepository vehicleRepository;
+    private RegisterMeasurementService registerMeasurementService;
 
     public MeasurementResource() {
         // Only here to satisfy CDI spec.
@@ -30,12 +27,9 @@ public class MeasurementResource {
 
     @Inject
     public MeasurementResource(
-            MeasurementMapper measurementMapper,
-            MeasurementRepository measurementRepository,
-            VehicleRepository vehicleRepository) {
-        this.measurementRepository = measurementRepository;
-        this.vehicleRepository = vehicleRepository;
+            MeasurementMapper measurementMapper, RegisterMeasurementService registerMeasurementService) {
         this.measurementMapper = measurementMapper;
+        this.registerMeasurementService = registerMeasurementService;
     }
 
     @Consumes("application/json")
@@ -44,21 +38,19 @@ public class MeasurementResource {
     @Transactional
     public Response registerMeasurement(
             @PathParam("code") String code, MeasurementDto measurementDto, @Context HttpHeaders headers) {
-        var vehicle = vehicleRepository.findByCode(code);
-        if (vehicle.isEmpty()) {
-            return Response.status(Status.NOT_FOUND).build();
-        }
-
         var apiKey = headers.getHeaderString("X-VEHICLE-API-KEY");
-        if (apiKey == null || !vehicle.get().hasAuthorisationWithKey(apiKey)) {
-            return Response.status(Status.UNAUTHORIZED).build();
-        }
 
-        var now = OffsetDateTime.now();
+        var measurement = measurementMapper.toMeasurement(measurementDto);
 
-        var measurement = measurementMapper.toMeasurement(vehicle.get(), measurementDto, now);
-        measurementRepository.save(measurement);
+        var result = registerMeasurementService.registerAutomatedMeasurement(code, apiKey, measurement);
 
-        return Response.status(Status.CREATED).build();
+        var httpStatus =
+                switch (result) {
+                    case SUCCESS -> Status.CREATED;
+                    case UNAUTHORIZED -> Status.UNAUTHORIZED;
+                    case UNKNOWN_VEHICLE -> Status.NOT_FOUND;
+                };
+
+        return Response.status(httpStatus).build();
     }
 }

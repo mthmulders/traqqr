@@ -6,7 +6,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.JAKARTA_CDI;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
-import it.mulders.traqqr.domain.measurements.Source;
 import it.mulders.traqqr.web.measurements.model.MeasurementDTO;
 import java.time.OffsetDateTime;
 import org.mapstruct.Mapper;
@@ -21,11 +20,7 @@ public interface MeasurementMapper {
     @Mapping(target = "vehicle.ownerId", ignore = true)
     @Mapping(target = "vehicle.authorisations", ignore = true)
     @Mapping(target = "battery.soc", source = "measurementDto.batterySoc")
-    Measurement measurementDtoToMeasurement(
-            MeasurementDTO measurementDto,
-            OffsetDateTime measurementTimestamp,
-            OffsetDateTime registrationTimestamp,
-            Source source);
+    Measurement measurementDtoToMeasurement(MeasurementDTO measurementDto, OffsetDateTime measurementTimestamp);
 
     default Measurement.Location map(String coordinates) {
         if (coordinates == null || coordinates.isEmpty()) {

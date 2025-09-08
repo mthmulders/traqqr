@@ -13,6 +13,20 @@ public record Measurement(
         Location location,
         Source source,
         Vehicle vehicle) {
+    public Measurement withRegistrationTimestamp(OffsetDateTime registrationTimestamp) {
+        return new Measurement(
+                id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);
+    }
+
+    public Measurement withVehicle(Vehicle vehicle) {
+        return new Measurement(
+                id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);
+    }
+
+    public Measurement withSource(Source source) {
+        return new Measurement(
+                id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);
+    }
 
     public record Battery(byte soc) {}
 
