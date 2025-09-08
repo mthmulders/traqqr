@@ -242,13 +242,19 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
         }
 
         @Override
-        public void save(Vehicle vehicle) {}
+        public void save(Vehicle vehicle) {
+            // Intentionally left empty
+        }
 
         @Override
-        public void update(Vehicle vehicle) {}
+        public void update(Vehicle vehicle) {
+            // Intentionally left empty
+        }
 
         @Override
-        public void removeVehicle(Vehicle vehicle) {}
+        public void removeVehicle(Vehicle vehicle) {
+            // Intentionally left empty
+        }
     }
 
     private static class InMemoryMeasurementRepository implements MeasurementRepository {
