@@ -10,6 +10,9 @@ updates:
       # These needs to align with the version of OpenLiberty
       - dependency-name: "com.ibm.websphere.appserver.api:com.ibm.websphere.appserver.api.basics"
       - dependency-name: "com.ibm.websphere.appserver.api:com.ibm.websphere.appserver.api.security"
+      - dependency-name: "jakarta.platform:jakarta.jakartaee-bom"
+      - dependency-name: "org.eclipse.persistence:org.eclipse.persistence.jpa"
+      - dependency-name: "org.jboss.resteasy:resteasy-core"
       - dependency-name: "org.jboss.weld.se:weld-se-core"
   - package-ecosystem: docker
     directory: /runtime
