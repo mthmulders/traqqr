@@ -29,7 +29,7 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
             String vehicleCode, String apiKey, Measurement measurement) {
         return switch (lookupVehicle(vehicleCode)) {
             case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
-            case VehicleFound found -> storeAutomatedMeasurement(measurement, found.vehicle(), apiKey);
+            case VehicleFound(var vehicle) -> storeAutomatedMeasurement(measurement, vehicle, apiKey);
         };
     }
 
@@ -37,7 +37,7 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
     public RegisterMeasurementOutcome registerManualMeasurement(String vehicleCode, Measurement measurement) {
         return switch (lookupVehicle(vehicleCode)) {
             case VehicleNotFound ignored -> RegisterMeasurementOutcome.UNKNOWN_VEHICLE;
-            case VehicleFound found -> storeManualMeasurement(measurement, found.vehicle());
+            case VehicleFound(var vehicle) -> storeManualMeasurement(measurement, vehicle);
         };
     }
 
