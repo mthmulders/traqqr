@@ -1,7 +1,7 @@
 package it.mulders.traqqr.batch.example;
 
 import it.mulders.traqqr.domain.batch.BatchJobItem;
-import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
+import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import jakarta.batch.api.chunk.AbstractItemWriter;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;

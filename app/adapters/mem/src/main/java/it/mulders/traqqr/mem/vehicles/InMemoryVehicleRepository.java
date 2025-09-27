@@ -2,7 +2,7 @@ package it.mulders.traqqr.mem.vehicles;
 
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import java.util.Collection;

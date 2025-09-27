@@ -1,7 +1,7 @@
 package it.mulders.traqqr.batch.example;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
-import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import jakarta.batch.api.chunk.AbstractItemReader;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;

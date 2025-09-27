@@ -1,8 +1,8 @@
 package it.mulders.traqqr.mem.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJobItem;
-import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
+import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;

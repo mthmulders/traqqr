@@ -5,7 +5,7 @@ import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.VehicleMapperImpl;

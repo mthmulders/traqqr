@@ -1,7 +1,7 @@
 package it.mulders.traqqr.mem.measurements;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
-import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import jakarta.enterprise.context.ApplicationScoped;

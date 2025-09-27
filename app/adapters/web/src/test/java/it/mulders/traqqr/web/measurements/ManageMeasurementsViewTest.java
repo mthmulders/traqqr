@@ -3,10 +3,10 @@ package it.mulders.traqqr.web.measurements;
 import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
-import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.FacesContextMock;

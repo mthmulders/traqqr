@@ -1,6 +1,7 @@
-package it.mulders.traqqr.domain.vehicles;
+package it.mulders.traqqr.domain.vehicles.spi;
 
 import it.mulders.traqqr.domain.user.Owner;
+import it.mulders.traqqr.domain.vehicles.Vehicle;
 import java.util.Collection;
 import java.util.Optional;
 

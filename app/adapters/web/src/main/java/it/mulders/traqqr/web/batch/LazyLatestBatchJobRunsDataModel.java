@@ -1,8 +1,8 @@
 package it.mulders.traqqr.web.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
-import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;
+import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.model.FilterMeta;

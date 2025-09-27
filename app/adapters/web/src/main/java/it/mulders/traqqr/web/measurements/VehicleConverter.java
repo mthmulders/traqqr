@@ -3,7 +3,7 @@ package it.mulders.traqqr.web.measurements;
 import static java.util.stream.Collectors.toMap;
 
 import it.mulders.traqqr.domain.user.Owner;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.component.UIComponent;

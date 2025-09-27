@@ -1,5 +1,6 @@
-package it.mulders.traqqr.domain.measurements;
+package it.mulders.traqqr.domain.measurements.spi;
 
+import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import java.util.Collection;

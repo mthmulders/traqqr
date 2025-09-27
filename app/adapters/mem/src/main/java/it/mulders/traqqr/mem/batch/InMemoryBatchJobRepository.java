@@ -3,8 +3,8 @@ package it.mulders.traqqr.mem.batch;
 import static java.util.Comparator.comparing;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
-import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;
+import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import java.util.ArrayList;
 import java.util.Arrays;

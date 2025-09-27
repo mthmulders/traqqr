@@ -7,7 +7,7 @@ import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.faces.FacesContextMock;
 import it.mulders.traqqr.web.measurements.model.MeasurementDTO;

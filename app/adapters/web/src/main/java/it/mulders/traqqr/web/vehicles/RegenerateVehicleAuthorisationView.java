@@ -3,7 +3,7 @@ package it.mulders.traqqr.web.vehicles;
 import static jakarta.faces.application.FacesMessage.SEVERITY_WARN;
 
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.web.vehicles.model.AuthorisationDTO;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import jakarta.faces.application.FacesMessage;

@@ -1,5 +1,7 @@
-package it.mulders.traqqr.domain.batch;
+package it.mulders.traqqr.domain.batch.spi;
 
+import it.mulders.traqqr.domain.batch.BatchJobItem;
+import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import java.util.Collection;
 import java.util.Map;
 

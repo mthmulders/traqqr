@@ -1,8 +1,9 @@
 package it.mulders.traqqr.domain.measurements;
 
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.time.OffsetDateTime;

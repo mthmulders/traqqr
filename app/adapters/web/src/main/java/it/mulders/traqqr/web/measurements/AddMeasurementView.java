@@ -5,7 +5,7 @@ import static jakarta.faces.application.FacesMessage.SEVERITY_INFO;
 
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
 import it.mulders.traqqr.domain.user.Owner;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.web.measurements.model.MeasurementDTO;
 import it.mulders.traqqr.web.vehicles.VehicleMapper;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;

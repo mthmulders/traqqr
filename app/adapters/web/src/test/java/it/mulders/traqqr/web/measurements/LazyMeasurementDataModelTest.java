@@ -3,7 +3,7 @@ package it.mulders.traqqr.web.measurements;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
-import it.mulders.traqqr.domain.measurements.MeasurementRepository;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.measurements.Source;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;

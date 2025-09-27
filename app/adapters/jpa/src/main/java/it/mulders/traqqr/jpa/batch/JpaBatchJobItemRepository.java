@@ -3,8 +3,8 @@ package it.mulders.traqqr.jpa.batch;
 import static java.util.stream.Collectors.toMap;
 
 import it.mulders.traqqr.domain.batch.BatchJobItem;
-import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
+import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import it.mulders.traqqr.domain.measurements.Measurement;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

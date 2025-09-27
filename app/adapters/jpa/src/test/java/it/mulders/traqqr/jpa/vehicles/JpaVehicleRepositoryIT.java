@@ -4,7 +4,7 @@ import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.domain.vehicles.Vehicle;
-import it.mulders.traqqr.domain.vehicles.VehicleRepository;
+import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import jakarta.persistence.RollbackException;
 import org.assertj.core.api.WithAssertions;

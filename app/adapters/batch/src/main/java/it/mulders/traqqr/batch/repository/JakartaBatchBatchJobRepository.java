@@ -4,10 +4,10 @@ import static java.util.Comparator.comparing;
 
 import it.mulders.traqqr.batch.shared.BatchJobConverter;
 import it.mulders.traqqr.domain.batch.BatchJob;
-import it.mulders.traqqr.domain.batch.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
-import it.mulders.traqqr.domain.batch.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.BatchJobType;
+import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
+import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import jakarta.batch.operations.JobOperator;
 import jakarta.batch.runtime.JobExecution;
