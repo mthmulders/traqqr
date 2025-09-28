@@ -11,7 +11,7 @@
 		"ghcr.io/devcontainers-extra/features/maven-sdkman:2": {
 			// Use a 4.x version of Maven so resolution of dependencies in the workspace works
 			// without issuing `mvn install` first.
-			"version": "4.0.0-rc-2"
+			"version": "4.0.0-rc-4"
 		}
 	},
 
