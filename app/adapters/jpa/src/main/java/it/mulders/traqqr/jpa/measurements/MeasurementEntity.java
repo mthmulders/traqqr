@@ -60,6 +60,9 @@ public class MeasurementEntity {
     @Embedded
     private GpsLocationEntity gpsLocation;
 
+    @Column(name = "location_description")
+    private String locationDescription;
+
     public UUID getId() {
         return id;
     }
@@ -114,6 +117,14 @@ public class MeasurementEntity {
 
     public void setGpsLocation(GpsLocationEntity gpsLocation) {
         this.gpsLocation = gpsLocation;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 
     public Source getSource() {
