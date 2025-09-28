@@ -21,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>it.mulders.traqqr</groupId>
-      <artifactId>men<artifactId</artifactId>
+      <artifactId>mem</artifactId>
     </dependency>
 
     <dependency>
