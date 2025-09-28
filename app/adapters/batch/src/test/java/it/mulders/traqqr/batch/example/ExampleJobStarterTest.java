@@ -3,7 +3,7 @@ package it.mulders.traqqr.batch.example;
 import it.mulders.traqqr.batch.jakarta.DummyJobOperator;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
-import it.mulders.traqqr.libertysecurity.SecurityWrapper;
+import it.mulders.traqqr.domain.shared.spi.SecurityWrapper;
 import java.security.PrivilegedAction;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

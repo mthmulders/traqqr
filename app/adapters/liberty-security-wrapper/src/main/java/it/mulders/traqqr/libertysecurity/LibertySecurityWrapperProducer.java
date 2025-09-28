@@ -1,7 +1,6 @@
-package it.mulders.traqqr.batch.shared;
+package it.mulders.traqqr.libertysecurity;
 
-import it.mulders.traqqr.libertysecurity.LibertySecurityWrapper;
-import it.mulders.traqqr.libertysecurity.SecurityWrapper;
+import it.mulders.traqqr.domain.shared.spi.SecurityWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import org.slf4j.Logger;

@@ -3,7 +3,7 @@ package it.mulders.traqqr.batch.example;
 import it.mulders.traqqr.batch.scheduling.Scheduled;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
-import it.mulders.traqqr.libertysecurity.SecurityWrapper;
+import it.mulders.traqqr.domain.shared.spi.SecurityWrapper;
 import jakarta.annotation.security.RunAs;
 import jakarta.batch.operations.JobOperator;
 import jakarta.enterprise.context.ApplicationScoped;

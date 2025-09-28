@@ -5,29 +5,36 @@ workspace polly {
         user = person "User" "Someone who drives an electric car"
         car = element "Car" "An electric vehicle"
         adapter = element "Adapter" "One or more hardware and/or software adapters"
-        traqqr = softwareSystem "Traqqr" "A web application for calculating electric car energy usage" {
+        traqqr = softwareSystem "Traqqr" "An application for calculating electric car energy usage" {
             database = container "PostgreSQL" "PostgreSQL database" {
                 tags "Database"
             }
             application = container "Traqqr" "Traqqr application" {
                 domain = component "Domain"
-                application = component "Application services"
-
+                
+                batch = component "Batch processing" {
+                    tags "Adapter"
+                }
                 web = component "Web application" {
-                    tags "Port"
+                    tags "Adapter"
                 }
                 api = component "REST API" {
-                    tags "Port"
+                    tags "Adapter"
                 }
 
                 rdbms-persistence = component "Relational database persistence" {
                     tags "Adapter"
                 }
+                liberty-security-wrapper = component "OpenLiberty wrapper" {
+                    tags "Adapter"
+                }
 
-                web -> domain "Interacts with"
-                api -> domain "Interacts with"
+                web -> domain "Uses API"
+                api -> domain "Uses API"
+                batch -> domain "Uses API"
 
-                rdbms-persistence -> domain "Persists"
+                liberty-security-wrapper -> domain "Implements SPI"
+                rdbms-persistence -> domain "Implements SPI"
             }
             application -> database "Uses"
         }

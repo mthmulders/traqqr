@@ -6,6 +6,7 @@ import java.security.PrivilegedAction;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import it.mulders.traqqr.domain.shared.spi.SecurityWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

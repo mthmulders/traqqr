@@ -20,6 +20,12 @@
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>domain</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.ibm.websphere.appserver.api</groupId>
       <artifactId>com.ibm.websphere.appserver.api.security</artifactId>
