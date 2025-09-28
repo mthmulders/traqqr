@@ -1,6 +1,7 @@
 package it.mulders.traqqr.jpa.measurements;
 
 import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurementWithLocation;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
@@ -148,5 +149,23 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
 
         // Assert
         assertThat(repository.findByVehicle(vehicle)).isEmpty();
+    }
+
+    @Test
+    void should_retrieve_measurement_with_location_description() {
+        // Arrange
+        var vehicle = createVehicle();
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var location = new Measurement.Location(55.0, 6.0, "Somewhere");
+        var measurement = createMeasurementWithLocation(vehicle, location);
+        runTransactional(() -> repository.save(measurement));
+
+        // Act
+        var measurements = repository.findByVehicle(vehicle);
+
+        // Assert
+        assertThat(measurements).hasSize(1).allSatisfy(found -> {
+            assertThat(found.location().description()).isEqualTo(location.description());
+        });
     }
 }

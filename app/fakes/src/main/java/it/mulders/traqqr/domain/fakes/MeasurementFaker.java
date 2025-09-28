@@ -15,7 +15,20 @@ public class MeasurementFaker {
                 now.minusSeconds(5),
                 1_000,
                 new Measurement.Battery((byte) 80),
-                new Measurement.Location(55.0, 6.0),
+                new Measurement.Location(55.0, 6.0, null),
+                Source.API,
+                vehicle);
+    }
+
+    public static Measurement createMeasurementWithLocation(Vehicle vehicle, Measurement.Location location) {
+        var now = OffsetDateTime.now();
+        return new Measurement(
+                UUID.randomUUID(),
+                now,
+                now.minusSeconds(5),
+                1_000,
+                new Measurement.Battery((byte) 80),
+                location,
                 Source.API,
                 vehicle);
     }

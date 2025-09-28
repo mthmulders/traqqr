@@ -20,6 +20,7 @@ public interface MeasurementMapper {
     @Mapping(source = "registrationTimestamp", target = "registeredAt")
     @Mapping(source = "measurementTimestamp", target = "measuredAt")
     @Mapping(source = "location", target = "gpsLocation")
+    @Mapping(source = "location.description", target = "locationDescription")
     MeasurementEntity measurementToMeasurementEntity(final Measurement measurement);
 
     BatteryEntity batteryToBatteryEntity(final Measurement.Battery battery);
@@ -28,14 +29,15 @@ public interface MeasurementMapper {
     @Mapping(source = "lon", target = "longitude")
     GpsLocationEntity locationToGpsLocationEntity(final Measurement.Location location);
 
-    @Mapping(source = "gpsLocation", target = "location")
+    @Mapping(expression = "java(gpsLocationEntityToLocation(measurement))", target = "location")
     @Mapping(source = "registeredAt", target = "registrationTimestamp")
     @Mapping(source = "measuredAt", target = "measurementTimestamp")
     Measurement measurementEntityToMeasurement(MeasurementEntity measurement);
 
     Measurement.Battery batteryEntityToBattery(BatteryEntity batteryEntity);
 
-    @Mapping(source = "latitude", target = "lat")
-    @Mapping(source = "longitude", target = "lon")
-    Measurement.Location gpsLocationEntityToLocation(GpsLocationEntity gpsLocationEntity);
+    @Mapping(source = "gpsLocation.latitude", target = "lat")
+    @Mapping(source = "gpsLocation.longitude", target = "lon")
+    @Mapping(source = "locationDescription", target = "description")
+    Measurement.Location gpsLocationEntityToLocation(MeasurementEntity measurement);
 }
