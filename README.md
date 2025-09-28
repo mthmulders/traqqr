@@ -18,7 +18,6 @@ The project uses the following technologies
 - Java 21
 - [Jakarta EE](https://jakarta.ee/)
 - [Jakarta Server Faces](https://jakarta.ee/specifications/mvc/)
-- [Playwright](https://playwright.dev/java)
 
 ## Documentation
 

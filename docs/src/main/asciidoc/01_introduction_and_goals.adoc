@@ -7,7 +7,6 @@ https://mthmulders.github.io/traqqr/[Traqqr] is a project for
 * evaluating and learning certain technologies:
 ** https://jakarta.ee/[Jakarta EE]
 ** https://jakarta.ee/specifications/faces/[Jakarta Server Faces]
-** https://playwright.dev/java[Playwright]
 
 === Requirements Overview
 From a functional point of view, Traqqr is a web application for keeping track of the energy usage of an electric car.
