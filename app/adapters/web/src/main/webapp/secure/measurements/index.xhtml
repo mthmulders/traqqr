@@ -61,11 +61,15 @@
                     <p:column headerText="Location">
                         <c:choose>
                           <c:when test="#{empty(measurement.location().description())}">
-                            <h:outputText value="#{measurement.location().description()}" />
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
+                              <h:outputText value="#{measurement.location().lat()}" />,
+                              <h:outputText value="#{measurement.location().lon()}" />
+                            </a>
                           </c:when>
                           <c:otherwise>
-                            <h:outputText value="#{measurement.location().lat()}" />,
-                            <h:outputText value="#{measurement.location().lon()}" />
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
+                              <h:outputText value="#{measurement.location().description()}" />
+                            </a>
                           </c:otherwise>
                         </c:choose>
                     </p:column>
