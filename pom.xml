@@ -92,8 +92,9 @@
       <!-- project dependencies -->
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
-        <artifactId>config</artifactId>
+        <artifactId>api</artifactId>
         <version>${project.version}</version>
+        <type>war</type>
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
@@ -102,26 +103,13 @@
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
+        <artifactId>config</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
         <artifactId>domain</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>it.mulders.traqqr</groupId>
-        <artifactId>api</artifactId>
-        <version>${project.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>it.mulders.traqqr</groupId>
-        <artifactId>web</artifactId>
-        <version>${project.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>it.mulders.traqqr</groupId>
-        <artifactId>mem</artifactId>
-        <version>${project.version}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
@@ -138,6 +126,18 @@
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>liberty-security-adapter</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>mem</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>web</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
