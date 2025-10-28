@@ -119,6 +119,11 @@
       </dependency>
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
+        <artifactId>google-maps-location-lookup</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
         <artifactId>jpa</artifactId>
         <version>${project.version}</version>
       </dependency>
