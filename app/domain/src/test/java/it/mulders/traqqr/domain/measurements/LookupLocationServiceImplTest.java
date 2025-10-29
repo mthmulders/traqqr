@@ -16,11 +16,28 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LookupLocationServiceImplTest implements WithAssertions {
-    private final LocationLookup lookup = null; // No SPI implementation for these tests
+    private final LocationLookup lookup = new LocationLookup() {
+        @Override
+        public LocationLookupResult lookup(Location location) {
+            return new LocationLookupResult.Success(location);
+        }
+    };
     private final LookupLocationService service = new LookupLocationServiceImpl(lookup);
 
     @Nested
     class LookupLocation {
+        @Test
+        void should_not_lookup_if_location_is_null() {
+            // Arrange
+            var measurement = createMeasurement(OffsetDateTime.now(), null);
+
+            // Act
+            var result = service.lookupLocation(measurement);
+
+            // Assert
+            assertThat(result).isEqualTo(LookupLocationOutcome.NOT_FOUND);
+        }
+
         @Test
         void should_not_lookup_if_description_already_filled() {
             // Arrange
@@ -37,6 +54,18 @@ class LookupLocationServiceImplTest implements WithAssertions {
 
     @Nested
     class RefreshLocation {
+        @Test
+        void should_not_lookup_if_location_is_null() {
+            // Arrange
+            var measurement = createMeasurement(OffsetDateTime.now(), null);
+
+            // Act
+            var result = service.refreshLocation(measurement);
+
+            // Assert
+            assertThat(result).isEqualTo(LookupLocationOutcome.NOT_FOUND);
+        }
+
         @Test
         void should_lookup_even_if_description_already_filled() {
             // Arrange
