@@ -5,9 +5,12 @@ import it.mulders.traqqr.domain.measurements.spi.LocationLookup;
 import it.mulders.traqqr.domain.measurements.spi.LocationLookup.LocationLookupResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class LookupLocationServiceImpl implements LookupLocationService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final LocationLookup locationLookup;
 
     @Inject
@@ -18,8 +21,17 @@ public class LookupLocationServiceImpl implements LookupLocationService {
     @Override
     public LookupLocationOutcome lookupLocation(Measurement measurement) {
         if (measurement.location() != null && measurement.location().description() != null) {
+            logger.info("Measurement already has location description; measurement_id={}", measurement.id());
             return LookupLocationOutcome.NOT_NECESSARY;
-        } else if (measurement.location() == null) {
+        }
+
+        return refreshLocation(measurement);
+    }
+
+    @Override
+    public LookupLocationOutcome refreshLocation(Measurement measurement) {
+        if (measurement.location() == null) {
+            logger.warn("Can't perform location lookup for measurement without location; measurement_id={}", measurement.id());
             return LookupLocationOutcome.NOT_FOUND;
         }
 
@@ -28,29 +40,5 @@ public class LookupLocationServiceImpl implements LookupLocationService {
             case LocationLookupResult.Failure ignored -> LookupLocationOutcome.FAILURE;
             case LocationLookupResult.Success success -> LookupLocationOutcome.SUCCESS;
         };
-    }
-
-    @Override
-    public LookupLocationOutcome refreshLocation(Measurement measurement) {
-        if (measurement.location() == null) {
-            return LookupLocationOutcome.NOT_FOUND;
-        }
-
-        // Always (re-)lookup when refreshing; if SPI is available, use it
-        if (locationLookup != null) {
-            LocationLookupResult result = locationLookup.lookup(measurement.location());
-            if (result instanceof LocationLookupResult.Success) {
-                return LookupLocationOutcome.SUCCESS;
-            } else {
-                return LookupLocationOutcome.FAILURE;
-            }
-        }
-
-        // Fallback behavior for tests: if we already have a description, consider it a success
-        if (measurement.location().description() != null) {
-            return LookupLocationOutcome.SUCCESS;
-        }
-
-        return LookupLocationOutcome.FAILURE;
     }
 }
