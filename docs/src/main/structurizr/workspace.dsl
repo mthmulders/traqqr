@@ -1,4 +1,4 @@
-workspace polly {
+workspace traqqr {
     !identifiers hierarchical
 
     model {
