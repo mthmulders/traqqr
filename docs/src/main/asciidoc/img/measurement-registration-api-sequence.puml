@@ -1,0 +1,66 @@
+@startuml measurement-registration-sequence
+!define RECTANGLE class
+
+participant "External System" as Client
+participant "MeasurementResource" as Resource
+participant "MeasurementMapper" as Mapper
+participant "RegisterMeasurementService" as Service
+participant "VehicleRepository" as VehicleRepo
+participant "MeasurementRepository" as MeasurementRepo
+database "Database" as DB
+
+Client -> Resource: POST /v1/vehicle/{code}/measurement\n+ X-VEHICLE-API-KEY header\n+ MeasurementDto (JSON)
+activate Resource
+
+Resource -> Resource: Extract API key from headers
+Resource -> Mapper: toMeasurement(measurementDto)
+activate Mapper
+Mapper --> Resource: Measurement domain object
+deactivate Mapper
+
+Resource -> Service: registerAutomatedMeasurement(code, apiKey, measurement)
+activate Service
+
+Service -> VehicleRepo: findByCode(vehicleCode)
+activate VehicleRepo
+VehicleRepo -> DB: SELECT * FROM vehicle WHERE code = ?
+activate DB
+DB --> VehicleRepo: Vehicle record
+deactivate DB
+VehicleRepo --> Service: Optional<Vehicle>
+deactivate VehicleRepo
+
+alt Vehicle not found
+    Service --> Resource: UNKNOWN_VEHICLE
+    Resource --> Client: HTTP 404 NOT_FOUND
+else Vehicle found
+    Service -> Service: storeAutomatedMeasurement(measurement, vehicle, apiKey)
+    activate Service
+    
+    alt API key invalid or null
+        Service --> Resource: UNAUTHORIZED
+        Resource --> Client: HTTP 401 UNAUTHORIZED
+    else API key valid
+        Service -> Service: storeMeasurement(measurement, Source.API, vehicle)
+        
+        'Service -> Service: measurement.withRegistrationTimestamp(now())\n.withSource(API)\n.withVehicle(vehicle)
+        
+        Service -> MeasurementRepo: save(enrichedMeasurement)
+        activate MeasurementRepo
+        MeasurementRepo -> DB: INSERT INTO measurement (...)
+        activate DB
+        DB --> MeasurementRepo: Success
+        deactivate DB
+        MeasurementRepo --> Service: void
+        deactivate MeasurementRepo
+        
+        Service --> Resource: SUCCESS
+        deactivate Service
+        Resource --> Client: HTTP 201 CREATED
+    end
+
+    deactivate Service
+end
+
+deactivate Resource
+@enduml

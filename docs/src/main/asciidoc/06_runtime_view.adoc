@@ -1,2 +1,25 @@
 [[section-runtime-view]]
 == Runtime View
+
+=== Measurement Registration
+
+This section describes the runtime behavior for registering new measurements through the REST API.
+
+==== Automated Measurement Registration via API
+
+The following sequence diagram shows how external systems can register measurements for a vehicle using the REST API:
+
+plantuml::img/measurement-registration-api-sequence.puml[format=svg]
+
+The flow includes:
+
+1. **Authentication**: The external system must provide a valid API key in the `X-VEHICLE-API-KEY` header.
+2. **Vehicle Validation**: The system verifies that the vehicle exists and the API key is authorized for that vehicle.
+3. **Data Enrichment**: The measurement is enriched with registration timestamp, source information, and vehicle association.
+4. **Persistence**: The validated measurement is stored in the database.
+
+The API returns appropriate HTTP status codes:
+
+- `201 Created` - Measurement successfully registered.
+- `401 Unauthorized` - Invalid or missing API key.
+- `404 Not Found` - Vehicle with the specified code does not exist.
