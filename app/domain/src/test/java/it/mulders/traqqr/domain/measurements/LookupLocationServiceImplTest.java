@@ -39,6 +39,19 @@ class LookupLocationServiceImplTest implements WithAssertions {
         }
 
         @Test
+        void should_not_lookup_if_location_description_is_null() {
+            // Arrange
+            var location = new Location(52.320418, 4.7685652, null);
+            var measurement = createMeasurement(OffsetDateTime.now(), location);
+
+            // Act
+            var result = service.lookupLocation(measurement);
+
+            // Assert
+            assertThat(result).isEqualTo(LookupLocationOutcome.SUCCESS);
+        }
+
+        @Test
         void should_not_lookup_if_description_already_filled() {
             // Arrange
             var location = new Location(52.320418, 4.7685652, "Wateringen, Netherlands");
