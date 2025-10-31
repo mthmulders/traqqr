@@ -30,5 +30,9 @@ public record Measurement(
 
     public record Battery(byte soc) {}
 
-    public record Location(double lat, double lon) {}
+    public record Location(double lat, double lon, String description) {
+        public Location(double lat, double lon) {
+            this(lat, lon, null);
+        }
+    }
 }
