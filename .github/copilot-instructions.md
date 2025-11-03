@@ -40,7 +40,7 @@ Avoid Spring-specific patterns; use Jakarta EE (CDI, JAX-RS, JSF, JPA).
   - When invoking the `refreshLocation` method:
     - call `LocationLookup` SPI;
       - if success → `SUCCESS`.
-      - if failure → `FAILURE`..
+      - if failure → `FAILURE`.
 - Keep adapters thin (map I/O ⇆ domain). MapStruct (provided) can be used for DTO ↔ domain mappings.
 
 ## Build, test, run (use `mvn`)
