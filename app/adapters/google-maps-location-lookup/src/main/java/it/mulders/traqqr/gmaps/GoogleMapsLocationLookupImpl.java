@@ -13,6 +13,8 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
     @Override
     public LocationLookupResult lookup(Measurement.Location location) {
         // Placeholder implementation; real implementation would call Google Maps API
+        // See https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding
+        // for details on how to perform reverse geocoding using Google API's.
         logger.info("Looking up location for latitude={}, longitude={}", location.lat(), location.lon());
 
         try {
