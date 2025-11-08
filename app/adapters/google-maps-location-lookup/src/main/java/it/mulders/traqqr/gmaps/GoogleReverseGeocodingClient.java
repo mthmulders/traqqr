@@ -1,9 +1,6 @@
 package it.mulders.traqqr.gmaps;
 
 import it.mulders.traqqr.gmaps.dto.GeocodeResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -12,6 +9,8 @@ import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple client for Google Reverse Geocoding API.
@@ -52,7 +51,8 @@ public class GoogleReverseGeocodingClient {
     public Optional<GeocodeResponse> reverseGeocode(double lat, double lon) {
         try {
             var coords = lat + "," + lon;
-            var url = String.format("%s?latlng=%s&key=%s",
+            var url = String.format(
+                    "%s?latlng=%s&key=%s",
                     baseUrl,
                     URLEncoder.encode(coords, StandardCharsets.UTF_8),
                     URLEncoder.encode(apiKey, StandardCharsets.UTF_8));

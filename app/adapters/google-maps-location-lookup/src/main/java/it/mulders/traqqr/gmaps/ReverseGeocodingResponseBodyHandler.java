@@ -3,14 +3,13 @@ package it.mulders.traqqr.gmaps;
 import it.mulders.traqqr.gmaps.dto.GeocodeResponse;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.ResponseInfo;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ReverseGeocodingResponseBodyHandler implements HttpResponse.BodyHandler<Optional<GeocodeResponse>> {
     private static final Logger logger = LoggerFactory.getLogger(ReverseGeocodingResponseBodyHandler.class);

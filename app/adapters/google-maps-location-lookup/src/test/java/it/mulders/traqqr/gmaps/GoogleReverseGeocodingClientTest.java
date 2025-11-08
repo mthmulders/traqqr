@@ -1,17 +1,5 @@
 package it.mulders.traqqr.gmaps;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.InputStream;
-import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -20,8 +8,20 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import java.io.InputStream;
+import java.net.http.HttpClient;
+import java.nio.charset.StandardCharsets;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 class GoogleReverseGeocodingClientTest implements WithAssertions {
-    private final WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.options().dynamicPort());
+    private final WireMockServer wireMockServer =
+            new WireMockServer(WireMockConfiguration.options().dynamicPort());
     private GoogleReverseGeocodingClient client;
 
     @BeforeEach
@@ -39,7 +39,9 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
     private String loadResourceAsString(String resourcePath) throws Exception {
         try (InputStream is = getClass().getResourceAsStream(resourcePath)) {
-            assertThat(is).describedAs("Test resource not found: " + resourcePath).isNotNull();
+            assertThat(is)
+                    .describedAs("Test resource not found: " + resourcePath)
+                    .isNotNull();
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
@@ -85,7 +87,8 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
             assertThat(response.status).isEqualTo("OK");
             assertThat(response.results).isNotNull();
             assertThat(response.results).isNotEmpty();
-            assertThat(response.results.get(0).formattedAddress).isEqualTo("1600 Amphitheatre Parkway, Mountain View, CA 94043, USA");
+            assertThat(response.results.get(0).formattedAddress)
+                    .isEqualTo("1600 Amphitheatre Parkway, Mountain View, CA 94043, USA");
             assertThat(response.results.get(0).geometry.location.lat).isCloseTo(37.4224764, within(0.0000001));
             assertThat(response.results.get(0).geometry.location.lng).isCloseTo(-122.0842499, within(0.0000001));
         });
@@ -134,7 +137,8 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
             assertThat(response.results).isNotNull();
             assertThat(response.results).isNotEmpty();
             assertThat(response.results.get(0).partialMatch).isTrue();
-            assertThat(response.results.get(0).formattedAddress).isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA");
+            assertThat(response.results.get(0).formattedAddress)
+                    .isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA");
         });
     }
 }
