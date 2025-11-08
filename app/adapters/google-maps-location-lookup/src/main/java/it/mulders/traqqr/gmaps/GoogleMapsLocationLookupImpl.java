@@ -20,7 +20,7 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
         try {
             // Simulate a successful lookup with a dummy description
             var description = "Dummy Location Description";
-            Measurement.Location enrichedLocation = new Measurement.Location(location.lat(), location.lon(), description);
+            var enrichedLocation = new Measurement.Location(location.lat(), location.lon(), description);
             return new LocationLookupResult.Success(enrichedLocation);
         } catch (Exception e) {
             logger.error("Failed to lookup location", e);

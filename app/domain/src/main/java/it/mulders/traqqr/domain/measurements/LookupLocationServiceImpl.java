@@ -31,7 +31,9 @@ public class LookupLocationServiceImpl implements LookupLocationService {
     @Override
     public LookupLocationOutcome refreshLocation(Measurement measurement) {
         if (measurement.location() == null) {
-            logger.warn("Can't perform location lookup for measurement without location; measurement_id={}", measurement.id());
+            logger.warn(
+                    "Can't perform location lookup for measurement without location; measurement_id={}",
+                    measurement.id());
             return LookupLocationOutcome.NOT_FOUND;
         }
 

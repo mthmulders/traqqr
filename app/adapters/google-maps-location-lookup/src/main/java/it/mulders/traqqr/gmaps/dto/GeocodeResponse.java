@@ -1,7 +1,6 @@
 package it.mulders.traqqr.gmaps.dto;
 
 import jakarta.json.bind.annotation.JsonbProperty;
-
 import java.util.List;
 
 /**
@@ -42,10 +41,7 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "Result{" +
-                    "formattedAddress='" + formattedAddress + '\'' +
-                    ", placeId='" + placeId + '\'' +
-                    '}';
+            return "Result{" + "formattedAddress='" + formattedAddress + '\'' + ", placeId='" + placeId + '\'' + '}';
         }
     }
 
@@ -61,11 +57,10 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "AddressComponent{" +
-                    "longName='" + longName + '\'' +
-                    ", shortName='" + shortName + '\'' +
-                    ", types=" + types +
-                    '}';
+            return "AddressComponent{" + "longName='"
+                    + longName + '\'' + ", shortName='"
+                    + shortName + '\'' + ", types="
+                    + types + '}';
         }
     }
 
@@ -84,10 +79,7 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "Geometry{" +
-                    "location=" + location +
-                    ", locationType='" + locationType + '\'' +
-                    '}';
+            return "Geometry{" + "location=" + location + ", locationType='" + locationType + '\'' + '}';
         }
     }
 
@@ -100,10 +92,7 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "Location{" +
-                    "lat=" + lat +
-                    ", lng=" + lng +
-                    '}';
+            return "Location{" + "lat=" + lat + ", lng=" + lng + '}';
         }
     }
 
@@ -116,10 +105,7 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "Viewport{" +
-                    "northeast=" + northeast +
-                    ", southwest=" + southwest +
-                    '}';
+            return "Viewport{" + "northeast=" + northeast + ", southwest=" + southwest + '}';
         }
     }
 
@@ -132,18 +118,12 @@ public final class GeocodeResponse {
 
         @Override
         public String toString() {
-            return "PlusCode{" +
-                    "compoundCode='" + compoundCode + '\'' +
-                    ", globalCode='" + globalCode + '\'' +
-                    '}';
+            return "PlusCode{" + "compoundCode='" + compoundCode + '\'' + ", globalCode='" + globalCode + '\'' + '}';
         }
     }
 
     @Override
     public String toString() {
-        return "GeocodeResponse{" +
-                "status='" + status + '\'' +
-                ", results=" + results +
-                '}';
+        return "GeocodeResponse{" + "status='" + status + '\'' + ", results=" + results + '}';
     }
 }

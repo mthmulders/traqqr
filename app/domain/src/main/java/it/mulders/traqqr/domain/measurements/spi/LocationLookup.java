@@ -28,5 +28,4 @@ public interface LocationLookup {
         /** Failed lookup with the underlying cause. */
         record Failure(Throwable cause) implements LocationLookupResult {}
     }
-
 }

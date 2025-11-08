@@ -5,9 +5,7 @@ import it.mulders.traqqr.domain.measurements.Measurement.Location;
 import it.mulders.traqqr.domain.measurements.api.LookupLocationService;
 import it.mulders.traqqr.domain.measurements.api.LookupLocationService.LookupLocationOutcome;
 import it.mulders.traqqr.domain.measurements.spi.LocationLookup;
-
 import java.time.OffsetDateTime;
-
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -93,8 +91,7 @@ class LookupLocationServiceImplTest implements WithAssertions {
         }
     }
 
-    private Measurement createMeasurement(
-            OffsetDateTime measurementTimestamp, Location location) {
+    private Measurement createMeasurement(OffsetDateTime measurementTimestamp, Location location) {
         return new Measurement(null, null, measurementTimestamp, 10_000, new Battery((byte) 75), location, null, null);
     }
 }
