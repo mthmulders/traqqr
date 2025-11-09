@@ -2,7 +2,6 @@ package it.mulders.traqqr.gmaps;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
-
 import java.util.Map;
 
 @ApplicationScoped
