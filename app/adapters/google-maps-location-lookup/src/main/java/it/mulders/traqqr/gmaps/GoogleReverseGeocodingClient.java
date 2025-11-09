@@ -31,10 +31,6 @@ public class GoogleReverseGeocodingClient {
         this(apiKey, HttpClient.newHttpClient(), DEFAULT_BASE_URL);
     }
 
-    public GoogleReverseGeocodingClient(String apiKey, HttpClient httpClient) {
-        this(apiKey, httpClient, DEFAULT_BASE_URL);
-    }
-
     /**
      * Create client with a custom base URL (useful for testing with WireMock).
      */
