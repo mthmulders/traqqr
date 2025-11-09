@@ -9,5 +9,15 @@ import java.util.List;
  */
 public record GeocodeResponse(
         @JsonbProperty("results") List<Result> results,
-        @JsonbProperty("status") String status,
-        @JsonbProperty("error_message") String errorMessage) {}
+        @JsonbProperty("status") ResponseStatus status,
+        @JsonbProperty("error_message") String errorMessage) {
+
+    public enum ResponseStatus {
+        OK,
+        ZERO_RESULTS,
+        OVER_QUERY_LIMIT,
+        REQUEST_DENIED,
+        INVALID_REQUEST,
+        UNKNOWN_ERROR
+    }
+}
