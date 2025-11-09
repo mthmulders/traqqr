@@ -84,10 +84,10 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status).isEqualTo("OK");
-            assertThat(response.results).isNotNull();
-            assertThat(response.results).isNotEmpty();
-            assertThat(response.results).anySatisfy(r -> assertThat(r.formattedAddress)
+            assertThat(response.status()).isEqualTo("OK");
+            assertThat(response.results()).isNotNull();
+            assertThat(response.results()).isNotEmpty();
+            assertThat(response.results()).anySatisfy(r -> assertThat(r.formattedAddress())
                     .isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"));
         });
     }
@@ -108,9 +108,9 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status).isEqualTo("ZERO_RESULTS");
-            assertThat(response.results).isNotNull();
-            assertThat(response.results).isEmpty();
+            assertThat(response.status()).isEqualTo("ZERO_RESULTS");
+            assertThat(response.results()).isNotNull();
+            assertThat(response.results()).isEmpty();
         });
     }
 
@@ -131,11 +131,11 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status).isEqualTo("OK");
-            assertThat(response.results).isNotNull();
-            assertThat(response.results).isNotEmpty();
-            assertThat(response.results.get(0).partialMatch).isTrue();
-            assertThat(response.results.get(0).formattedAddress)
+            assertThat(response.status()).isEqualTo("OK");
+            assertThat(response.results()).isNotNull();
+            assertThat(response.results()).isNotEmpty();
+            assertThat(response.results().getFirst().partialMatch()).isTrue();
+            assertThat(response.results().getFirst().formattedAddress())
                     .isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA");
         });
     }
