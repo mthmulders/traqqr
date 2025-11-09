@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Simple client for Google Reverse Geocoding API.
- *
+ * <p>
  * This class builds a request to the endpoint described in <a href="https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding">the documentation</a>.
- *
+ * <p>
  * It maps the JSON response into DTOs under the `it.mulders.traqqr.gmaps.dto` package.
  */
 public class GoogleReverseGeocodingClient {
@@ -74,8 +74,12 @@ public class GoogleReverseGeocodingClient {
             }
 
             return response.body();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Failed to call Google Reverse Geocoding API", e);
+        } catch (IOException ioe) {
+            logger.error("Failed to call Google Reverse Geocoding API", ioe);
+            return Optional.empty();
+        } catch (InterruptedException ie) {
+            // No need to clean up resources, just restore the interrupt flag.
+            Thread.currentThread().interrupt();
             return Optional.empty();
         }
     }
