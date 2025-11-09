@@ -17,8 +17,11 @@ import java.nio.charset.StandardCharsets;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class GoogleReverseGeocodingClientTest implements WithAssertions {
     private final WireMockServer wireMockServer =
             new WireMockServer(WireMockConfiguration.options().dynamicPort());
