@@ -19,6 +19,6 @@ public class GoogleReverseGeocodingClientProvider {
     @Produces
     public GoogleReverseGeocodingClient createGoogleReverseGeocodingClient() {
         var apiKey = this.environment.get("GOOGLE_REVERSE_GEOCODING_API_KEY");
-        return new GoogleReverseGeocodingClient(apiKey);
+        return new GoogleReverseGeocodingClientImpl(apiKey);
     }
 }

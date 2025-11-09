@@ -23,16 +23,16 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class GoogleReverseGeocodingClientTest implements WithAssertions {
+class GoogleReverseGeocodingClientImplTest implements WithAssertions {
     private final WireMockServer wireMockServer =
             new WireMockServer(WireMockConfiguration.options().dynamicPort());
-    private GoogleReverseGeocodingClient client;
+    private GoogleReverseGeocodingClientImpl client;
 
     @BeforeEach
     void setUp() {
         wireMockServer.start();
         var baseUrl = String.format("http://localhost:%d/maps/api/geocode/json", wireMockServer.port());
-        client = new GoogleReverseGeocodingClient("test-key", HttpClient.newHttpClient(), baseUrl);
+        client = new GoogleReverseGeocodingClientImpl("test-key", HttpClient.newHttpClient(), baseUrl);
         WireMock.configureFor("localhost", wireMockServer.port());
     }
 
