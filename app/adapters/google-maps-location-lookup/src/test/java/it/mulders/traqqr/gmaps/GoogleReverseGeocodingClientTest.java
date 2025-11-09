@@ -14,6 +14,8 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import java.io.InputStream;
 import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
+
+import it.mulders.traqqr.gmaps.dto.GeocodeResponse.ResponseStatus;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +89,7 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status()).isEqualTo("OK");
+            assertThat(response.status()).isEqualTo(ResponseStatus.OK);
             assertThat(response.results()).isNotNull();
             assertThat(response.results()).isNotEmpty();
             assertThat(response.results()).anySatisfy(r -> assertThat(r.formattedAddress())
@@ -111,7 +113,7 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status()).isEqualTo("ZERO_RESULTS");
+            assertThat(response.status()).isEqualTo(ResponseStatus.ZERO_RESULTS);
             assertThat(response.results()).isNotNull();
             assertThat(response.results()).isEmpty();
         });
@@ -134,7 +136,7 @@ class GoogleReverseGeocodingClientTest implements WithAssertions {
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
-            assertThat(response.status()).isEqualTo("OK");
+            assertThat(response.status()).isEqualTo(ResponseStatus.OK);
             assertThat(response.results()).isNotNull();
             assertThat(response.results()).isNotEmpty();
             assertThat(response.results().getFirst().partialMatch()).isTrue();
