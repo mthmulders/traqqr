@@ -95,7 +95,7 @@
     <dependency>
       <groupId>it.mulders.clocky</groupId>
       <artifactId>clocky</artifactId>
-      <version>0.4.8</version>
+      <version>0.4.9</version>
       <scope>test</scope>
     </dependency>
     <dependency>
