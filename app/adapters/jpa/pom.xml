@@ -16,7 +16,7 @@
 
   <properties>
     <eclipselink.version>4.0.5</eclipselink.version>
-    <flyway.version>11.17.1</flyway.version>
+    <flyway.version>11.17.2</flyway.version>
     <testcontainers.version>1.21.3</testcontainers.version>
   </properties>
 
