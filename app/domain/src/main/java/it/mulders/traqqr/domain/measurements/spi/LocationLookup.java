@@ -21,9 +21,12 @@ public interface LocationLookup {
      * <p>
      * Implementations are limited to {@link Success} and {@link Failure}.
      */
-    public sealed interface LocationLookupResult permits LocationLookupResult.Success, LocationLookupResult.Failure {
+    sealed interface LocationLookupResult permits LocationLookupResult.Success, LocationLookupResult.NotFound, LocationLookupResult.Failure {
         /** Successful lookup containing the resolved location. */
         record Success(Measurement.Location location) implements LocationLookupResult {}
+
+        /** Successful lookup but no location could be found. */
+        record NotFound() implements LocationLookupResult {}
 
         /** Failed lookup with the underlying cause. */
         record Failure(Throwable cause) implements LocationLookupResult {}
