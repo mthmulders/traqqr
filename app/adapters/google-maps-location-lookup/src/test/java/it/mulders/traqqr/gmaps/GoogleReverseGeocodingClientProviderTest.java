@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class GoogleReverseGeocodingClientProviderTest implements WithAssertions {
     @Test
-    void should_return_google_reverse_geocoding_client_provider() {
+    void should_return_Google_reverse_geocoding_client() {
         // Arrange
         var env = Map.of("GOOGLE_REVERSE_GEOCODING_API_KEY", "test-api-key");
 
