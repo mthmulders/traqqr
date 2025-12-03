@@ -78,28 +78,29 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
                         "Unknown error looking up location with Google Maps API; latitude={}, longitude={}",
                         location.lat(),
                         location.lon());
-                yield Optional.empty();
+                throw new GoogleMapsLocationLookupException("An unknown error occurred.");
             }
             case REQUEST_DENIED -> {
                 logger.warn(
-                        "Request to Google Maps API was denied; latitude={}, longitude={}",
+                        "Request to Google Maps API was denied; latitude={}, longitude={}; message={}",
                         location.lat(),
-                        location.lon());
-                yield Optional.empty();
+                        location.lon(),
+                        response.errorMessage());
+                throw new GoogleMapsLocationLookupException("Request to Google Maps API was denied");
             }
             case INVALID_REQUEST -> {
                 logger.warn(
                         "Invalid request sent to Google Maps API; latitude={}, longitude={}",
                         location.lat(),
                         location.lon());
-                yield Optional.empty();
+                throw new GoogleMapsLocationLookupException("The request to Google Maps API was invalid");
             }
             case OVER_QUERY_LIMIT -> {
                 logger.warn(
                         "Query limit for Google Maps API exceeded; latitude={}, longitude={}",
                         location.lat(),
                         location.lon());
-                yield Optional.empty();
+                throw new GoogleMapsLocationLookupException("You have exceeded your daily request quota for this API.");
             }
         };
     }
