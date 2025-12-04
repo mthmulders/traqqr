@@ -46,7 +46,7 @@ class LookupLocationServiceImplTest implements WithAssertions {
             var result = service.lookupLocation(measurement);
 
             // Assert
-            assertThat(result).isEqualTo(LookupLocationOutcome.SUCCESS);
+            assertThat(result).isInstanceOf(LookupLocationOutcome.Success.class);
         }
 
         @Test
@@ -87,7 +87,7 @@ class LookupLocationServiceImplTest implements WithAssertions {
             var result = service.refreshLocation(measurement);
 
             // Assert
-            assertThat(result).isEqualTo(LookupLocationOutcome.SUCCESS);
+            assertThat(result).isEqualTo(LookupLocationOutcome.Success.class);
         }
     }
 
