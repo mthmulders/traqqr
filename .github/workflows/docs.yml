@@ -39,7 +39,7 @@ jobs:
           
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
-          curl -sLOJ https://github.com/structurizr/cli/releases/download/${STRUCTURIZR_VERSION}/structurizr-cli.zip
+          curl -sLOJ --proto "=https" https://github.com/structurizr/cli/releases/download/${STRUCTURIZR_VERSION}/structurizr-cli.zip
           mkdir structurizr-${STRUCTURIZR_VERSION}
           pushd structurizr-${STRUCTURIZR_VERSION}
           unzip -q ../structurizr-cli.zip
