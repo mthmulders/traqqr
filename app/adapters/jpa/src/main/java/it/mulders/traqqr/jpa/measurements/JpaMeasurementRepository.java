@@ -88,8 +88,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
 
     @Override
     public Stream<Measurement> exampleStreamingFindForBatchJob() {
-        var query = this.em.createQuery(
-                """
+        var query = this.em.createQuery("""
                         select m
                         from Measurement m
                         where not exists (
@@ -97,8 +96,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
                             from JobItem ji
                             where ji.itemId = m.id
                         )
-                        """,
-                MeasurementEntity.class);
+                        """, MeasurementEntity.class);
         return query.setMaxResults(100).getResultStream().map(mapper::measurementEntityToMeasurement);
     }
 

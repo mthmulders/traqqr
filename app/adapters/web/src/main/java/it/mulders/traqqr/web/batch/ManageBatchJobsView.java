@@ -2,8 +2,8 @@ package it.mulders.traqqr.web.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobType;
-import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import it.mulders.traqqr.domain.batch.JobStartRequestedEvent;
+import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import jakarta.enterprise.event.Event;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;

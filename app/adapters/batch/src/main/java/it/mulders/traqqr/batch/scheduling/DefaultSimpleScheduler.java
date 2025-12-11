@@ -68,14 +68,10 @@ public class DefaultSimpleScheduler implements Scheduler {
                     var next = pendingInvocations.getFirst();
                     var nextInvocation = next.timestamp;
 
-                    logger.debug(
-                            "Inspecting first scheduled task; now={}, next_invocation={}",
-                            now,
-                            nextInvocation);
+                    logger.debug("Inspecting first scheduled task; now={}, next_invocation={}", now, nextInvocation);
 
                     if (now.isAfter(nextInvocation)) {
-                        logger.info(
-                                "First scheduled task is due or overdue, executing it; delegate={}", next.delegate);
+                        logger.info("First scheduled task is due or overdue, executing it; delegate={}", next.delegate);
                         executor.submit(next);
                         pendingInvocations.removeFirst();
 

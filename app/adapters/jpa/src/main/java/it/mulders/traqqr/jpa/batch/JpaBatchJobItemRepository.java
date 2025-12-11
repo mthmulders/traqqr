@@ -49,15 +49,13 @@ public class JpaBatchJobItemRepository implements BatchJobItemRepository {
         Objects.requireNonNull(executionId);
 
         var query = this.em
-                .createQuery(
-                        """
+                .createQuery("""
                         select new it.mulders.traqqr.jpa.batch.StringLongTuple(ji.itemStatus, count(ji))
                         from JobItem ji
                         where ji.instanceId = :instanceId
                         and ji.executionId = :executionId
                         group by ji.itemStatus
-                        """,
-                        StringLongTuple.class)
+                        """, StringLongTuple.class)
                 .setParameter("instanceId", instanceId)
                 .setParameter("executionId", executionId);
 
@@ -95,8 +93,9 @@ public class JpaBatchJobItemRepository implements BatchJobItemRepository {
     private UUID extractItemId(Object item) {
         return switch (item) {
             case Measurement measurement -> measurement.id();
-            default -> throw new IllegalStateException(
-                    "Unexpected item type: " + item.getClass().getName());
+            default ->
+                throw new IllegalStateException(
+                        "Unexpected item type: " + item.getClass().getName());
         };
     }
 }

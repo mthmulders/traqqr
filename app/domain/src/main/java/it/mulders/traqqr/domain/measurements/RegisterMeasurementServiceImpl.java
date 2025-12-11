@@ -42,7 +42,8 @@ public class RegisterMeasurementServiceImpl implements RegisterMeasurementServic
         };
     }
 
-    private RegisterMeasurementOutcome storeAutomatedMeasurement(Measurement measurement, Vehicle vehicle, String apiKey) {
+    private RegisterMeasurementOutcome storeAutomatedMeasurement(
+            Measurement measurement, Vehicle vehicle, String apiKey) {
         if (apiKey == null || !vehicle.hasAuthorisationWithKey(apiKey)) {
             logger.info("Registering measurement failed, invalid API key; vehicle_code={}", vehicle.code());
             return RegisterMeasurementOutcome.UNAUTHORIZED;
