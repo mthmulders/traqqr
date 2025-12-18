@@ -28,6 +28,11 @@ public record Measurement(
                 id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);
     }
 
+    public Measurement withLocation(Location location) {
+        return new Measurement(
+                id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);
+    }
+
     public record Battery(byte soc) {}
 
     public record Location(double lat, double lon, String description) {
