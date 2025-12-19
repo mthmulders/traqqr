@@ -2,7 +2,7 @@
 <job xmlns="https://jakarta.ee/xml/ns/jakartaee"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/jobXML_2_0.xsd"
-     id="example"
+     id="location-lookup"
      restartable="false"
      version="2.0">
   <properties>
@@ -12,11 +12,11 @@
     <listener ref="traqqrJobListener" />
   </listeners>
 
-  <step id="location-lookup">
+  <step id="step-location-lookup">
     <listeners>
       <listener ref="traqqrChunkListener" />
     </listeners>
-    <chunk item-count="50">
+    <chunk item-count="10">
       <reader ref="locationLookupReader" />
       <processor ref="locationLookupProcessor" />
       <writer ref="locationLookupWriter" />

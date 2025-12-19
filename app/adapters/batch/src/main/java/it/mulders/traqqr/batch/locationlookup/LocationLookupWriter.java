@@ -42,6 +42,7 @@ public class LocationLookupWriter extends AbstractItemWriter {
             }
         });
 
+        log.info("Writing {} items", result.size());
         batchJobItemRepository.saveAll(result);
     }
 }

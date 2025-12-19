@@ -57,7 +57,10 @@ public class GoogleReverseGeocodingClientImpl implements GoogleReverseGeocodingC
                     .header("Accept", "application/json")
                     .build();
 
-            logger.debug("Calling Google Reverse Geocoding: url={}", url);
+            if (logger.isDebugEnabled()) {
+                var urlForLogging = url.replace(apiKey, "[[REDACTED]]");
+                logger.debug("Calling Google Reverse Geocoding: url={}", urlForLogging);
+            }
 
             var response = httpClient.send(request, new ReverseGeocodingResponseBodyHandler());
             var status = response.statusCode();
