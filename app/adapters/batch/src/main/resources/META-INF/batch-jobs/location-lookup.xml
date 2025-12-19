@@ -12,14 +12,14 @@
     <listener ref="traqqrJobListener" />
   </listeners>
 
-  <step id="step1">
+  <step id="location-lookup">
     <listeners>
       <listener ref="traqqrChunkListener" />
     </listeners>
     <chunk item-count="50">
       <reader ref="locationLookupReader" />
       <processor ref="locationLookupProcessor" />
-      <writer ref="exampleWriter" />
+      <writer ref="locationLookupWriter" />
     </chunk>
     <!--    <fail on="FAILED" />-->
     <!--    <end on="*" />-->
