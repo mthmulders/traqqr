@@ -39,5 +39,9 @@ public record Measurement(
         public Location(double lat, double lon) {
             this(lat, lon, null);
         }
+
+        public Location withDescription(String description) {
+            return new Location(lat, lon, description);
+        }
     }
 }
