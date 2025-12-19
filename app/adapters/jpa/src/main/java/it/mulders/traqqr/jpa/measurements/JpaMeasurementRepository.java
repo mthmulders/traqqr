@@ -101,6 +101,20 @@ public class JpaMeasurementRepository implements MeasurementRepository {
     }
 
     @Override
+    public Collection<Measurement> findOldestMeasurementsWithoutLocationDescription() {
+        var query = this.em.createQuery("""
+                        select m
+                        from Measurement m
+                        where m.locationDescription is null
+                        order by m.measuredAt desc
+                        """, MeasurementEntity.class);
+        return query.setMaxResults(100)
+                .getResultStream()
+                .map(mapper::measurementEntityToMeasurement)
+                .toList();
+    }
+
+    @Override
     public long countByVehicle(Vehicle vehicle) {
         log.debug("Counting measurements; vehicle={}", vehicle.code());
         return this.em

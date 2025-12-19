@@ -18,7 +18,7 @@
       <listener ref="traqqrChunkListener" />
     </listeners>
     <chunk item-count="50">
-      <reader ref="exampleReader" />
+      <reader ref="locationLookupReader" />
       <processor ref="exampleProcessor" />
       <writer ref="exampleWriter" />
     </chunk>
