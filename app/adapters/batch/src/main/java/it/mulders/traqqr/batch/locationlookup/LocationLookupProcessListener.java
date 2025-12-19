@@ -42,18 +42,18 @@ public class LocationLookupProcessListener extends TraqqrProcessor implements It
                 logger.info("Location lookup not necessary; measurement_id={}", measurement.id());
                 yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.NO_PROCESSING_NECESSARY, measurement);
             }
-            case Success success -> {
+            case Success(var location) -> {
                 logger.info("Location lookup successful; measurement_id={}", measurement.id());
-                var updatedMeasurement = measurement.withLocation(success.location());
+                var updatedMeasurement = measurement.withLocation(location);
                 yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.PROCESSED, updatedMeasurement);
             }
             case NotFound ignored -> {
                 logger.info("Location lookup: location not found; measurement_id={}", measurement.id());
                 yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.FAILED, measurement);
             }
-            case Failure failure -> {
-                logger.error("Location lookup failed; measurement_id={}", measurement.id(), failure.throwable());
-                yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.FAILED, failure.throwable());
+            case Failure(var cause) -> {
+                logger.error("Location lookup failed; measurement_id={}", measurement.id(), cause);
+                yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.FAILED, cause);
             }
         };
     }

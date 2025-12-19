@@ -39,9 +39,9 @@ public class LookupLocationServiceImpl implements LookupLocationService {
 
         var result = locationLookup.lookup(measurement.location());
         return switch (result) {
-            case LocationLookupResult.Failure failure -> new LookupLocationOutcome.Failure(failure.cause());
+            case LocationLookupResult.Failure(var cause) -> new LookupLocationOutcome.Failure(cause);
             case LocationLookupResult.NotFound ignored -> LookupLocationOutcome.NOT_FOUND;
-            case LocationLookupResult.Success success -> new LookupLocationOutcome.Success(success.location());
+            case LocationLookupResult.Success(var location) -> new LookupLocationOutcome.Success(location);
         };
     }
 }
