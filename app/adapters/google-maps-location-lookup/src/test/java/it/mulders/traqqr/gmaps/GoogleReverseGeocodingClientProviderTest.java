@@ -11,7 +11,7 @@ class GoogleReverseGeocodingClientProviderTest implements WithAssertions {
     @Test
     void should_return_Google_reverse_geocoding_client() {
         // Arrange
-        var env = Map.of("GOOGLE_REVERSE_GEOCODING_API_KEY", "test-api-key");
+        var env = Map.of("GOOGLE_GEOCODING_API_KEY", "test-api-key");
 
         // Act
         var client = new GoogleReverseGeocodingClientProvider(env).createGoogleReverseGeocodingClient();
