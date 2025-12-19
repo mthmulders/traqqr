@@ -11,6 +11,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.gmaps.dto.GeocodeResponse.ResponseStatus;
 import java.io.InputStream;
 import java.net.http.HttpClient;
@@ -63,7 +64,7 @@ class GoogleReverseGeocodingClientImplTest implements WithAssertions {
                         .withBody(payload)));
 
         // Act
-        client.reverseGeocode(37.4224764, -122.0842499);
+        client.reverseGeocode(new Measurement.Location(37.4224764, -122.0842499));
 
         // Assert
         verify(getRequestedFor(urlPathEqualTo("/maps/api/geocode/json"))
@@ -84,7 +85,7 @@ class GoogleReverseGeocodingClientImplTest implements WithAssertions {
                         .withBody(payload)));
 
         // Act
-        var result = client.reverseGeocode(37.4224764, -122.0842499);
+        var result = client.reverseGeocode(new Measurement.Location(37.4224764, -122.0842499));
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
@@ -108,7 +109,7 @@ class GoogleReverseGeocodingClientImplTest implements WithAssertions {
                         .withHeader("Content-Type", "application/json")
                         .withBody(payload)));
         // Act
-        var result = client.reverseGeocode(0.0, 0.0);
+        var result = client.reverseGeocode(new Measurement.Location(0.0, 0.0));
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {
@@ -131,7 +132,7 @@ class GoogleReverseGeocodingClientImplTest implements WithAssertions {
                         .withBody(payload)));
 
         // Act
-        var result = client.reverseGeocode(37.4224764, -122.0842499);
+        var result = client.reverseGeocode(new Measurement.Location(37.4224764, -122.0842499));
 
         // Assert
         assertThat(result).isPresent().hasValueSatisfying(response -> {

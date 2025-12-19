@@ -1,5 +1,6 @@
 package it.mulders.traqqr.gmaps;
 
+import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.gmaps.dto.GeocodeResponse;
 import java.io.IOException;
 import java.net.URI;
@@ -40,13 +41,9 @@ public class GoogleReverseGeocodingClientImpl implements GoogleReverseGeocodingC
         this.baseUrl = baseUrl;
     }
 
-    /**
-     * Call the Google Reverse Geocoding API for the given latitude/longitude.
-     * Returns an Optional containing the parsed GeocodeResponse on success, or empty on failure.
-     */
-    public Optional<GeocodeResponse> reverseGeocode(double lat, double lon) {
+    public Optional<GeocodeResponse> reverseGeocode(final Measurement.Location location) {
         try {
-            var coords = lat + "," + lon;
+            var coords = "%s,%s".formatted(location.lat(), location.lon());
             var url = String.format(
                     "%s?latlng=%s&key=%s",
                     baseUrl,

@@ -25,7 +25,7 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
         logger.info("Looking up location for latitude={}, longitude={}", location.lat(), location.lon());
 
         try {
-            return client.reverseGeocode(location.lat(), location.lon())
+            return client.reverseGeocode(location)
                     .flatMap(response -> this.extractLocationDescription(response, location))
                     .map(location::withDescription)
                     .map(LocationLookupResult.Success::new)
