@@ -15,33 +15,33 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class GoogleMapsLocationLookupImplTest implements WithAssertions {
-    private final double KNOWN_LATITUDE = 37.4224764;
-    private final double KNOWN_LONGITUDE = -122.0842499;
-    private final String KNOWN_DESCRIPTION = "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA";
+    private static final double KNOWN_LATITUDE = 37.4224764;
+    private static final double KNOWN_LONGITUDE = -122.0842499;
+    private static final String KNOWN_DESCRIPTION = "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA";
 
-    private final double NO_STREET_ADDRESS_LATITUDE = 37.4225764;
-    private final double NO_STREET_ADDRESS_LONGITUDE = -122.1842499;
+    private static final double NO_STREET_ADDRESS_LATITUDE = 37.4225764;
+    private static final double NO_STREET_ADDRESS_LONGITUDE = -122.1842499;
 
-    private final double MULTIPLE_STREET_ADDRESSES_LATITUDE = 36.4225764;
-    private final double MULTIPLE_STREET_ADDRESSES_LONGITUDE = -124.1842499;
-    private final String MULTIPLE_STREET_ADDRESSES_LONGITUDE_FIRST_DESCRIPTION =
+    private static final double MULTIPLE_STREET_ADDRESSES_LATITUDE = 36.4225764;
+    private static final double MULTIPLE_STREET_ADDRESSES_LONGITUDE = -124.1842499;
+    private static final String MULTIPLE_STREET_ADDRESSES_LONGITUDE_FIRST_DESCRIPTION =
             "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA";
 
-    private final double REQUEST_DENIED_LATITUDE = 35.4225764;
-    private final double REQUEST_DENIED_LONGITUDE = -125.1842499;
-    private final String REQUEST_DENIED_MESSAGE = "Request to Google Maps API was denied";
+    private static final double REQUEST_DENIED_LATITUDE = 35.4225764;
+    private static final double REQUEST_DENIED_LONGITUDE = -125.1842499;
+    private static final String REQUEST_DENIED_MESSAGE = "Request to Google Maps API was denied";
 
-    private final double INVALID_REQUEST_LATITUDE = Double.MAX_VALUE;
-    private final double INVALID_REQUEST_LONGITUDE = Double.MIN_VALUE;
-    private final String INVALID_REQUEST_MESSAGE = "The request to Google Maps API was invalid";
+    private static final double INVALID_REQUEST_LATITUDE = Double.MAX_VALUE;
+    private static final double INVALID_REQUEST_LONGITUDE = Double.MIN_VALUE;
+    private static final String INVALID_REQUEST_MESSAGE = "The request to Google Maps API was invalid";
 
-    private final double OVER_QUERY_LATITUDE = 33.4764225;
-    private final double OVER_QUERY_LONGITUDE = 122.1849429;
-    private final String OVER_QUERY_MESSAGE = "You have exceeded your daily request quota for this API.";
+    private static final double OVER_QUERY_LATITUDE = 33.4764225;
+    private static final double OVER_QUERY_LONGITUDE = 122.1849429;
+    private static final String OVER_QUERY_MESSAGE = "You have exceeded your daily request quota for this API.";
 
-    private final double UNKNOWN_ERROR_LATITUDE = 31.4764225;
-    private final double UNKNOWN_ERROR_LONGITUDE = 129.1849429;
-    private final String UNKNOWN_ERROR_MESSAGE = "An unknown error occurred.";
+    private static final double UNKNOWN_ERROR_LATITUDE = 31.4764225;
+    private static final double UNKNOWN_ERROR_LONGITUDE = 129.1849429;
+    private static final String UNKNOWN_ERROR_MESSAGE = "An unknown error occurred.";
 
     private final GoogleReverseGeocodingClient client = (latitude, longitude) -> {
         if (latitude == KNOWN_LATITUDE && longitude == KNOWN_LONGITUDE) {
