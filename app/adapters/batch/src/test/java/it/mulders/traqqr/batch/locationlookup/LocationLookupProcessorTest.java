@@ -24,7 +24,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class LocationLookupProcessListenerTest implements WithAssertions {
+class LocationLookupProcessorTest implements WithAssertions {
     private final JobContext jobContext = new DummyJobContext();
 
     private static final Measurement.Location LOCATION_FOR_FAILURE = new Measurement.Location(1, 2);
@@ -50,7 +50,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
             return null;
         }
     };
-    private final LocationLookupProcessListener listener = new LocationLookupProcessListener(jobContext, service);
+    private final LocationLookupProcessor processor = new LocationLookupProcessor(jobContext, service);
 
     @Test
     void measurement_with_location_description_should_return_item_with_status_NO_PROCESSING_NECESSARY()
@@ -61,7 +61,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
         var measurementWithLocationDescription = measurement.withLocation(location);
 
         // Act
-        var result = listener.processItem(measurementWithLocationDescription);
+        var result = processor.processItem(measurementWithLocationDescription);
 
         // Assert
         assertThat(result)
@@ -77,7 +77,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
         var measurement = createMeasurementWithLocation(createVehicle(), LOCATION_FOR_NOT_FOUND);
 
         // Act
-        var result = listener.processItem(measurement);
+        var result = processor.processItem(measurement);
 
         // Assert
         assertThat(result)
@@ -93,7 +93,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
         var measurement = createMeasurementWithLocation(createVehicle(), LOCATION_FOR_FAILURE);
 
         // Act
-        var result = listener.processItem(measurement);
+        var result = processor.processItem(measurement);
 
         // Assert
         assertThat(result)
@@ -109,7 +109,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
         var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0,0));
 
         // Act
-        var result = listener.processItem(measurement);
+        var result = processor.processItem(measurement);
 
         // Assert
         assertThat(result)
@@ -125,7 +125,7 @@ class LocationLookupProcessListenerTest implements WithAssertions {
         var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0,0));
 
         // Act
-        var result = listener.processItem(measurement);
+        var result = processor.processItem(measurement);
 
         // Assert
         assertThat(result)

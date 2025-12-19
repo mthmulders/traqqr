@@ -18,15 +18,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Dependent
-@Named("locationLookupProcessListener")
-public class LocationLookupProcessListener extends TraqqrProcessor implements ItemProcessor {
-    private final Logger logger = LoggerFactory.getLogger(LocationLookupProcessListener.class);
+@Named("locationLookupProcessor")
+public class LocationLookupProcessor extends TraqqrProcessor implements ItemProcessor {
+    private final Logger logger = LoggerFactory.getLogger(LocationLookupProcessor.class);
 
     // Components
     private final LookupLocationService lookupLocationService;
 
     @Inject
-    public LocationLookupProcessListener(
+    public LocationLookupProcessor(
             final JobContext jobContext, final LookupLocationService lookupLocationService) {
         super(jobContext);
         this.lookupLocationService = lookupLocationService;
