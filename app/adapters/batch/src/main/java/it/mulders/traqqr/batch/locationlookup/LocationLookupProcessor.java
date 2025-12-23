@@ -26,8 +26,7 @@ public class LocationLookupProcessor extends TraqqrProcessor implements ItemProc
     private final LookupLocationService lookupLocationService;
 
     @Inject
-    public LocationLookupProcessor(
-            final JobContext jobContext, final LookupLocationService lookupLocationService) {
+    public LocationLookupProcessor(final JobContext jobContext, final LookupLocationService lookupLocationService) {
         super(jobContext);
         this.lookupLocationService = lookupLocationService;
     }

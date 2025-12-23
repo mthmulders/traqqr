@@ -1,22 +1,21 @@
 package it.mulders.traqqr.batch.locationlookup;
 
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
+
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.BatchJobItem;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.BatchJobStatus;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.mem.batch.InMemoryBatchJobItemRepository;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Map;
-
-import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
-import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class LocationLookupWriterTest implements WithAssertions {

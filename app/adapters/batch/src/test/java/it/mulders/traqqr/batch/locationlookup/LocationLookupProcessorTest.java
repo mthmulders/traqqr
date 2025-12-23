@@ -106,7 +106,7 @@ class LocationLookupProcessorTest implements WithAssertions {
     @Test
     void location_lookup_should_return_item_with_status_PROCESSED() throws Exception {
         // Arrange
-        var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0,0));
+        var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0, 0));
 
         // Act
         var result = processor.processItem(measurement);
@@ -122,7 +122,7 @@ class LocationLookupProcessorTest implements WithAssertions {
     @Test
     void location_lookup_should_return_item_with_location_description() throws Exception {
         // Arrange
-        var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0,0));
+        var measurement = createMeasurementWithLocation(createVehicle(), new Measurement.Location(0, 0));
 
         // Act
         var result = processor.processItem(measurement);
