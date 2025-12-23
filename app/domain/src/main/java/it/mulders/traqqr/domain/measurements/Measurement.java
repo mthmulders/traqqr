@@ -1,5 +1,6 @@
 package it.mulders.traqqr.domain.measurements;
 
+import it.mulders.traqqr.domain.shared.Identifiable;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -12,7 +13,8 @@ public record Measurement(
         Battery battery,
         Location location,
         Source source,
-        Vehicle vehicle) {
+        Vehicle vehicle)
+        implements Identifiable {
     public Measurement withRegistrationTimestamp(OffsetDateTime registrationTimestamp) {
         return new Measurement(
                 id, registrationTimestamp, measurementTimestamp, odometer, battery, location, source, vehicle);

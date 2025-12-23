@@ -3,6 +3,7 @@ package it.mulders.traqqr.mem.batch;
 import it.mulders.traqqr.domain.batch.BatchJobItem;
 import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
+import it.mulders.traqqr.domain.shared.Identifiable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,12 +21,12 @@ public class InMemoryBatchJobItemRepository implements BatchJobItemRepository {
     }
 
     @Override
-    public void save(BatchJobItem<?> item) {
+    public void save(BatchJobItem<Identifiable> item) {
         batchJobItems.add(item);
     }
 
     @Override
-    public void saveAll(Collection<BatchJobItem<?>> items) {
+    public void saveAll(Collection<BatchJobItem<Identifiable>> items) {
         batchJobItems.addAll(items);
     }
 

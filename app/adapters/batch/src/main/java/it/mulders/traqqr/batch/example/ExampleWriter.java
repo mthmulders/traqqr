@@ -2,6 +2,7 @@ package it.mulders.traqqr.batch.example;
 
 import it.mulders.traqqr.domain.batch.BatchJobItem;
 import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
+import it.mulders.traqqr.domain.shared.Identifiable;
 import jakarta.batch.api.chunk.AbstractItemWriter;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
@@ -29,13 +30,19 @@ public class ExampleWriter extends AbstractItemWriter {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void writeItems(List<Object> items) {
         // The items are the individual return values of ExampleProcessor#processItem
-        var result = new ArrayList<BatchJobItem<?>>();
+        var result = new ArrayList<BatchJobItem<Identifiable>>();
 
         // Not using the Streams API because it has trouble inferring the type
         // of the Collector to use.
         items.forEach(item -> {
             if (item instanceof BatchJobItem<?> batchJobItem) {
-                result.add(batchJobItem);
+                if (batchJobItem.item() instanceof Identifiable) {
+                    result.add((BatchJobItem<Identifiable>) batchJobItem);
+                } else {
+                    log.warn(
+                            "Unexpected batch job item payload type {}",
+                            batchJobItem.item().getClass());
+                }
             } else {
                 log.warn("Unexpected item type {}", item.getClass());
             }
