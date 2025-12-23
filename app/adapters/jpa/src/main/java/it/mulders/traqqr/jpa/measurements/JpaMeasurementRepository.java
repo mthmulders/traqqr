@@ -48,7 +48,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
         entity.setVehicle(vehicle);
 
         try {
-            em.persist(entity);
+            em.merge(entity);
             log.info("Measurement stored; id={}", entity.getId());
         } catch (PersistenceException e) {
             log.error("Database error during measurement storage; id={}", entity.getId(), e);

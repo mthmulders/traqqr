@@ -9,7 +9,10 @@ import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.BatchJobStatus;
 import it.mulders.traqqr.domain.batch.BatchJobType;
 import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
+import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
+import it.mulders.traqqr.domain.shared.Identifiable;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
+import it.mulders.traqqr.mem.measurements.InMemoryMeasurementRepository;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,9 +27,11 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class JpaBatchJobItemRepositoryIT extends AbstractJpaRepositoryTest<BatchJobItemRepository, JpaBatchJobItemRepository>
         implements WithAssertions {
+    private final MeasurementRepository measurementRepository = new InMemoryMeasurementRepository();
+
     @BeforeEach
     void prepare() {
-        prepare(em -> new JpaBatchJobItemRepository(em, batchJobItemMapper));
+        prepare(em -> new JpaBatchJobItemRepository(em, batchJobItemMapper, measurementRepository));
     }
 
     @Test
@@ -54,7 +59,7 @@ class JpaBatchJobItemRepositoryIT extends AbstractJpaRepositoryTest<BatchJobItem
                     instanceId,
                     executionId);
 
-            Collection<BatchJobItem<?>> items = new ArrayList<>();
+            Collection<BatchJobItem<Identifiable>> items = new ArrayList<>();
 
             IntStream.range(0, 10).mapToObj(i -> createMeasurement(vehicle)).forEach(measurement -> {
                 var measurementEntity = measurementMapper.measurementToMeasurementEntity(measurement);
@@ -91,5 +96,36 @@ class JpaBatchJobItemRepositoryIT extends AbstractJpaRepositoryTest<BatchJobItem
                 .containsEntry(BatchJobItemStatus.PROCESSED, 10L)
                 .containsEntry(BatchJobItemStatus.NO_PROCESSING_NECESSARY, 3L)
                 .containsEntry(BatchJobItemStatus.FAILED, 2L);
+    }
+
+    @Test
+    void should_store_batch_job_item_with_related_item() {
+        // Arrange
+        var instanceId = 48932L;
+        var vehicle = createVehicle();
+        var batchJob = new BatchJob(
+                OffsetDateTime.now().minusMinutes(1),
+                OffsetDateTime.now(),
+                OffsetDateTime.now(),
+                BatchJobType.LOCATION_LOOKUP,
+                BatchJobStatus.COMPLETED,
+                Map.of(BatchJobItemStatus.PROCESSED, 1L),
+                instanceId,
+                0L);
+        var item = new BatchJobItem<Identifiable>(batchJob, BatchJobItemStatus.PROCESSED, createMeasurement(vehicle));
+
+        // Act
+        runTransactional(() -> repository.save(item));
+
+        // Assert
+        var allItems = entityManager
+                .createQuery("select ji from JobItem ji", JobItemEntity.class)
+                .getResultList();
+        var measurements = measurementRepository.findByVehicle(vehicle);
+
+        assertThat(allItems)
+                .anySatisfy(jobItem -> assertThat(jobItem.getInstanceId()).isEqualTo(instanceId));
+        assertThat(measurements)
+                .anySatisfy(measurement -> assertThat(measurement.vehicle().equals(vehicle)));
     }
 }
