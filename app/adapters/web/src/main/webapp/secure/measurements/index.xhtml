@@ -59,19 +59,17 @@
                         <h:outputText value="#{measurement.battery().soc()}" />%
                     </p:column>
                     <p:column headerText="Location">
-                        <c:choose>
-                          <c:when test="#{empty(measurement.location().description())}">
+                        <h:panelGroup rendered="#{empty(measurement.location().description())}">
                             <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
-                              <h:outputText value="#{measurement.location().lat()}" />,
-                              <h:outputText value="#{measurement.location().lon()}" />
+                                <h:outputText value="#{measurement.location().lat()}" />,
+                                <h:outputText value="#{measurement.location().lon()}" />
                             </a>
-                          </c:when>
-                          <c:otherwise>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty(measurement.location().description())}">
                             <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
-                              <h:outputText value="#{measurement.location().description()}" />
+                                <h:outputText value="#{measurement.location().description()}" />
                             </a>
-                          </c:otherwise>
-                        </c:choose>
+                        </h:panelGroup>
                     </p:column>
                     <p:column style="width:3rem" ariaHeaderText="Actions">
                         <p:commandButton icon="pi pi-trash" class="ui-button-warning"
