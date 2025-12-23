@@ -9,7 +9,7 @@ public abstract class TraqqrProcessor {
     // Data
     private final JobContext jobContext;
 
-    public TraqqrProcessor(final JobContext jobContext) {
+    protected TraqqrProcessor(final JobContext jobContext) {
         this.jobContext = jobContext;
     }
 

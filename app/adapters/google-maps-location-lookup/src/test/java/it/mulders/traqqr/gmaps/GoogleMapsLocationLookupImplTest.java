@@ -38,7 +38,7 @@ class GoogleMapsLocationLookupImplTest implements WithAssertions {
     private static final Location UNKNOWN_ERROR = new Location(31.4764225, 129.1849429);
     private static final String UNKNOWN_ERROR_MESSAGE = "An unknown error occurred.";
 
-    private final GoogleReverseGeocodingClient client = (location) -> {
+    private final GoogleReverseGeocodingClient client = location -> {
         if (KNOWN.equals(location)) {
             var results = List.of(
                     new Result(KNOWN_DESCRIPTION, "ChIJ2eUgeAK6j4ARbn5u_wAGqWA", List.of("street_address"), false));
