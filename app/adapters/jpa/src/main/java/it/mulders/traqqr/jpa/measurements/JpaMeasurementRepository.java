@@ -106,7 +106,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
                         select m
                         from Measurement m
                         where m.locationDescription is null
-                        order by m.measuredAt desc
+                        order by m.measuredAt asc
                         """, MeasurementEntity.class);
         return query.setMaxResults(100)
                 .getResultStream()
