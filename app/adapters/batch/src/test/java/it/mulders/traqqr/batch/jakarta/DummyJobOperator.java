@@ -23,7 +23,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class DummyJobOperator implements JobOperator {
-    private static final String[] DUMMY_JOB_NAMES = {"example_01", "example_02", "example_03", "example"};
+    private static final String[] DUMMY_JOB_NAMES = {
+        "example_01", "example_02", "example_03", "example", "location-lookup"
+    };
 
     public record RequestedJobStart(String jobXMLName, Properties jobParameters, Date createTime) {
         RequestedJobStart(String jobXMLName, Properties jobParameters) {
@@ -60,9 +62,9 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public List<JobInstance> getJobInstances(String jobName, int start, int count)
             throws NoSuchJobException, JobSecurityException {
-        if ("example".equals(jobName)) {
+        if ("example".equals(jobName) || "location-lookup".equals(jobName)) {
             return IntStream.range(start, start + count)
-                    .mapToObj(i -> new DummyJobInstance(i, "example"))
+                    .mapToObj(i -> new DummyJobInstance(i, jobName))
                     .map(JobInstance.class::cast)
                     .toList();
         } else {
@@ -115,16 +117,16 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public List<JobExecution> getJobExecutions(JobInstance instance)
             throws NoSuchJobInstanceException, JobSecurityException {
-        if ("example".equals(instance.getJobName())) {
+        if ("example".equals(instance.getJobName()) || "location-lookup".equals(instance.getJobName())) {
             return List.of(new DummyJobExecution(
                     instance.getInstanceId(),
                     instance.getJobName(),
                     BatchStatus.STARTED,
+                    new Date(),
                     null,
                     null,
-                    null,
-                    null,
-                    null,
+                    new Date(),
+                    new Date(),
                     null));
         } else {
             return List.of();

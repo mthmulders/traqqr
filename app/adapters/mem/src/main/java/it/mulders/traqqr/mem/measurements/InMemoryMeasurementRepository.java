@@ -1,5 +1,7 @@
 package it.mulders.traqqr.mem.measurements;
 
+import static java.util.Comparator.comparing;
+
 import it.mulders.traqqr.domain.measurements.Measurement;
 import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
@@ -38,6 +40,17 @@ public class InMemoryMeasurementRepository implements MeasurementRepository {
     @Override
     public Stream<Measurement> exampleStreamingFindForBatchJob() {
         return measurements.stream();
+    }
+
+    @Override
+    public Collection<Measurement> findOldestMeasurementsWithoutLocationDescription() {
+        return measurements.stream()
+                .filter(m -> m.location() != null)
+                .filter(m -> m.location().description() == null
+                        || m.location().description().isEmpty())
+                .sorted(comparing(Measurement::measurementTimestamp))
+                .limit(100)
+                .toList();
     }
 
     @Override

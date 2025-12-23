@@ -63,6 +63,10 @@
       <groupId>it.mulders.traqqr</groupId>
       <artifactId>liberty-security-adapter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>google-maps-location-lookup</artifactId>
+    </dependency>
 
     <!-- platform dependencies -->
     <dependency>

@@ -77,6 +77,11 @@
       <artifactId>fakes</artifactId>
     </dependency>
     <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>mem</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>

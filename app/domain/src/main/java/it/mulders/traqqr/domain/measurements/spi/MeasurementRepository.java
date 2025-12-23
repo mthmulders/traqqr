@@ -15,6 +15,8 @@ public interface MeasurementRepository {
 
     Stream<Measurement> exampleStreamingFindForBatchJob();
 
+    Collection<Measurement> findOldestMeasurementsWithoutLocationDescription();
+
     long countByVehicle(Vehicle vehicle);
 
     void removeMeasurement(final Measurement measurement);

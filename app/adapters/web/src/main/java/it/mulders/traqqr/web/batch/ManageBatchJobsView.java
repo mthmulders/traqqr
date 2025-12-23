@@ -40,6 +40,10 @@ public class ManageBatchJobsView implements Serializable {
         startBatchJob(BatchJobType.EXAMPLE);
     }
 
+    public void startLocationLookupBatchJob() {
+        startBatchJob(BatchJobType.LOCATION_LOOKUP);
+    }
+
     private void startBatchJob(BatchJobType type) {
         log.info("Starting batch job; type={}", type);
         var event = new JobStartRequestedEvent(type);

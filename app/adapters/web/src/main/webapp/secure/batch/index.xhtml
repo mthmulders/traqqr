@@ -108,6 +108,13 @@
                            styleClass="ui-button-danger"
                            process="@this">
           </p:commandButton>
+          <p:commandButton icon="pi pi-bolt" class="ui-button-secondary"
+                           action="#{manageBatchJobsView.startLocationLookupBatchJob()}"
+                           style="margin: 0.5rem"
+                           value="Start Location Lookup batch job"
+                           styleClass="ui-button-danger"
+                           process="@this">
+          </p:commandButton>
         </h:form>
       </p:tab>
     </p:tabView>

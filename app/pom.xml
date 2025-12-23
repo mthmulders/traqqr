@@ -19,6 +19,7 @@
     <module>fakes</module>
     <module>adapters/api</module>
     <module>adapters/batch</module>
+    <module>adapters/google-maps-location-lookup</module>
     <module>adapters/jpa</module>
     <module>adapters/liberty-security-wrapper</module>
     <module>adapters/mem</module>

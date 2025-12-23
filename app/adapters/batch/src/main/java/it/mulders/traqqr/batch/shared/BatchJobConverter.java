@@ -21,6 +21,7 @@ public class BatchJobConverter {
 
     public BatchJobConverter() {
         typeToNameMapping.put(BatchJobType.EXAMPLE, "example");
+        typeToNameMapping.put(BatchJobType.LOCATION_LOOKUP, "location-lookup");
     }
 
     public BatchJob convert(final JobInstance instance, final JobExecution execution) {
