@@ -60,13 +60,13 @@
                     </p:column>
                     <p:column headerText="Location">
                         <h:panelGroup rendered="#{empty measurement.location().description()}">
-                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_blank">
                                 <h:outputText value="#{measurement.location().lat()}" />,
                                 <h:outputText value="#{measurement.location().lon()}" />
                             </a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{not empty measurement.location().description()}">
-                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_new">
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_blank">
                                 <h:outputText value="#{measurement.location().description()}" />
                             </a>
                         </h:panelGroup>
