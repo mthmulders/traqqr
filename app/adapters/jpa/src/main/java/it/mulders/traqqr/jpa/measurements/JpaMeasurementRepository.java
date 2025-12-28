@@ -105,7 +105,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
         var query = this.em.createQuery("""
                         select m
                         from Measurement m
-                        where m.locationDescription is null
+                        where (m.locationDescription is null or m.locationDescription = '')
                         order by m.measuredAt asc
                         """, MeasurementEntity.class);
         return query.setMaxResults(100)

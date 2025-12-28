@@ -20,7 +20,9 @@ public class LookupLocationServiceImpl implements LookupLocationService {
 
     @Override
     public LookupLocationOutcome lookupLocation(Measurement measurement) {
-        if (measurement.location() != null && measurement.location().description() != null) {
+        if (measurement.location() != null
+                && measurement.location().description() != null
+                && !measurement.location().description().isEmpty()) {
             logger.info("Measurement already has location description; measurement_id={}", measurement.id());
             return LookupLocationOutcome.NOT_NECESSARY;
         }
