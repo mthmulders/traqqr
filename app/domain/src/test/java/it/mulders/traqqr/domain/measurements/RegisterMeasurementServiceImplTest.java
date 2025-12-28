@@ -1,5 +1,7 @@
 package it.mulders.traqqr.domain.measurements;
 
+import static java.util.Comparator.comparing;
+
 import it.mulders.traqqr.domain.measurements.Measurement.Battery;
 import it.mulders.traqqr.domain.measurements.Measurement.Location;
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
@@ -291,6 +293,17 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
         @Override
         public void removeMeasurement(Measurement measurement) {
             // Intentionally left empty
+        }
+
+        @Override
+        public Collection<Measurement> findOldestMeasurementsWithoutLocationDescription() {
+            return measurements.stream()
+                    .filter(m -> m.location() != null)
+                    .filter(m -> m.location().description() == null
+                            || m.location().description().isEmpty())
+                    .sorted(comparing(Measurement::measurementTimestamp))
+                    .limit(100)
+                    .toList();
         }
     }
 }

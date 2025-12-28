@@ -1,5 +1,6 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -57,9 +58,18 @@
                     <p:column headerText="Battery SoC">
                         <h:outputText value="#{measurement.battery().soc()}" />%
                     </p:column>
-                    <p:column headerText="GPS Location">
-                        <h:outputText value="#{measurement.location().lat()}" />,
-                        <h:outputText value="#{measurement.location().lon()}" />
+                    <p:column headerText="Location">
+                        <h:panelGroup rendered="#{empty measurement.location().description()}">
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_blank">
+                                <h:outputText value="#{measurement.location().lat()}" />,
+                                <h:outputText value="#{measurement.location().lon()}" />
+                            </a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty measurement.location().description()}">
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=#{measurement.location().lat()},#{measurement.location().lon()}" target="_blank">
+                                <h:outputText value="#{measurement.location().description()}" />
+                            </a>
+                        </h:panelGroup>
                     </p:column>
                     <p:column style="width:3rem" ariaHeaderText="Actions">
                         <p:commandButton icon="pi pi-trash" class="ui-button-warning"

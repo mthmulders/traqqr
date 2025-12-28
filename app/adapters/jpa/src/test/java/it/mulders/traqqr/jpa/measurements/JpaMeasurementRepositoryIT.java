@@ -1,6 +1,7 @@
 package it.mulders.traqqr.jpa.measurements;
 
 import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurement;
+import static it.mulders.traqqr.domain.fakes.MeasurementFaker.createMeasurementWithLocation;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
 import it.mulders.traqqr.domain.measurements.Measurement;
@@ -9,9 +10,11 @@ import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import java.time.OffsetDateTime;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -148,5 +151,68 @@ class JpaMeasurementRepositoryIT extends AbstractJpaRepositoryTest<MeasurementRe
 
         // Assert
         assertThat(repository.findByVehicle(vehicle)).isEmpty();
+    }
+
+    @Test
+    void should_retrieve_measurement_with_location_description() {
+        // Arrange
+        var vehicle = createVehicle();
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+        var location = new Measurement.Location(55.0, 6.0, "Somewhere");
+        var measurement = createMeasurementWithLocation(vehicle, location);
+        runTransactional(() -> repository.save(measurement));
+
+        // Act
+        var measurements = repository.findByVehicle(vehicle);
+
+        // Assert
+        assertThat(measurements).hasSize(1).allSatisfy(found -> {
+            assertThat(found.location().description()).isEqualTo(location.description());
+        });
+    }
+
+    @Nested
+    class FindOldestMeasurementsWithoutLocationDescription {
+        @Test
+        void should_find_measurements_without_location_description() {
+            // Arrange
+            var vehicle = createVehicle();
+            persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+            var location = new Measurement.Location(55.0, 6.0, "Somewhere");
+            var measurementWithLocation = createMeasurementWithLocation(vehicle, location);
+
+            runTransactional(() -> {
+                repository.save(createMeasurement(vehicle));
+                repository.save(createMeasurement(vehicle));
+                repository.save(measurementWithLocation);
+            });
+
+            // Act
+            var measurements = repository.findOldestMeasurementsWithoutLocationDescription();
+
+            // Assert
+            assertThat(measurements)
+                    .allSatisfy(measurement ->
+                            assertThat(measurement.location().description()).isNullOrEmpty());
+        }
+
+        @Test
+        void should_not_find_more_measurements_than_limit() {
+            // Arrange
+            var vehicle = createVehicle();
+            persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+            IntStream.range(0, 150).forEach(i -> {
+                runTransactional(() -> repository.save(createMeasurement(vehicle)));
+            });
+
+            // Act
+            var measurements = repository.findOldestMeasurementsWithoutLocationDescription();
+            var measurementsForVehicle = measurements.stream()
+                    .filter(m -> m.vehicle().equals(vehicle))
+                    .toList();
+
+            // Assert
+            assertThat(measurementsForVehicle).hasSizeLessThanOrEqualTo(100);
+        }
     }
 }

@@ -48,7 +48,7 @@ public class JpaMeasurementRepository implements MeasurementRepository {
         entity.setVehicle(vehicle);
 
         try {
-            em.persist(entity);
+            em.merge(entity);
             log.info("Measurement stored; id={}", entity.getId());
         } catch (PersistenceException e) {
             log.error("Database error during measurement storage; id={}", entity.getId(), e);
@@ -98,6 +98,20 @@ public class JpaMeasurementRepository implements MeasurementRepository {
                         )
                         """, MeasurementEntity.class);
         return query.setMaxResults(100).getResultStream().map(mapper::measurementEntityToMeasurement);
+    }
+
+    @Override
+    public Collection<Measurement> findOldestMeasurementsWithoutLocationDescription() {
+        var query = this.em.createQuery("""
+                        select m
+                        from Measurement m
+                        where (m.locationDescription is null or m.locationDescription = '')
+                        order by m.measuredAt asc
+                        """, MeasurementEntity.class);
+        return query.setMaxResults(100)
+                .getResultStream()
+                .map(mapper::measurementEntityToMeasurement)
+                .toList();
     }
 
     @Override
