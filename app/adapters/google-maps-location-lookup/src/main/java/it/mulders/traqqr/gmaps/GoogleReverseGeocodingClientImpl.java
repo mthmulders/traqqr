@@ -41,6 +41,7 @@ public class GoogleReverseGeocodingClientImpl implements GoogleReverseGeocodingC
         this.baseUrl = baseUrl;
     }
 
+    @Override
     public Optional<GeocodeResponse> reverseGeocode(final Measurement.Location location) {
         try {
             var coords = "%s,%s".formatted(location.lat(), location.lon());
