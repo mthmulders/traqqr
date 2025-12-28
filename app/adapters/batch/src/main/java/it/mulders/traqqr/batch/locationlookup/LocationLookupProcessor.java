@@ -52,7 +52,7 @@ public class LocationLookupProcessor extends TraqqrProcessor implements ItemProc
             }
             case Failure(var cause) -> {
                 logger.error("Location lookup failed; measurement_id={}", measurement.id(), cause);
-                yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.FAILED, cause);
+                yield new BatchJobItem<>(getBatchJob(), BatchJobItemStatus.FAILED, measurement);
             }
         };
     }
