@@ -29,7 +29,7 @@ public class LocationLookupWriter extends AbstractItemWriter {
     @Override
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void writeItems(List<Object> items) {
-        // The items are the individual return values of ExampleProcessor#processItem
+        // The items are the individual return values of LocationLookupProcessor#processItem
         var result = new ArrayList<BatchJobItem<Identifiable>>();
 
         // Not using the Streams API because it has trouble inferring the type
