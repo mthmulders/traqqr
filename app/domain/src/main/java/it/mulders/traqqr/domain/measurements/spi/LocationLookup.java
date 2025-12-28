@@ -19,7 +19,7 @@ public interface LocationLookup {
     /**
      * Sealed result type for a location lookup operation.
      * <p>
-     * Implementations are limited to {@link Success} and {@link Failure}.
+     * Implementations are limited to {@link Success}, {@link Failure} and {@link NotFound}.
      */
     sealed interface LocationLookupResult
             permits LocationLookupResult.Success, LocationLookupResult.NotFound, LocationLookupResult.Failure {
