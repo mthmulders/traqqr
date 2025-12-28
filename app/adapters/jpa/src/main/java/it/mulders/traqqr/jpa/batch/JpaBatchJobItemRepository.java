@@ -96,7 +96,9 @@ public class JpaBatchJobItemRepository implements BatchJobItemRepository {
     private void storeItemEntity(Identifiable item) {
         switch (item) {
             case Measurement measurement -> measurementRepository.save(measurement);
-            default -> throw new IllegalStateException("Unexpected type of item in Batch Job: " + item.getClass());
+            default ->
+                throw new IllegalStateException(
+                        "Unexpected type of Identifiable item in Batch Job: " + item.getClass());
         }
     }
 
