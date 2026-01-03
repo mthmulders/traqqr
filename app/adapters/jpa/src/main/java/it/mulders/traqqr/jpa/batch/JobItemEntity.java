@@ -32,6 +32,9 @@ public class JobItemEntity {
     @Column(name = "item_id")
     private UUID itemId;
 
+    @Column
+    private String message;
+
     public UUID getId() {
         return id;
     }
@@ -78,6 +81,14 @@ public class JobItemEntity {
 
     public void setItemId(UUID itemId) {
         this.itemId = itemId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

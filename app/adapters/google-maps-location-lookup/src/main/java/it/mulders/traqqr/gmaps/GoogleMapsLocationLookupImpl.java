@@ -22,7 +22,7 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
 
     @Override
     public LocationLookupResult lookup(Measurement.Location location) {
-        logger.info("Looking up location for latitude={}, longitude={}", location.lat(), location.lon());
+        logger.info("Looking up location; latitude={}, longitude={}", location.lat(), location.lon());
 
         try {
             return client.reverseGeocode(location)
@@ -31,6 +31,9 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
                     .map(LocationLookupResult.Success::new)
                     .map(LocationLookupResult.class::cast)
                     .orElse(new LocationLookupResult.NotFound());
+        } catch (GoogleMapsLocationLookupException gmlle) {
+            logger.error("Google Maps location lookup failed; latitude={}, longitude={}", location.lat(), location.lon(), gmlle);
+            return new LocationLookupResult.Failure(gmlle);
         } catch (Exception e) {
             logger.error("Failed to lookup location", e);
             return new LocationLookupResult.Failure(e);

@@ -1,0 +1,2 @@
+ALTER TABLE
+    job_item ADD COLUMN message VARCHAR DEFAULT NULL;
