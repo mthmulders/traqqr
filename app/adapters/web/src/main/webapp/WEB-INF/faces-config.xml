@@ -50,4 +50,18 @@
             </redirect>
         </navigation-case>
     </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/secure/batch/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>show-batch-job</from-outcome>
+            <to-view-id>/secure/batch/show/index.xhtml</to-view-id>
+            <redirect>
+                <redirect-param>
+                    <name>batchJob</name>
+                    <value>#{showBatchJobView.batchJob}</value>
+                </redirect-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

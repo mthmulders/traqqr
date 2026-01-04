@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,6 +124,18 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
                 .map(this::mapToDomain)
                 .sorted(comparing(BatchJob::getLastUpdated))
                 .toList();
+    }
+
+    @Override
+    public Optional<BatchJob> findById(UUID id) {
+        itemRepository.findById(id).map(item -> {
+            var instance = jobOperator.getJobInstance(item.batchJob().getInstanceId());
+            var execution = jobOperator.getJobExecution(item.batchJob().getExecutionId());
+
+            return batchJobConverter.convert(instance, execution);
+        });
+
+        return Optional.empty();
     }
 
     private record JobInstanceWithExecution(JobInstance instance, JobExecution execution) {}

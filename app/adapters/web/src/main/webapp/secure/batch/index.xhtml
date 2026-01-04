@@ -47,6 +47,14 @@
               </p:badge>
               <p:outputLabel rendered="#{batchJob.totalItemsProcessed == 0}">none</p:outputLabel>
             </p:column>
+            <p:column style="width:3rem" ariaHeaderText="Actions">
+              <p:commandButton icon="pi pi-book"
+                               styleClass="ui-button-primary"
+                               title="Show details"
+                               ajax="false"
+                               action="#{showBatchJobView.showBatchJob(batchJob)}">
+              </p:commandButton>
+            </p:column>
           </p:dataTable>
         </h:form>
       </p:tab>
@@ -95,6 +103,14 @@
                        visible="#{batchJob.itemsProcessingFailed != 0}">
               </p:badge>
               <p:outputLabel rendered="#{batchJob.totalItemsProcessed == 0}">none</p:outputLabel>
+            </p:column>
+            <p:column style="width:3rem" ariaHeaderText="Actions">
+              <p:commandButton icon="pi pi-book"
+                               styleClass="ui-button-primary"
+                               title="Show details"
+                               ajax="false"
+                               action="#{showBatchJobView.showBatchJob(batchJob)}">
+              </p:commandButton>
             </p:column>
           </p:dataTable>
         </h:form>

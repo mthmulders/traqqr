@@ -1,0 +1,54 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        template="/WEB-INF/layout-closed.xhtml">
+  <ui:define name="title">Batch Job run</ui:define>
+
+  <f:metadata>
+    <f:viewParam name="batchJob" value="#{showBatchJobView.batchJob}" />
+    <f:event listener="#{showBatchJobView.loadBatchJob()}" type="preRenderView"/>
+  </f:metadata>
+
+  <ui:define name="content">
+    <h:form id="form">
+      <f:facet name="title">Batch Job run details</f:facet>
+
+      <p:card style="margin-bottom: 2em">
+        <f:facet name="title">
+          Statistics
+        </f:facet>
+        <div class="flex">
+          <p>
+            Success
+            <br />
+            <p:badge value="#{showBatchJobView.batchJob.itemsProcessedSuccess}"
+                     severity="success"
+                     styleClass="mr-2">
+            </p:badge>
+          </p>
+          <p:divider layout="vertical" />
+          <p>
+            Failure
+            <br />
+            <p:badge value="#{showBatchJobView.batchJob.itemsProcessingFailed}"
+                     severity="danger"
+                     styleClass="mr-2">
+            </p:badge>
+          </p>
+          <p:divider layout="vertical" />
+          <p>
+            Other
+            <br />
+            <p:badge value="#{showBatchJobView.batchJob.totalItemsProcessed - showBatchJobView.batchJob.itemsProcessedSuccess - showBatchJobView.batchJob.itemsProcessingFailed}"
+                     severity="danger"
+                     styleClass="mr-2">
+            </p:badge>
+          </p>
+        </div>
+      </p:card>
+    </h:form>
+  </ui:define>
+</ui:composition>

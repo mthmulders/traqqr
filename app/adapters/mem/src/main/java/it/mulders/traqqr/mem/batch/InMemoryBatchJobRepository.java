@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class InMemoryBatchJobRepository implements BatchJobRepository {
     private final List<BatchJob> batchJobs = new ArrayList<>();
@@ -49,6 +51,11 @@ public class InMemoryBatchJobRepository implements BatchJobRepository {
         });
 
         return result.stream().sorted(comparing(BatchJob::getLastUpdated)).toList();
+    }
+
+    @Override
+    public Optional<BatchJob> findById(UUID id) {
+        return batchJobs.stream().filter(item -> id.equals(item.getId())).findAny();
     }
 
     public void addBatchJob(BatchJob batchJob) {

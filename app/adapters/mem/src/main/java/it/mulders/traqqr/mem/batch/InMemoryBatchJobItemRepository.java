@@ -5,12 +5,15 @@ import it.mulders.traqqr.domain.batch.BatchJobItemStatus;
 import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import it.mulders.traqqr.domain.shared.Identifiable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public class InMemoryBatchJobItemRepository implements BatchJobItemRepository {
-    private final Set<BatchJobItem<?>> batchJobItems = new HashSet<>();
+    private final Map<UUID, BatchJobItem<Identifiable>> batchJobItems = new HashMap<>();
 
     @Override
     public Map<BatchJobItemStatus, Long> findItemCountsForJobInstanceAndExecution(Long instanceId, Long executionId) {
@@ -22,15 +25,23 @@ public class InMemoryBatchJobItemRepository implements BatchJobItemRepository {
 
     @Override
     public void save(BatchJobItem<Identifiable> item) {
-        batchJobItems.add(item);
+        batchJobItems.put(UUID.randomUUID(), item);
     }
 
     @Override
     public void saveAll(Collection<BatchJobItem<Identifiable>> items) {
-        batchJobItems.addAll(items);
+        items.forEach(this::save);
     }
 
     public Set<BatchJobItem<?>> getBatchJobItems() {
-        return batchJobItems;
+        return new HashSet<>(batchJobItems.values());
+    }
+
+    @Override
+    public Optional<BatchJobItem<Identifiable>> findById(UUID id) {
+        return batchJobItems.entrySet().stream()
+                .filter(entry -> id.equals(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findAny();
     }
 }

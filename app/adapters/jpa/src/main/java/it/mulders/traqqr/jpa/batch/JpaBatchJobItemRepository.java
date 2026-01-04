@@ -18,6 +18,8 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,5 +108,10 @@ public class JpaBatchJobItemRepository implements BatchJobItemRepository {
     @Transactional(Transactional.TxType.MANDATORY)
     public void saveAll(Collection<BatchJobItem<Identifiable>> items) {
         items.forEach(this::save);
+    }
+
+    @Override
+    public Optional<BatchJobItem<Identifiable>> findById(UUID id) {
+        return Optional.ofNullable(this.em.find(JobItemEntity.class, id)).map(this.mapper::toDomain);
     }
 }
