@@ -21,8 +21,9 @@
     <htmx.version>2.0.4</htmx.version>
     <jakarta-ee.version>10.0.0</jakarta-ee.version>
     <junit.jupiter.version>6.0.3</junit.jupiter.version>
-    <krazo.version>3.0.1</krazo.version>
+    <krazo.version>4.0.1</krazo.version>
     <mapstruct.version>1.6.3</mapstruct.version>
+    <mvc.version>3.0.0</mvc.version>
     <mvc-toolbox.version>2.1.0</mvc-toolbox.version>
     <postgresql.jdbc.version>42.7.10</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
@@ -152,6 +153,38 @@
         <artifactId>web-new</artifactId>
         <version>${project.version}</version>
         <type>war</type>
+      </dependency>
+
+      <!-- third-party dependencies -->
+      <dependency>
+        <groupId>jakarta.mvc</groupId>
+        <artifactId>jakarta.mvc-api</artifactId>
+        <version>${mvc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.krazo</groupId>
+        <artifactId>krazo-core</artifactId>
+        <version>${krazo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.krazo</groupId>
+        <artifactId>krazo-resteasy</artifactId>
+        <version>${krazo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.webjars.npm</groupId>
+        <artifactId>htmx.org</artifactId>
+        <version>${htmx.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.chkal.mvc-toolbox</groupId>
+        <artifactId>mvc-toolbox-core</artifactId>
+        <version>${mvc-toolbox.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.chkal.mvc-toolbox</groupId>
+        <artifactId>mvc-toolbox-jsp</artifactId>
+        <version>${mvc-toolbox.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
