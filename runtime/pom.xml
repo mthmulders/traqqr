@@ -41,6 +41,11 @@
       <artifactId>web</artifactId>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>it.mulders.traqqr</groupId>
+      <artifactId>web-new</artifactId>
+      <type>war</type>
+    </dependency>
 
     <!-- shared application modules  -->
     <dependency>
@@ -135,6 +140,7 @@
     <dependency>
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.faces</groupId>
@@ -167,6 +173,32 @@
       <artifactId>primeflex</artifactId>
       <version>4.0.0</version>
     </dependency>
+
+    <!-- webapp-new dependencies -->
+    <dependency>
+      <groupId>jakarta.mvc</groupId>
+      <artifactId>jakarta.mvc-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.krazo</groupId>
+      <artifactId>krazo-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.krazo</groupId>
+      <artifactId>krazo-resteasy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.chkal.mvc-toolbox</groupId>
+      <artifactId>mvc-toolbox-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.chkal.mvc-toolbox</groupId>
+      <artifactId>mvc-toolbox-jsp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>htmx.org</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -187,6 +219,11 @@
               <groupId>it.mulders.traqqr</groupId>
               <artifactId>web</artifactId>
               <contextRoot>/</contextRoot>
+            </webModule>
+            <webModule>
+              <groupId>it.mulders.traqqr</groupId>
+              <artifactId>web-new</artifactId>
+              <contextRoot>/web-new</contextRoot>
             </webModule>
             <jarModule>
               <groupId>it.mulders.traqqr</groupId>
