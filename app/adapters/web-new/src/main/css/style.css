@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@source "./src/main/webapp/**/*.html";
+@source "./src/main/webapp/**/*.jsp";
+@source "./src/main/webapp/**/*.tag";
+
+@plugin "daisyui" {
+    themes: dim --default;
+}
