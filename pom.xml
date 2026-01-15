@@ -18,9 +18,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>25</maven.compiler.release>
 
+    <htmx.version>2.0.4</htmx.version>
     <jakarta-ee.version>10.0.0</jakarta-ee.version>
     <junit.jupiter.version>6.1.2</junit.jupiter.version>
     <mapstruct.version>1.6.3</mapstruct.version>
+      <mvc-toolbox.version>2.1.0</mvc-toolbox.version>
     <postgresql.jdbc.version>42.7.13</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
     <slf4j.version>2.0.18</slf4j.version>
@@ -145,6 +147,12 @@
       <dependency>
         <groupId>it.mulders.traqqr</groupId>
         <artifactId>web</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>it.mulders.traqqr</groupId>
+        <artifactId>web-new</artifactId>
         <version>${project.version}</version>
         <type>war</type>
       </dependency>

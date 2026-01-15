@@ -24,5 +24,6 @@
     <module>adapters/liberty-security-wrapper</module>
     <module>adapters/mem</module>
     <module>adapters/web</module>
+    <module>adapters/web-new</module>
   </modules>
 </project>
