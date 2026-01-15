@@ -14,20 +14,12 @@
 
   <name>Traqqr :: Adapters :: Web application</name>
 
-  <properties>
-    <htmx.version>2.0.4</htmx.version>
-    <krazo.version>3.0.1</krazo.version>
-    <mvc-toolbox.version>2.1.0</mvc-toolbox.version>
-  </properties>
+  <properties></properties>
 
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
@@ -67,7 +59,6 @@
     <dependency>
       <groupId>jakarta.mvc</groupId>
       <artifactId>jakarta.mvc-api</artifactId>
-      <version>2.1.0</version>
     </dependency>
     <dependency>
       <groupId>jakarta.security.enterprise</groupId>
@@ -103,28 +94,23 @@
     <dependency>
       <groupId>org.eclipse.krazo</groupId>
       <artifactId>krazo-core</artifactId>
-      <version>${krazo.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.krazo</groupId>
       <artifactId>krazo-resteasy</artifactId>
-      <version>${krazo.version}</version>
     </dependency>
     <dependency>
       <groupId>de.chkal.mvc-toolbox</groupId>
       <artifactId>mvc-toolbox-core</artifactId>
-      <version>${mvc-toolbox.version}</version>
     </dependency>
     <dependency>
       <groupId>de.chkal.mvc-toolbox</groupId>
       <artifactId>mvc-toolbox-jsp</artifactId>
-      <version>${mvc-toolbox.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.webjars.npm</groupId>
       <artifactId>htmx.org</artifactId>
-      <version>${htmx.version}</version>
     </dependency>
 
     <dependency>
@@ -209,7 +195,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
-          <!-- filter WEB-INF/tags/layouts/main.tag so we can refer dependency version properties from POM -->
+          <!-- filter files that need properties from POM -->
           <webResources>
             <resource>
               <directory>src/main/resources</directory>
@@ -218,10 +204,18 @@
             <resource>
               <directory>src/main/webapp</directory>
               <includes>
-                <include>WEB-INF/tags/layouts/main.tag</include>
-                <include>WEB-INF/views/**/*.jsp</include>
+                <include>WEB-INF/tags/layouts/*.tag</include>
+                <include>WEB-INF/views/home.jsp</include>
               </includes>
               <filtering>true</filtering>
+            </resource>
+            <resource>
+              <directory>src/main/webapp</directory>
+              <excludes>
+                <exclude>WEB-INF/tags/layouts/*.tag</exclude>
+                <exclude>WEB-INF/views/home.jsp</exclude>
+              </excludes>
+              <filtering>false</filtering>
             </resource>
           </webResources>
         </configuration>
