@@ -1,0 +1,15 @@
+{
+  "name": "traqqr-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./src/main/css/style.css -o ./src/main/webapp/css/dist.css -m",
+    "watch": "tailwindcss -i ./src/main/css/style.css -o ./src/main/webapp/css/dist.css --watch --optimize"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "0.5.19",
+    "daisyui": "5.5.14",
+    "tailwindcss": "4.1.18",
+    "@tailwindcss/cli": "4.1.18"
+  }
+}
