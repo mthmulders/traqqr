@@ -10,8 +10,9 @@
         <feature>cdi</feature>
         <feature>concurrent</feature>
         <feature>expressionLanguage</feature>
-        <feature>faces</feature>
+        <feature>faces</feature><!-- to be removed -->
         <feature>jsonb</feature>
+        <feature>pages</feature>
         <feature>persistence</feature>
         <feature>restfulWS</feature>
         <feature>servlet</feature>
@@ -76,5 +77,4 @@
 
     <applicationMonitor dropinsEnabled="false" />
     <webContainer deferServletLoad="false" />
-    <cdi12 enableImplicitBeanArchives="false" />
 </server>
