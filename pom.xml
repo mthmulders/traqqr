@@ -22,7 +22,7 @@
     <junit.jupiter.version>6.0.2</junit.jupiter.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <postgresql.jdbc.version>42.7.9</postgresql.jdbc.version>
-    <primefaces.version>15.0.11</primefaces.version>
+    <primefaces.version>15.0.12</primefaces.version>
 
     <!-- spotless:off -->
     <jacocoArgLine></jacocoArgLine>
