@@ -19,7 +19,7 @@
     <maven.compiler.release>21</maven.compiler.release>
 
     <jakarta-ee.version>10.0.0</jakarta-ee.version>
-    <junit.jupiter.version>6.0.2</junit.jupiter.version>
+    <junit.jupiter.version>6.0.3</junit.jupiter.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <postgresql.jdbc.version>42.7.10</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
