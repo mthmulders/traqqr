@@ -1,9 +1,15 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @source "./src/main/webapp/**/*.html";
 @source "./src/main/webapp/**/*.jsp";
 @source "./src/main/webapp/**/*.tag";
 
 @plugin "daisyui" {
-    themes: dim --default;
+    themes: business --default;
+}
+
+footer {
+    @apply border-dotted border-t-4;
+    border-color: var(--color-accent);
 }
