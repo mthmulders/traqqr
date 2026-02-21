@@ -1,3 +1,21 @@
 ul.menu li {
     @apply py-2;
 }
+
+ul.menu li:hover {
+    color: var(--color-primary);
+}
+
+ul.menu li a svg {
+    @apply m-2;
+    height: 24px;
+    width: 24px;
+}
+
+ul.menu li:hover svg.icon {
+    stroke: var(--color-primary);
+}
+
+ul.menu svg.icon {
+    fill: var(--color-secondary);
+}
