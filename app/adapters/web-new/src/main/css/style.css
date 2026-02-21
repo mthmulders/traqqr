@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./menu.css";
+
 @plugin "@tailwindcss/typography";
 
 @source "./src/main/webapp/**/*.html";
