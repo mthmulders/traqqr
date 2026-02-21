@@ -24,7 +24,7 @@
         </p>
 
         <p>
-            To get started, please <a href="${pageContext.servletContext.contextPath}/secure/">log in</a>.
+            To get started, please <a href="${pageContext.servletContext.contextPath}/app/secure/dashboard">log in</a>.
         </p>
     </article>
 </main>

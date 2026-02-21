@@ -1,11 +1,9 @@
 package it.mulders.traqqr.web.security;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import java.util.Map;
 
-@ApplicationScoped
-@Named("oidcConfig")
+@Named
 public class OidcConfig {
     private final String callbackUrl;
     private final String clientId;

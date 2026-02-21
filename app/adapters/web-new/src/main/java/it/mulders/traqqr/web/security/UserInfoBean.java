@@ -1,4 +1,4 @@
-package it.mulders.traqqr.web.user;
+package it.mulders.traqqr.web.security;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
