@@ -6,15 +6,28 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </div>
-            <ul tabIndex="0" class="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-base-100 rounded-box w-52">
-                <li><a href="${pageContext.request.contextPath}/app/secure/dashboard">Dashboard</a></li>
-                <li class="border-dotted border-t-4 border-[var(--a)]">
+            <ul tabIndex="0" class="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-secondary text-secondary-content rounded-box w-52">
+                <li>
+                    <a href="${pageContext.request.contextPath}/app/secure/dashboard">
+                        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                            <use xlink:href="#home"></use>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
                     <a href="${pageContext.request.contextPath}/app/secure/admin">
+                        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                            <use xlink:href="#shield-exclamation"></use>
+                        </svg>
                         Admin Zone
                     </a>
                 </li>
                 <li class="border-dotted border-t-4 border-[var(--a)]">
                     <a href="${pageContext.request.contextPath}/app/secure/logout">
+                        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                            <use xlink:href="#arrow-right-start-on-rectangle"></use>
+                        </svg>
                         Logout
                     </a>
                 </li>

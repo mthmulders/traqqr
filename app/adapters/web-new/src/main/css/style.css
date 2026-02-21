@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./menu.css";
+@import "./icons.css";
 
 @plugin "@tailwindcss/typography";
 
