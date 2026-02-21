@@ -1,6 +1,6 @@
-package it.mulders.traqqr.web.user;
+package it.mulders.traqqr.web.security;
 
-import static it.mulders.traqqr.web.user.FakeOpenIdContext.createOpenIdContext;
+import static it.mulders.traqqr.web.security.FakeOpenIdContext.createOpenIdContext;
 
 import jakarta.security.enterprise.identitystore.openid.OpenIdContext;
 import org.assertj.core.api.WithAssertions;
