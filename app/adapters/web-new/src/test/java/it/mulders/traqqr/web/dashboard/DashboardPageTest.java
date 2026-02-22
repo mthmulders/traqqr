@@ -1,20 +1,14 @@
 package it.mulders.traqqr.web.dashboard;
 
-import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.system.api.UserStatisticsService;
 import it.mulders.traqqr.domain.user.Owner;
-import jakarta.mvc.Models;
-import jakarta.ws.rs.core.Response;
-import org.assertj.core.api.WithAssertions;
-import org.eclipse.krazo.core.ModelsImpl;
+import it.mulders.traqqr.web.AbstractMvcPageTest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class DashboardPageTest implements WithAssertions {
-    private final Models models = new ModelsImpl();
-    private final Owner owner = createOwner();
+class DashboardPageTest extends AbstractMvcPageTest {
     private final UserStatisticsService userStatisticsService = new UserStatisticsService() {
 
         @Override
@@ -31,8 +25,7 @@ class DashboardPageTest implements WithAssertions {
         var response = page.show();
 
         // Assert
-        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
-        assertThat(response.readEntity(String.class)).isEqualTo("dashboard/index.jsp");
+        assertThat(response).hasStatus(200).hasViewName("dashboard/index.jsp");
     }
 
     @Test
@@ -44,26 +37,5 @@ class DashboardPageTest implements WithAssertions {
 
         // Assert
         assertThat(models.get("numMeasurements")).asInstanceOf(LONG).isEqualTo(42);
-    }
-
-    private Owner createOwner() {
-        return new Owner() {
-            private final String code = RandomStringUtils.generateRandomAlphaString(18);
-
-            @Override
-            public String code() {
-                return code;
-            }
-
-            @Override
-            public String displayName() {
-                return "";
-            }
-
-            @Override
-            public String profilePictureUrl() {
-                return "";
-            }
-        };
     }
 }
