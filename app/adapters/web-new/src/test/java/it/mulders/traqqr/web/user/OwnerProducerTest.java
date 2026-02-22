@@ -27,8 +27,8 @@ class OwnerProducerTest implements WithAssertions {
 
     @Test
     void should_map_picture_claim_to_profilePictureUrl() {
-        var context = createOpenIdContext(null, null, "http://example.com/picture");
+        var context = createOpenIdContext(null, null, "https://example.com/picture");
         var owner = producer.create(context);
-        assertThat(owner.profilePictureUrl()).isEqualTo("http://example.com/picture");
+        assertThat(owner.profilePictureUrl()).isEqualTo("https://example.com/picture");
     }
 }
