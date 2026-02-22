@@ -1,5 +1,7 @@
 package it.mulders.traqqr.domain.system;
 
+import com.mockrunner.mock.jdbc.MockDataSource;
+import javax.sql.DataSource;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -7,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SystemInfoTest implements WithAssertions {
-    private final SystemInfo systemInfo = new SystemInfo();
+    private final DataSource datasource = new MockDataSource();
+    private final SystemInfo systemInfo = new SystemInfo(datasource);
 
     @Test
     void should_expose_application_version() {
@@ -30,9 +33,20 @@ class SystemInfoTest implements WithAssertions {
     }
 
     @Test
+    void should_expose_os_info() {
+        assertThat(systemInfo.getOsInfo()).isNotNull().isNotEmpty();
+    }
+
+    @Test
+    void should_expose_database_info() {
+        assertThat(systemInfo.getDatabaseInfo()).isNotNull().isNotEmpty();
+    }
+
+    @Test
     void should_fail_to_load_invalid_property_resource() {
-        assertThatThrownBy(() -> new SystemInfo(new String[] {"/non-existing.properties"}))
+        assertThatThrownBy(() -> new SystemInfo(datasource, new String[] {"/non-existing.properties"}))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new SystemInfo(new String[] {null})).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new SystemInfo(datasource, new String[] {null}))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

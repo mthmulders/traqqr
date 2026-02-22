@@ -1,0 +1,14 @@
+dl {
+    @apply grid;
+    grid-template-columns: max-content auto;
+}
+
+dt {
+    @apply col-start-1;
+    @apply mt-2;
+}
+
+dd {
+    @apply col-start-2;
+    @apply my-2;
+}
