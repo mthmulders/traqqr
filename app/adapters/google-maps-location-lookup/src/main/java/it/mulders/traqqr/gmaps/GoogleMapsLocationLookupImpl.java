@@ -32,7 +32,11 @@ public class GoogleMapsLocationLookupImpl implements LocationLookup {
                     .map(LocationLookupResult.class::cast)
                     .orElse(new LocationLookupResult.NotFound());
         } catch (GoogleMapsLocationLookupException gmlle) {
-            logger.error("Google Maps location lookup failed; latitude={}, longitude={}", location.lat(), location.lon(), gmlle);
+            logger.error(
+                    "Google Maps location lookup failed; latitude={}, longitude={}",
+                    location.lat(),
+                    location.lon(),
+                    gmlle);
             return new LocationLookupResult.Failure(gmlle);
         } catch (Exception e) {
             logger.error("Failed to lookup location", e);

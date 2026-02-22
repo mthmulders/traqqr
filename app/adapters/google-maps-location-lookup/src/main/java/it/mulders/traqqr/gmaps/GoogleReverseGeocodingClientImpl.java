@@ -42,7 +42,8 @@ public class GoogleReverseGeocodingClientImpl implements GoogleReverseGeocodingC
     }
 
     @Override
-    public Optional<GeocodeResponse> reverseGeocode(final Measurement.Location location) throws GoogleMapsLocationLookupException {
+    public Optional<GeocodeResponse> reverseGeocode(final Measurement.Location location)
+            throws GoogleMapsLocationLookupException {
         try {
             var coords = "%s,%s".formatted(location.lat(), location.lon());
             var url = String.format(
@@ -72,7 +73,8 @@ public class GoogleReverseGeocodingClientImpl implements GoogleReverseGeocodingC
 
             return response.body();
         } catch (IOException ioe) {
-            logger.error("Failed to call Google Reverse Geocoding API", ioe); // the exception does not end up in the log
+            logger.error(
+                    "Failed to call Google Reverse Geocoding API", ioe); // the exception does not end up in the log
             throw new GoogleMapsLocationLookupException(ioe);
         } catch (InterruptedException ie) {
             // No need to clean up resources, just restore the interrupt flag.
