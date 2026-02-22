@@ -1,28 +1,18 @@
 package it.mulders.traqqr.domain.measurements;
 
-import static java.util.Comparator.comparing;
-
 import it.mulders.traqqr.domain.measurements.Measurement.Battery;
 import it.mulders.traqqr.domain.measurements.Measurement.Location;
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService;
 import it.mulders.traqqr.domain.measurements.api.RegisterMeasurementService.RegisterMeasurementOutcome;
 import it.mulders.traqqr.domain.measurements.spi.MeasurementRepository;
-import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
-import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Authorisation;
+import it.mulders.traqqr.domain.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -218,92 +208,5 @@ class RegisterMeasurementServiceImplTest implements WithAssertions {
     private Measurement createMeasurement(
             OffsetDateTime measurementTimestamp, int odometer, Battery battery, Location location) {
         return new Measurement(null, null, measurementTimestamp, odometer, battery, location, null, null);
-    }
-
-    private static class InMemoryVehicleRepository implements VehicleRepository {
-        private final Collection<Vehicle> vehicles;
-
-        public InMemoryVehicleRepository(Collection<Vehicle> vehicles) {
-            this.vehicles = new ArrayList<>(vehicles);
-        }
-
-        @Override
-        public Optional<Vehicle> findByCode(String code) {
-            return vehicles.stream()
-                    .filter(vehicle -> code.equals(vehicle.code()))
-                    .findAny();
-        }
-
-        @Override
-        public Collection<Vehicle> findByOwner(Owner owner) {
-            return List.of();
-        }
-
-        @Override
-        public Optional<Vehicle> findByOwnerAndCode(Owner owner, String code) {
-            return Optional.empty();
-        }
-
-        @Override
-        public void save(Vehicle vehicle) {
-            // Intentionally left empty
-        }
-
-        @Override
-        public void update(Vehicle vehicle) {
-            // Intentionally left empty
-        }
-
-        @Override
-        public void removeVehicle(Vehicle vehicle) {
-            // Intentionally left empty
-        }
-    }
-
-    private static class InMemoryMeasurementRepository implements MeasurementRepository {
-        private final Set<Measurement> measurements = Collections.synchronizedSet(new HashSet<>());
-
-        @Override
-        public void save(Measurement measurement) {
-            measurements.add(measurement);
-        }
-
-        @Override
-        public Collection<Measurement> findByVehicle(Vehicle vehicle) {
-            return measurements.stream()
-                    .filter(measurement -> measurement.vehicle().code().equals(vehicle.code()))
-                    .toList();
-        }
-
-        @Override
-        public Collection<Measurement> findByVehicle(Vehicle vehicle, Pagination pagination) {
-            return List.of();
-        }
-
-        @Override
-        public Stream<Measurement> exampleStreamingFindForBatchJob() {
-            return Stream.empty();
-        }
-
-        @Override
-        public long countByVehicle(Vehicle vehicle) {
-            return 0;
-        }
-
-        @Override
-        public void removeMeasurement(Measurement measurement) {
-            // Intentionally left empty
-        }
-
-        @Override
-        public Collection<Measurement> findOldestMeasurementsWithoutLocationDescription() {
-            return measurements.stream()
-                    .filter(m -> m.location() != null)
-                    .filter(m -> m.location().description() == null
-                            || m.location().description().isEmpty())
-                    .sorted(comparing(Measurement::measurementTimestamp))
-                    .limit(100)
-                    .toList();
-        }
     }
 }
