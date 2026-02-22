@@ -19,14 +19,13 @@
 </nav>
 <main class="container p-4 mx-auto">
     <article class="prose max-w-none">
-        <h1>Home</h1>
+        <h1>${title}</h1>
 
         <jsp:doBody />
     </article>
 </main>
 <footer class="container mx-auto p-4 border-dotted border-t-4 border-[oklch(var(--a))]">
-    Traqqr v${project.version} (revision <code>${git.commit.id.abbrev}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
-    Proudly running on ${systemInfo.javaRuntime}.
+    Traqqr v${systemInfo.applicationVersion} is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
 </footer>
 <tags:icons />
 <script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/${htmx.version}/dist/htmx.min.js"></script>
