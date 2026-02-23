@@ -44,7 +44,8 @@ public abstract class AbstractMvcPageTest implements WithAssertions {
 
         public ResponseAssert hasStatus(int expectedStatus) {
             isNotNull();
-            if (actual.getStatus() != expectedStatus) {
+            var actualStatus = actual.getStatus();
+            if (actualStatus != expectedStatus) {
                 failWithMessage("Expected response status to be <%d> but was <%d>", expectedStatus, actual.getStatus());
             }
             return this;
@@ -52,9 +53,20 @@ public abstract class AbstractMvcPageTest implements WithAssertions {
 
         public ResponseAssert hasViewName(String expectedViewName) {
             isNotNull();
-            String actualEntity = actual.readEntity(String.class);
+            var actualEntity = actual.readEntity(String.class);
             if (!expectedViewName.equals(actualEntity)) {
                 failWithMessage("Expected response entity to be <%s> but was <%s>", expectedViewName, actualEntity);
+            }
+            return this;
+        }
+
+        public ResponseAssert hasHeader(String name, String expectedValue) {
+            isNotNull();
+            var headers = actual.getHeaders();
+            var values = headers.get(name).stream().map(Object::toString).toList();
+            if (!values.contains(expectedValue)) {
+                failWithMessage(
+                        "Expected response <%s> header to contain <%s> but was <%s>", name, expectedValue, values);
             }
             return this;
         }
