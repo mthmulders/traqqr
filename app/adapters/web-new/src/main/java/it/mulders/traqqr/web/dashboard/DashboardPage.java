@@ -23,12 +23,10 @@ public class DashboardPage {
     private Models models;
     private Owner owner;
 
-    public DashboardPage() {
-    }
+    public DashboardPage() {}
 
     @Inject
-    public DashboardPage(
-            Models models, Owner owner, UserStatisticsService userStatisticsService) {
+    public DashboardPage(Models models, Owner owner, UserStatisticsService userStatisticsService) {
         this.models = models;
         this.owner = owner;
         this.userStatisticsService = userStatisticsService;
