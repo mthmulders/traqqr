@@ -24,6 +24,9 @@
     <postgresql.jdbc.version>42.7.10</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
 
+    <!-- plugin dependencies -->
+    <spotless.palantir.version>2.83.0</spotless.palantir.version>
+
     <!-- spotless:off -->
     <jacocoArgLine></jacocoArgLine>
     <!-- spotless:on -->
@@ -144,6 +147,13 @@
         <version>${project.version}</version>
         <type>war</type>
       </dependency>
+
+      <!-- plugin dependencies -->
+      <dependency>
+          <groupId>com.palantir.javaformat</groupId>
+          <artifactId>palantir-java-format</artifactId>
+          <version>${spotless.palantir.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -237,7 +247,7 @@
           <configuration>
             <java>
               <palantirJavaFormat>
-                <version>2.83.0</version>
+                <version>${spotless.palantir.version}</version>
               </palantirJavaFormat>
               <toggleOffOn></toggleOffOn>
             </java>
