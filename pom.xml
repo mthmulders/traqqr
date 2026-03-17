@@ -25,7 +25,7 @@
     <primefaces.version>15.0.11</primefaces.version>
 
     <!-- plugin dependencies -->
-    <spotless.palantir.version>2.83.0</spotless.palantir.version>
+    <spotless.palantir.version>2.89.0</spotless.palantir.version>
 
     <!-- spotless:off -->
     <jacocoArgLine></jacocoArgLine>
