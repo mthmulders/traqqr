@@ -1,7 +1,12 @@
 package it.mulders.traqqr.web.security;
 
 import jakarta.json.JsonObject;
-import jakarta.security.enterprise.identitystore.openid.*;
+import jakarta.security.enterprise.identitystore.openid.AccessToken;
+import jakarta.security.enterprise.identitystore.openid.Claims;
+import jakarta.security.enterprise.identitystore.openid.IdentityToken;
+import jakarta.security.enterprise.identitystore.openid.OpenIdClaims;
+import jakarta.security.enterprise.identitystore.openid.OpenIdContext;
+import jakarta.security.enterprise.identitystore.openid.RefreshToken;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Instant;
@@ -11,7 +16,7 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
 
-class FakeOpenIdContext {
+public class FakeOpenIdContext {
     public static OpenIdContext createOpenIdContext(String subject, String nameClaim, String pictureClaim) {
         return new OpenIdContext() {
 
