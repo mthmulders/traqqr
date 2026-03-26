@@ -1,8 +1,6 @@
 package it.mulders.traqqr.web.vehicles;
 
 import it.mulders.traqqr.domain.fakes.VehicleFaker;
-import it.mulders.traqqr.domain.shared.RandomStringUtils;
-import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.mem.vehicles.InMemoryVehicleRepository;
 import it.mulders.traqqr.web.AbstractMvcPageTest;

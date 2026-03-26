@@ -3,9 +3,11 @@ package it.mulders.traqqr.web.vehicles;
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
+import it.mulders.traqqr.domain.user.Owner;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.web.vehicles.model.VehicleDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 @Mapper(
@@ -14,4 +16,7 @@ import org.mapstruct.MappingConstants;
         injectionStrategy = CONSTRUCTOR)
 public interface VehicleViewMapper {
     VehicleDTO vehicleToDto(final Vehicle vehicle);
+
+    @Mapping(target = "ownerId", expression = "java(owner.code())")
+    Vehicle dtoToVehicle(final VehicleDTO source, final Owner owner);
 }
