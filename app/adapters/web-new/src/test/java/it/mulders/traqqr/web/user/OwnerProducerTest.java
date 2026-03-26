@@ -1,6 +1,6 @@
 package it.mulders.traqqr.web.user;
 
-import static it.mulders.traqqr.web.user.FakeOpenIdContext.createOpenIdContext;
+import static it.mulders.traqqr.web.security.FakeOpenIdContext.createOpenIdContext;
 
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
