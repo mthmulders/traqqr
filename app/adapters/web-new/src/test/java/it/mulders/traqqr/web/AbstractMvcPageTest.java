@@ -3,6 +3,7 @@ package it.mulders.traqqr.web;
 import it.mulders.traqqr.domain.shared.RandomStringUtils;
 import it.mulders.traqqr.domain.user.Owner;
 import jakarta.mvc.Models;
+import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.core.Response;
 import org.assertj.core.api.ObjectAssert;
 import org.assertj.core.api.WithAssertions;
@@ -53,9 +54,14 @@ public abstract class AbstractMvcPageTest implements WithAssertions {
 
         public ResponseAssert hasViewName(String expectedViewName) {
             isNotNull();
-            var actualEntity = actual.readEntity(String.class);
-            if (!expectedViewName.equals(actualEntity)) {
-                failWithMessage("Expected response entity to be <%s> but was <%s>", expectedViewName, actualEntity);
+            try {
+                var actualEntity = actual.readEntity(String.class);
+                if (!expectedViewName.equals(actualEntity)) {
+                    failWithMessage("Expected response entity to be <%s> but was <%s>", expectedViewName, actualEntity);
+                }
+            } catch (ProcessingException e) {
+                // This can happen if the response has no entity or if the entity has already been read. In either case, we consider the assertion to have failed.
+                failWithMessage("The HTTP response did not have an entity, or it  has already been consumed, so it was not possible to verify the view name. Expected view name was <%s>.", expectedViewName);
             }
             return this;
         }
