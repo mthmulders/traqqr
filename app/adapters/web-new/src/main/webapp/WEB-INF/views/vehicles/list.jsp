@@ -16,18 +16,26 @@
             <tr>
                 <td class="actions">
                     <div class="grid">
-                        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
-                            <use xlink:href="#pencil"></use>
-                        </svg>
+                        <a href="${pageContext.request.contextPath}/app/secure/vehicles/${vehicle.code}">
+                            <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                                <use xlink:href="#pencil"></use>
+                            </svg>
+                        </a>
                         <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
                             <use xlink:href="#trash"></use>
                         </svg>
                     </div>
                 </td>
-                <td>${vehicle.code()}</td>
-                <td>${vehicle.description()}</td>
+                <td>${vehicle.code}</td>
+                <td>${vehicle.description}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <a href="${pageContext.request.contextPath}/app/secure/vehicles/new" class="btn btn-primary">
+        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+            <use xlink:href="#plus-circle"></use>
+        </svg>
+        Create
+    </a>
 </layout:main>
