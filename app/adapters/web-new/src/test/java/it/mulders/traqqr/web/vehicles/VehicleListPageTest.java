@@ -38,25 +38,4 @@ class VehicleListPageTest extends AbstractMvcPageTest {
         // Assert
         assertThat(models.get("vehicles")).asInstanceOf(COLLECTION).contains(vehicleViewMapper.vehicleToDto(vehicle));
     }
-
-    private Owner createOwner() {
-        return new Owner() {
-            private final String code = RandomStringUtils.generateRandomAlphaString(18);
-
-            @Override
-            public String code() {
-                return code;
-            }
-
-            @Override
-            public String displayName() {
-                return "";
-            }
-
-            @Override
-            public String profilePictureUrl() {
-                return "";
-            }
-        };
-    }
 }
