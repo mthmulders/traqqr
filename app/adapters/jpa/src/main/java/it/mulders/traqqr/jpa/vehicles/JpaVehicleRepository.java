@@ -65,7 +65,7 @@ public class JpaVehicleRepository implements VehicleRepository {
     }
 
     @Override
-    @Transactional(Transactional.TxType.MANDATORY)
+    @Transactional(Transactional.TxType.REQUIRED)
     public void save(Vehicle vehicle) {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         try {
@@ -78,7 +78,7 @@ public class JpaVehicleRepository implements VehicleRepository {
     }
 
     @Override
-    @Transactional(Transactional.TxType.MANDATORY)
+    @Transactional(Transactional.TxType.REQUIRED)
     public void update(Vehicle vehicle) {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         findEntityByCode(vehicle.code()).ifPresent(found -> {
