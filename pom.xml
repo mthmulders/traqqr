@@ -22,7 +22,7 @@
     <junit.jupiter.version>6.0.3</junit.jupiter.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <postgresql.jdbc.version>42.7.11</postgresql.jdbc.version>
-    <primefaces.version>15.0.11</primefaces.version>
+    <primefaces.version>15.0.14</primefaces.version>
 
     <!-- plugin dependencies -->
     <spotless.palantir.version>2.90.0</spotless.palantir.version>
