@@ -26,7 +26,7 @@
     <slf4j.version>2.0.18</slf4j.version>
 
     <!-- plugin dependencies -->
-    <spotless.palantir.version>2.90.0</spotless.palantir.version>
+    <spotless.palantir.version>2.91.0</spotless.palantir.version>
 
     <!-- spotless:off -->
     <jacocoArgLine></jacocoArgLine>
