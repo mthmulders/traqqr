@@ -30,7 +30,7 @@ jobs:
           cache: maven
 
       - name: SonarCloud Scan
-        run: mvn -B -Dsonar.login=$SONAR_TOKEN verify sonar:sonar -pl !:docs -P sonarcloud
+        run: mvn -B verify sonar:sonar -pl !:docs -P sonarcloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
