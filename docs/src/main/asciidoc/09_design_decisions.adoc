@@ -1,2 +1,32 @@
 [[section-design-decisions]]
 == Design Decisions
+
+=== ADR-001 Replace Jakarta Server Faces with Jakarta MVC
+
+[cols="1,1"]
+|===
+|*Date*
+|June 9, 2026
+
+|*Status*
+|Accepted
+
+|===
+
+==== Context
+When building more advanced use cases, such as filtering batch job runs, I noticed that Jakarta Server Faces is making a relatively simple use case needless complex.
+It may be caused by me not understanding the programming model well enough, but after studying it further I noticed I had to write a lot of hard-to-test code for something still relatively simple.
+
+==== Alternatives
+1. Keep on going with Jakarta Server Faces, accepting the fact that even for moderately advanced use cases I had to write a lot of code that I did not fully understand.
+2. Switch to a full-blown single-page application, consuming a REST API or a GraphQL API for coupling it to the data inside the system.
+3. Select a simpler server-side rendered technology, such as https://jakarta.ee/specifications/mvc/[Jakarta MVC].
+
+==== Decision
+I will rewrite the web application with https://jakarta.ee/specifications/mvc/[Jakarta MVC].
+
+==== Consequences
+* Since I am already familiar with that technology (see https://github.com/mthmulders/polly/[Polly]) I expect to lose less time in having to study the underlying programming model, leaving more time for building the functionality that I want.
+* Jakarta MVC is a relatively new standard which has not seen a wide adoption.
+  I might run into issues that require me to study the https://github.com/eclipse-ee4j/krazo[Krazo] codebase and the Jakarta MVC https://jakarta.ee/specifications/mvc/[specification].
+* I will need some time to come with a set of useful UI components as I can no longer use https://primefaces.github.io/[Primefaces].
