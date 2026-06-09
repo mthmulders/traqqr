@@ -15,7 +15,7 @@ In addition, I use this project to:
 ## Technologies
 
 The project uses the following technologies
-- Java 21
+- Java 25
 - [Jakarta EE](https://jakarta.ee/)
 - [Jakarta Server Faces](https://jakarta.ee/specifications/mvc/)
 
