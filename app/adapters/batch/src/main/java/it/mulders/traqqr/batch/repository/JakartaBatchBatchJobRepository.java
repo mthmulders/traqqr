@@ -76,7 +76,12 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
 
     private Stream<JobInstance> fetchJobExecutions(String jobName, int offset, int limit) {
         log.debug("Fetching job executions; job_name={}, offset={}, limit={}", jobName, offset, limit);
-        return jobOperator.getJobInstances(jobName, offset, limit).stream();
+        try {
+            return jobOperator.getJobInstances(jobName, offset, limit).stream();
+        } catch (NoSuchJobException nsje) {
+            log.info("No job found, assuming it never ran; job_name={}", jobName);
+            return Stream.empty();
+        }
     }
 
     private Stream<JobInstanceWithExecution> fetchJobExecutions(JobInstance jobInstance) {

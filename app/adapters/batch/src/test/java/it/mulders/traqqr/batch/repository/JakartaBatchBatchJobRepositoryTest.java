@@ -71,6 +71,17 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
     }
 
     @Test
+    void should_find_paginated_should_not_fail_on_unknown_BatchJobType() {
+        // Arrange
+
+        // Act
+        var result = repository.findPaginated(BatchJobType.LOCATION_LOOKUP, new Pagination(2, 1));
+
+        // Assert
+        assertThat(result).isEmpty();
+    }
+
+    @Test
     void should_find_multiple_jobs_using_pagination() {
         // Arrange
 
@@ -84,7 +95,7 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
     }
 
     @Test
-    void should_find_latest_run_per_BatchJobType() {
+    void should_find_latest_run_for_BatchJobTypes() {
         // Arrange
 
         // Act
@@ -96,7 +107,5 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
                 .isNotNull()
                 .singleElement()
                 .satisfies(job -> assertThat(job.getType()).isEqualTo(type)));
-        Arrays.stream(BatchJobType.values())
-                .forEach(type -> assertThat(resultPerType).containsKey(type));
     }
 }

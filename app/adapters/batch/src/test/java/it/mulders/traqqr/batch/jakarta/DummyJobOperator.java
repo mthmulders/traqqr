@@ -62,14 +62,12 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public List<JobInstance> getJobInstances(String jobName, int start, int count)
             throws NoSuchJobException, JobSecurityException {
-        if ("example".equals(jobName) || "location-lookup".equals(jobName)) {
-            return IntStream.range(start, start + count)
-                    .mapToObj(i -> new DummyJobInstance(i, jobName))
-                    .map(JobInstance.class::cast)
-                    .toList();
-        } else {
-            return List.of();
-        }
+        var actualCount = getJobInstanceCount(jobName);
+
+        return IntStream.range(start + actualCount, start + actualCount + count)
+                .mapToObj(i -> new DummyJobInstance(i, jobName))
+                .map(JobInstance.class::cast)
+                .toList();
     }
 
     @Override
