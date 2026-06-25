@@ -10,6 +10,7 @@ import it.mulders.traqqr.domain.batch.spi.BatchJobItemRepository;
 import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import jakarta.batch.operations.JobOperator;
+import jakarta.batch.operations.NoSuchJobException;
 import jakarta.batch.runtime.JobExecution;
 import jakarta.batch.runtime.JobInstance;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -104,14 +105,23 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
     @Override
     public long count() {
         return jobOperator.getJobNames().stream()
-                .mapToInt(jobOperator::getJobInstanceCount)
+                .mapToLong(this::count)
                 .sum();
     }
 
     @Override
     public long count(BatchJobType batchJobType) {
         var jobName = batchJobConverter.jobNameFromBatchJobType(batchJobType);
-        return jobOperator.getJobInstanceCount(jobName);
+        return count(jobName);
+    }
+
+    private long count(String jobName) {
+        try {
+            return jobOperator.getJobInstanceCount(jobName);
+        } catch (NoSuchJobException nsje) {
+            log.info("No job found, assuming it never ran; job_name={}", jobName);
+            return 0;
+        }
     }
 
     @Override

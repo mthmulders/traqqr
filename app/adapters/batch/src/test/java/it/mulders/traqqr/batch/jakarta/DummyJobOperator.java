@@ -55,7 +55,7 @@ public class DummyJobOperator implements JobOperator {
             case "example_01" -> 1;
             case "example_02" -> 2;
             case "example_03", "example" -> 3;
-            default -> 0;
+            default -> throw new NoSuchJobException("Unknown job name: " + jobName);
         };
     }
 
