@@ -2,46 +2,33 @@ package it.mulders.traqqr.web.batch;
 
 import it.mulders.traqqr.domain.batch.BatchJob;
 import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Named("showBatchJobView")
 @ViewScoped
 public class ShowBatchJobView implements Serializable {
-    private static final Logger log = LoggerFactory.getLogger(ShowBatchJobView.class);
-
     // Components
-    private final BatchJobRepository batchJobRepository;
+    private final FacesContext facesContext;
 
     // Data
-    private UUID id;
     private BatchJob batchJob;
 
     @Inject
-    public ShowBatchJobView(final BatchJobRepository batchJobRepository) {
-        this.batchJobRepository = batchJobRepository;
+    public ShowBatchJobView(final BatchJobRepository batchJobRepository, final FacesContext facesContext) {
+        this.facesContext = facesContext;
     }
 
     public void loadBatchJob() {
-        this.batchJobRepository.findById(id).ifPresent(item -> this.batchJob = item);
+        this.batchJob = (BatchJob) facesContext.getExternalContext().getFlash().get("selectedBatchJob");
     }
 
     public String showBatchJob(final BatchJob batchJob) {
-        this.id = batchJob.getId();
+        facesContext.getExternalContext().getFlash().put("selectedBatchJob", batchJob);
         return "/secure/batch/show/index.xhtml?faces-redirect=true&includeViewParams=true";
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public void setBatchJob(BatchJob batchJob) {
