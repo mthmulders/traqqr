@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,13 +34,5 @@ public class InMemoryBatchJobItemRepository implements BatchJobItemRepository {
 
     public Set<BatchJobItem<?>> getBatchJobItems() {
         return new HashSet<>(batchJobItems.values());
-    }
-
-    @Override
-    public Optional<BatchJobItem<Identifiable>> findById(UUID id) {
-        return batchJobItems.entrySet().stream()
-                .filter(entry -> id.equals(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .findAny();
     }
 }
