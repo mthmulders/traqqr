@@ -11,10 +11,10 @@ import it.mulders.traqqr.domain.batch.spi.BatchJobRepository;
 import it.mulders.traqqr.domain.shared.Pagination;
 import it.mulders.traqqr.mem.batch.InMemoryBatchJobItemRepository;
 import jakarta.batch.operations.JobOperator;
-import java.util.Arrays;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -26,72 +26,78 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
     private final BatchJobRepository repository =
             new JakartaBatchBatchJobRepository(jobOperator, itemRepository, batchJobConverter);
 
-    @Test
-    void should_count_jobs() {
-        // Act
-        var result = repository.count();
+    @Nested
+    class CountTest {
+        @Test
+        void should_count_jobs() {
+            // Act
+            var result = repository.count();
 
-        // Assert
-        assertThat(result).isEqualTo(9);
+            // Assert
+            assertThat(result).isEqualTo(10);
+        }
+
+        @Test
+        void should_count_by_BatchJobType() {
+            // Arrange
+
+            // Act
+            var result = repository.count(BatchJobType.LOCATION_LOOKUP);
+
+            // Assert
+            assertThat(result).isEqualTo(4);
+        }
+
+        @Test
+        void count_should_not_fail_on_unknown_BatchJobType() {
+            // Arrange
+
+            // Act
+            var result = repository.count(BatchJobType.EXAMPLE);
+
+            // Assert
+            assertThat(result).isEqualTo(0);
+        }
     }
 
-    @Test
-    void should_count_by_BatchJobType() {
-        // Arrange
+    @Nested
+    class FindPaginatedTest {
+        @Test
+        void should_find_single_job_using_pagination() {
+            // Arrange
 
-        // Act
-        var result = repository.count(BatchJobType.EXAMPLE);
+            // Act
+            var result = repository.findPaginated(BatchJobType.LOCATION_LOOKUP, new Pagination(2, 1));
 
-        // Assert
-        assertThat(result).isEqualTo(3);
-    }
+            // Assert
+            assertThat(result).singleElement().satisfies(job -> {
+                assertThat(job.getType()).isEqualTo(BatchJobType.LOCATION_LOOKUP);
+            });
+        }
 
-    @Test
-    void count_should_not_fail_on_unknown_BatchJobType() {
-        // Arrange
+        @Test
+        void should_find_paginated_should_not_fail_on_unknown_BatchJobType() {
+            // Arrange
 
-        // Act
-        var result = repository.count(BatchJobType.EXAMPLE);
+            // Act
+            var result = repository.findPaginated(BatchJobType.EXAMPLE, new Pagination(2, 1));
 
-        // Assert
-        assertThat(result).isEqualTo(3);
-    }
+            // Assert
+            assertThat(result).isEmpty();
+        }
 
-    @Test
-    void should_find_single_job_using_pagination() {
-        // Arrange
+        @Test
+        void should_find_multiple_jobs_using_pagination() {
+            // Arrange
 
-        // Act
-        var result = repository.findPaginated(BatchJobType.EXAMPLE, new Pagination(2, 1));
+            // Act
+            var result = repository.findPaginated(BatchJobType.LOCATION_LOOKUP, new Pagination(0, 10));
 
-        // Assert
-        assertThat(result).singleElement().satisfies(job -> {
-            assertThat(job.getType()).isEqualTo(BatchJobType.EXAMPLE);
-        });
-    }
-
-    @Test
-    void should_find_paginated_should_not_fail_on_unknown_BatchJobType() {
-        // Arrange
-
-        // Act
-        var result = repository.findPaginated(BatchJobType.LOCATION_LOOKUP, new Pagination(2, 1));
-
-        // Assert
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    void should_find_multiple_jobs_using_pagination() {
-        // Arrange
-
-        // Act
-        var result = repository.findPaginated(BatchJobType.EXAMPLE, new Pagination(0, 10));
-
-        // Assert
-        assertThat(result).hasSize(10).allSatisfy(job -> {
-            assertThat(job.getType()).isEqualTo(BatchJobType.EXAMPLE);
-        });
+            // Assert
+            assertThat(result).hasSize(10).allSatisfy(job -> {
+                assertThat(job.getType()).isEqualTo(BatchJobType.LOCATION_LOOKUP);
+            });
+        }
     }
 
     @Test

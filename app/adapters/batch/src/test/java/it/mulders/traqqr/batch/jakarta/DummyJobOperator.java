@@ -15,6 +15,7 @@ import jakarta.batch.runtime.BatchStatus;
 import jakarta.batch.runtime.JobExecution;
 import jakarta.batch.runtime.JobInstance;
 import jakarta.batch.runtime.StepExecution;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.stream.IntStream;
 
 public class DummyJobOperator implements JobOperator {
     private static final String[] DUMMY_JOB_NAMES = {
-        "example_01", "example_02", "example_03", "example", "location-lookup"
+        "example-01", "example-02", "example-03", "location-lookup"
     };
 
     public record RequestedJobStart(String jobXMLName, Properties jobParameters, Date createTime) {
@@ -52,9 +53,10 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public int getJobInstanceCount(String jobName) throws NoSuchJobException, JobSecurityException {
         return switch (jobName) {
-            case "example_01" -> 1;
-            case "example_02" -> 2;
-            case "example_03", "example" -> 3;
+            case "example-01" -> 1;
+            case "example-02" -> 2;
+            case "example-03" -> 3;
+            case "location-lookup" -> 4;
             default -> throw new NoSuchJobException("Unknown job name: " + jobName);
         };
     }
@@ -115,7 +117,7 @@ public class DummyJobOperator implements JobOperator {
     @Override
     public List<JobExecution> getJobExecutions(JobInstance instance)
             throws NoSuchJobInstanceException, JobSecurityException {
-        if ("example".equals(instance.getJobName()) || "location-lookup".equals(instance.getJobName())) {
+        if (Arrays.asList(DUMMY_JOB_NAMES).contains(instance.getJobName())) {
             return List.of(new DummyJobExecution(
                     instance.getInstanceId(),
                     instance.getJobName(),
