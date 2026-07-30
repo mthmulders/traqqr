@@ -83,11 +83,21 @@ public class JpaVehicleRepository implements VehicleRepository {
         var entity = this.mapper.vehicleToVehicleEntity(vehicle);
         findEntityByCode(vehicle.code()).ifPresent(found -> {
             entity.setId(found.getId());
-            entity.getAuthorisations().forEach(authorisation -> authorisation.setVehicle(found));
+            entity.getAuthorisations().forEach(auth -> {
+                var existingId = found.getAuthorisations().stream()
+                        .filter(aEntity -> aEntity.getHashedKey().equals(auth.getHashedKey()))
+                        .map(AuthorisationEntity::getId)
+                        .findFirst();
+                auth.setId(existingId.orElse(null));
+                auth.setVehicle(found);
+            });
 
             try {
                 em.merge(entity);
-                log.debug("Vehicle updated; code={}", vehicle.code());
+                log.debug(
+                        "Vehicle updated; code={}, num_authorisations={}",
+                        vehicle.code(),
+                        vehicle.authorisations().size());
             } catch (PersistenceException e) {
                 log.error("Database error during vehicle update; code={}", vehicle.code(), e);
                 throw e;

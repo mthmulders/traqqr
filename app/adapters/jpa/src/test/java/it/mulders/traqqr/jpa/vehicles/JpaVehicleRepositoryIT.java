@@ -3,10 +3,12 @@ package it.mulders.traqqr.jpa.vehicles;
 import static it.mulders.traqqr.domain.fakes.OwnerFaker.createOwner;
 import static it.mulders.traqqr.domain.fakes.VehicleFaker.createVehicle;
 
+import it.mulders.traqqr.domain.vehicles.Authorisation;
 import it.mulders.traqqr.domain.vehicles.Vehicle;
 import it.mulders.traqqr.domain.vehicles.spi.VehicleRepository;
 import it.mulders.traqqr.jpa.AbstractJpaRepositoryTest;
 import jakarta.persistence.RollbackException;
+import java.util.function.Function;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -107,7 +109,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
     }
 
     @Test
-    void should_update_vehicle_with_authorisation() {
+    void should_update_vehicle_with_one_authorisation() {
         var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
@@ -123,7 +125,7 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
     }
 
     @Test
-    void should_update_vehicle_with_new_and_updated_authorisation() {
+    void should_update_vehicle_with_new_and_one_existing_authorisation() {
         var vehicle = createVehicle();
         persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
 
@@ -149,5 +151,41 @@ class JpaVehicleRepositoryIT extends AbstractJpaRepositoryTest<VehicleRepository
                         assertThat(authorisation.getInvalidatedAt()).isNull();
                     });
                 });
+    }
+
+    @Test
+    void update_vehicle_should_not_create_superfluous_authorisations() {
+        var vehicle = createVehicle();
+        persist(vehicleMapper.vehicleToVehicleEntity(vehicle));
+
+        var regenerateKey = (Function<Vehicle, Authorisation>) (Vehicle v) -> {
+            var a = v.regenerateKey();
+            repository.update(v);
+            return a;
+        };
+
+        var authorisation1 = runTransactional(
+                () -> repository.findByCode(vehicle.code()).map(regenerateKey).get());
+
+        var authorisation2 = runTransactional(
+                () -> repository.findByCode(vehicle.code()).map(regenerateKey).get());
+
+        var authorisation3 = runTransactional(
+                () -> repository.findByCode(vehicle.code()).map(regenerateKey).get());
+
+        var rawRows = this.entityManager
+                .createNativeQuery("""
+                        select hashed_key
+                        from authorisation
+                        where vehicle_id in (select id from vehicle where code = ?)
+                        ;
+                        """)
+                .setParameter(1, vehicle.code())
+                .getResultList();
+
+        assertThat(rawRows)
+                .hasSize(3)
+                .containsOnly(
+                        authorisation1.getHashedKey(), authorisation2.getHashedKey(), authorisation3.getHashedKey());
     }
 }
