@@ -21,6 +21,11 @@
                                 <use xlink:href="#pencil"></use>
                             </svg>
                         </a>
+                        <a href="${pageContext.request.contextPath}/app/secure/vehicles/${vehicle.code}/authorisation/new">
+                            <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                                <use xlink:href="#key"></use>
+                            </svg>
+                        </a>
                         <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
                             <use xlink:href="#trash"></use>
                         </svg>
