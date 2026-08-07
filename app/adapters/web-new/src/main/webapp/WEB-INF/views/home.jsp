@@ -30,6 +30,6 @@
 </main>
 <footer class="container mx-auto p-4 border-dotted border-t-4 border-[oklch(var(--a))]">
 </footer>
-<script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/${htmx.version}/dist/htmx.min.js"></script>
+<script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/@htmx.version@/dist/htmx.min.js"></script>
 </body>
 </html>
