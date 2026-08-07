@@ -28,6 +28,6 @@
     Traqqr v${systemInfo.applicationVersion} is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
 </footer>
 <tags:icons />
-<script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/${htmx.version}/dist/htmx.min.js"></script>
+<script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/@htmx.version@/dist/htmx.min.js"></script>
 </body>
 </html>
