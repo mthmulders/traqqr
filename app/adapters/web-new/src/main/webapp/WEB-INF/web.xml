@@ -27,4 +27,14 @@
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
+
+  <!--WebjarsServlet-->
+  <servlet>
+    <servlet-name>WebJarsServlet</servlet-name>
+    <servlet-class>it.mulders.traqqr.web.servlet.WebjarsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WebJarsServlet</servlet-name>
+    <url-pattern>/webjars/*</url-pattern>
+  </servlet-mapping>
 </web-app>
