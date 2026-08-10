@@ -46,7 +46,7 @@ public class VehicleListPage {
         var vehicles = vehicleRepository.findByOwner(owner).stream()
                 .map(vehicleMapper::vehicleToDto)
                 .toList();
-        ;
+
         models.put("vehicles", vehicles);
         return Response.ok("vehicles/list.jsp").build();
     }

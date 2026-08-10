@@ -107,9 +107,7 @@ public class JakartaBatchBatchJobRepository implements BatchJobRepository {
 
     @Override
     public long count() {
-        return jobOperator.getJobNames().stream()
-                .mapToLong(this::count)
-                .sum();
+        return jobOperator.getJobNames().stream().mapToLong(this::count).sum();
     }
 
     @Override
