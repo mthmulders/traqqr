@@ -30,11 +30,13 @@
       <groupId>com.ibm.websphere.appserver.api</groupId>
       <artifactId>com.ibm.websphere.appserver.api.security</artifactId>
       <version>1.3.103</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.ibm.websphere.appserver.api</groupId>
       <artifactId>com.ibm.websphere.appserver.api.basics</artifactId>
       <version>1.4.103</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
