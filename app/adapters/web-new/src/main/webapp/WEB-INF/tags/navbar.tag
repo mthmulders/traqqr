@@ -24,6 +24,14 @@
                     </a>
                 </li>
                 <li>
+                    <a href="${pageContext.request.contextPath}/app/secure/measurements">
+                        <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
+                            <use xlink:href="#table-cells"></use>
+                        </svg>
+                        Measurements
+                    </a>
+                </li>
+                <li>
                     <a href="${pageContext.request.contextPath}/app/secure/admin">
                         <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
                             <use xlink:href="#shield-exclamation"></use>
