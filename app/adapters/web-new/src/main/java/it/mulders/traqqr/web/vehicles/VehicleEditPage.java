@@ -51,6 +51,7 @@ public class VehicleEditPage {
     @Path("/{code}")
     @Produces(MediaType.TEXT_HTML)
     public Response edit(@PathParam("code") String code) {
+        log.info("Fetching measurements; owner_id={}, vehicle_code={}", owner.code(), code);
         return vehicleRepository
                 .findByOwnerAndCode(owner, code)
                 .map(vehicleMapper::vehicleToDto)
