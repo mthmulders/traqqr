@@ -20,6 +20,8 @@ public interface VehicleViewMapper {
     VehicleDTO vehicleToDto(final Vehicle vehicle);
 
     @Mapping(target = "ownerId", expression = "java(owner.code())")
+    @Mapping(target = "updateWith", ignore = true)
+    @Mapping(target = "authorisations", ignore = true)
     Vehicle dtoToVehicle(final VehicleDTO source, final Owner owner);
 
     AuthorisationDTO authorisationToDto(final Authorisation authorisation);
