@@ -92,8 +92,9 @@ class GoogleReverseGeocodingClientImplTest implements WithAssertions {
             assertThat(response.status()).isEqualTo(ResponseStatus.OK);
             assertThat(response.results()).isNotNull();
             assertThat(response.results()).isNotEmpty();
-            assertThat(response.results()).anySatisfy(r -> assertThat(r.formattedAddress())
-                    .isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"));
+            assertThat(response.results())
+                    .anySatisfy(r -> assertThat(r.formattedAddress())
+                            .isEqualTo("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"));
         });
     }
 

@@ -15,8 +15,8 @@ import jakarta.batch.runtime.BatchStatus;
 import jakarta.batch.runtime.JobExecution;
 import jakarta.batch.runtime.JobInstance;
 import jakarta.batch.runtime.StepExecution;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -24,9 +24,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class DummyJobOperator implements JobOperator {
-    private static final String[] DUMMY_JOB_NAMES = {
-        "example-01", "example-02", "example-03", "location-lookup"
-    };
+    private static final String[] DUMMY_JOB_NAMES = {"example-01", "example-02", "example-03", "location-lookup"};
 
     public record RequestedJobStart(String jobXMLName, Properties jobParameters, Date createTime) {
         RequestedJobStart(String jobXMLName, Properties jobParameters) {

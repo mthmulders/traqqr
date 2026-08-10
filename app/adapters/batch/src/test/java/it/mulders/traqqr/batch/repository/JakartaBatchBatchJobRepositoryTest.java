@@ -109,9 +109,11 @@ class JakartaBatchBatchJobRepositoryTest implements WithAssertions {
         var resultPerType = result.stream().collect(groupingBy(BatchJob::getType));
 
         // Assert
-        resultPerType.keySet().forEach(type -> assertThat(resultPerType.get(type))
-                .isNotNull()
-                .singleElement()
-                .satisfies(job -> assertThat(job.getType()).isEqualTo(type)));
+        resultPerType
+                .keySet()
+                .forEach(type -> assertThat(resultPerType.get(type))
+                        .isNotNull()
+                        .singleElement()
+                        .satisfies(job -> assertThat(job.getType()).isEqualTo(type)));
     }
 }
