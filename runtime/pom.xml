@@ -17,8 +17,8 @@
     <dependencies>
       <dependency>
         <groupId>io.openliberty</groupId>
-        <artifactId>openliberty-jakartaee10</artifactId>
-        <version>26.0.0.4</version>
+        <artifactId>openliberty-jakartaee11</artifactId>
+        <version>26.0.0.8</version>
         <type>zip</type>
       </dependency>
       <dependency>
@@ -215,7 +215,7 @@
           <mergeServerEnv>true</mergeServerEnv>
           <runtimeArtifact>
             <groupId>io.openliberty</groupId>
-            <artifactId>openliberty-jakartaee10</artifactId>
+            <artifactId>openliberty-jakartaee11</artifactId>
           </runtimeArtifact>
         </configuration>
       </plugin>
