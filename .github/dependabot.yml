@@ -14,6 +14,7 @@ updates:
       - dependency-name: "org.eclipse.persistence:org.eclipse.persistence.jpa"
       - dependency-name: "org.jboss.resteasy:resteasy-core"
       - dependency-name: "org.jboss.weld.se:weld-se-core"
+      - dependency-name: "org.eclipse:yasson"
   - package-ecosystem: docker
     directory: /runtime
     schedule:
