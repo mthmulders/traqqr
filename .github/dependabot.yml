@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: maven
     directory: /
     schedule:
-      interval: daily
-      time: "04:00"
+      interval: weekly
     open-pull-requests-limit: 10
     ignore:
       # These needs to align with the version of OpenLiberty
@@ -18,8 +17,7 @@ updates:
   - package-ecosystem: docker
     directory: /runtime
     schedule:
-      interval: daily
-      time: "04:00"
+      interval: weekly
     open-pull-requests-limit: 10
   - package-ecosystem: github-actions
     directory: /
