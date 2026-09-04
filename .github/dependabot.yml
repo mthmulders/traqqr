@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: maven
     directory: /
     schedule:
-      interval: weekly
+      interval: daily
     open-pull-requests-limit: 10
     ignore:
       # These needs to align with the version of OpenLiberty
@@ -14,6 +14,12 @@ updates:
       - dependency-name: "org.jboss.resteasy:resteasy-core"
       - dependency-name: "org.jboss.weld.se:weld-se-core"
       - dependency-name: "org.eclipse:yasson"
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+      production-dependencies-patches:
+        dependency-type: "production"
+        update-types: [ "patch" ]
   - package-ecosystem: docker
     directory: /runtime
     schedule:
