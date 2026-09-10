@@ -23,7 +23,7 @@
     <mapstruct.version>1.6.3</mapstruct.version>
     <postgresql.jdbc.version>42.7.13</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
-    <slf4j.version>2.0.18</slf4j.version>
+    <slf4j.version>2.0.19</slf4j.version>
 
     <!-- plugin dependencies -->
     <spotless.palantir.version>2.97.0</spotless.palantir.version>
@@ -77,7 +77,7 @@
       <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>4.5.1</version>
+        <version>4.5.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -296,7 +296,7 @@
         <plugin>
           <groupId>org.pitest</groupId>
           <artifactId>pitest-maven</artifactId>
-          <version>1.25.9</version>
+          <version>1.30.0</version>
           <configuration combine.children="append">
             <excludedClasses>
               <excludedClass>it.mulders.traqqr.**.*Entity</excludedClass>
