@@ -14,6 +14,9 @@ updates:
       - dependency-name: "org.jboss.resteasy:resteasy-core"
       - dependency-name: "org.jboss.weld.se:weld-se-core"
       - dependency-name: "org.eclipse:yasson"
+      # During the rewrite to Jakarta MVC, these dependencies can stay as they are. No need to update them.
+      - dependency-name: "org.primefaces:primefaces"
+      - dependency-name: "org.primefaces:primefaces-themes"
     groups:
       development-dependencies:
         dependency-type: "development"
