@@ -23,7 +23,7 @@
     <mapstruct.version>1.6.3</mapstruct.version>
     <postgresql.jdbc.version>42.7.13</postgresql.jdbc.version>
     <primefaces.version>15.0.11</primefaces.version>
-    <slf4j.version>2.0.19</slf4j.version>
+    <slf4j.version>2.0.20</slf4j.version>
 
     <!-- plugin dependencies -->
     <spotless.palantir.version>2.97.0</spotless.palantir.version>
@@ -44,7 +44,7 @@
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.6.3</version>
+        <version>1.6.4</version>
       </dependency>
       <dependency>
         <groupId>org.mapstruct</groupId>
@@ -244,7 +244,7 @@
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
-          <version>3.10.0</version>
+          <version>3.10.2</version>
           <configuration>
             <java>
               <palantirJavaFormat>
@@ -290,7 +290,7 @@
         <plugin>
           <groupId>io.openliberty.tools</groupId>
           <artifactId>liberty-maven-plugin</artifactId>
-          <version>3.12.2</version>
+          <version>3.12.3</version>
         </plugin>
 
         <plugin>
@@ -318,7 +318,7 @@
             <dependency>
               <groupId>it.mulders.stryker</groupId>
               <artifactId>pit-dashboard-reporter</artifactId>
-              <version>0.3.19</version>
+              <version>0.3.20</version>
             </dependency>
             <dependency>
               <groupId>io.github.wmaarts</groupId>
