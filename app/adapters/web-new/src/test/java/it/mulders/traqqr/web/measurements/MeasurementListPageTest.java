@@ -32,7 +32,7 @@ class MeasurementListPageTest extends AbstractMvcPageTest {
         vehicleRepository.save(VehicleFaker.createVehicle(owner));
 
         // Act
-        var response = page.show();
+        var response = page.show(null, null);
 
         // Assert
         assertThat(response).hasStatus(200).hasViewName("measurements/no_vehicle.jsp");
@@ -44,7 +44,7 @@ class MeasurementListPageTest extends AbstractMvcPageTest {
         // Arrange
 
         // Act
-        var response = page.show("non-existing-code");
+        var response = page.show("non-existing-code", 0);
 
         // Assert
         assertThat(response).hasStatus(404);
@@ -60,11 +60,78 @@ class MeasurementListPageTest extends AbstractMvcPageTest {
         vehicleRepository.save(vehicle);
 
         // Act
-        var response = page.show(vehicle.code());
+        var response = page.show(vehicle.code(), 0);
+
+        // Assert
+        assertThat(response).hasStatus(200).hasViewName("measurements/list.jsp");
+        assertThat(models.get("measurements")).asInstanceOf(COLLECTION).hasSize(10);
+    }
+
+    @Test
+    void with_vehicle_selected_should_render_vehicle() {
+        // Arrange
+        var vehicle = VehicleFaker.createVehicle(owner);
+        vehicleRepository.save(vehicle);
+
+        // Act
+        var response = page.show(vehicle.code(), 0);
 
         // Assert
         assertThat(response).hasStatus(200).hasViewName("measurements/list.jsp");
         assertThat(models.get("vehicle")).asInstanceOf(type(VehicleDTO.class)).isNotNull();
-        assertThat(models.get("measurements")).asInstanceOf(COLLECTION).hasSize(15);
+    }
+
+    @Test
+    void with_vehicle_selected_should_render_pagination_info() {
+        // Arrange
+        var vehicle = VehicleFaker.createVehicle(owner);
+        IntStream.range(0, 15)
+                .mapToObj(_ -> MeasurementFaker.createMeasurement(vehicle))
+                .forEach(measurementRepository::save);
+        vehicleRepository.save(vehicle);
+
+        // Act
+        var response = page.show(vehicle.code(), 0);
+
+        // Assert
+        assertThat(response).hasStatus(200).hasViewName("measurements/list.jsp");
+        assertThat(models.get("pageNumber")).asInstanceOf(INTEGER).isEqualTo(0L);
+        assertThat(models.get("maximumPageNumber")).asInstanceOf(LONG).isEqualTo(1L);
+    }
+
+    @Test
+    void with_pageNumber_should_render_list_of_measurements() {
+        // Arrange
+        var vehicle = VehicleFaker.createVehicle(owner);
+        IntStream.range(0, 15)
+                .mapToObj(_ -> MeasurementFaker.createMeasurement(vehicle))
+                .forEach(measurementRepository::save);
+        vehicleRepository.save(vehicle);
+
+        // Act
+        var response = page.show(vehicle.code(), 1);
+
+        // Assert
+        assertThat(response).hasStatus(200).hasViewName("measurements/list.jsp");
+        assertThat(models.get("pageNumber")).asInstanceOf(INTEGER).isEqualTo(1);
+        assertThat(models.get("measurements")).asInstanceOf(COLLECTION).hasSize(5);
+    }
+
+    @Test
+    void with_too_high_pageNumber_should_render_empty_list_of_measurements() {
+        // Arrange
+        var vehicle = VehicleFaker.createVehicle(owner);
+        IntStream.range(0, 15)
+                .mapToObj(_ -> MeasurementFaker.createMeasurement(vehicle))
+                .forEach(measurementRepository::save);
+        vehicleRepository.save(vehicle);
+
+        // Act
+        var response = page.show(vehicle.code(), 2);
+
+        // Assert
+        assertThat(response).hasStatus(200).hasViewName("measurements/list.jsp");
+        assertThat(models.get("pageNumber")).asInstanceOf(INTEGER).isEqualTo(2L);
+        assertThat(models.get("measurements")).asInstanceOf(COLLECTION).hasSize(0);
     }
 }

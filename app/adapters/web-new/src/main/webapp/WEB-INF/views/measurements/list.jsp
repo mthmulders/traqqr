@@ -6,7 +6,7 @@
 <fmt:setLocale value="${user.locale}" />
 
 <layout:main title="Measurements for ${vehicle.description()}">
-    <table class="table table-lg w-full">
+    <table class="table table-md w-full not-prose">
         <thead>
         <tr>
             <th></th>
@@ -67,8 +67,44 @@
             </tr>
         </c:forEach>
         </tbody>
+        <tfoot>
+            <c:if test="${maximumPageNumber > 0}">
+                <tr class="hover:stroke-none">
+                    <td colspan="6">
+                        <div class="join grid grid-cols-5">
+                            <%--first--%>
+                            <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}&page=0"
+                               role="button" class="join-item btn ${pageNumber == 0 ? 'btn-disabled' : ''}">
+                                    ${pageNumber == 0 ? '...' : '« 1'}
+                            </a>
+                            <%-- previous --%>
+                            <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}&page=${pageNumber - 1}"
+                               role="button" class="join-item btn ${maximumPageNumber < 1 || pageNumber <= 1 ? 'btn-disabled' : ''}">
+                                    ${maximumPageNumber < 1 || pageNumber <= 1 ? '...' : '‹ '.concat(pageNumber - 1 + 1)}
+                            </a>
+                            <%-- current --%>
+                            <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}&page=${pageNumber}"
+                               role="button" class="join-item btn btn-active">
+                                    ${pageNumber + 1}
+                            </a>
+                            <%-- next --%>
+                            <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}&page=${pageNumber + 1}"
+                               role="button" class="join-item btn ${pageNumber >= maximumPageNumber - 1 ? 'btn-disabled' : ''}">
+                                    ${pageNumber >= maximumPageNumber ? '...' : ''.concat(pageNumber + 1 + 1).concat('›')}
+                            </a>
+                            <%-- last --%>
+                            <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}&page=${maximumPageNumber}"
+                               role="button" class="join-item btn ${pageNumber == maximumPageNumber ? 'btn-disabled' : ''}">
+                                    ${pageNumber == maximumPageNumber ? '...' : ''.concat(maximumPageNumber + 1).concat(' »')}
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </c:if>
+        </tfoot>
     </table>
-    <a href="${pageContext.request.contextPath}/app/secure/measurements/${vehicle.code()}/new" class="btn btn-primary">
+
+    <a href="${pageContext.request.contextPath}/app/secure/measurements/new?vehicle=${vehicle.code()}" class="btn btn-primary btn-wide">
         <svg class="icon stroke-current" xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#plus-circle"></use>
         </svg>

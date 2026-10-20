@@ -15,7 +15,7 @@
     <ul class="menu menu-vertical lg:menu-horizontal rounded-box">
         <c:forEach var="vehicle" items="${vehicles}">
             <li>
-                <a href="${pageContext.request.contextPath}/app/secure/measurements/${vehicle.code()}">
+                <a href="${pageContext.request.contextPath}/app/secure/measurements?vehicle=${vehicle.code()}">
                         ${vehicle.description()}</a>
             </li>
         </c:forEach>
