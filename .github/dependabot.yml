@@ -17,12 +17,6 @@ updates:
       # During the rewrite to Jakarta MVC, these dependencies can stay as they are. No need to update them.
       - dependency-name: "org.primefaces:primefaces"
       - dependency-name: "org.primefaces:primefaces-themes"
-    groups:
-      development-dependencies:
-        dependency-type: "development"
-      production-dependencies-patches:
-        dependency-type: "production"
-        update-types: [ "patch" ]
   - package-ecosystem: docker
     directory: /runtime
     schedule:
